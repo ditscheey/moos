@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-6">
+    <img src="http://159.89.19.33/assets/imgs/terasse.JPG" alt="" class="img-thumbnail">
+  </div>
+    <div class="col-md-6">
+      <h4 class="h1 text-center"><i class="fa fa-info" aria-hidden="true"></i>   Allgemeine Informationen</h4>
+      <p class="lead">{{wohnraum}} </p><br>
+      <p class="lead">{{zugang}} </p>
+    </div>
+
+</div>
+<br>
+<div class="row">
+  <div class="col-md-8">
+    <h4 class="h1 text-center"><i class="fa fa-bank" aria-hidden="true"></i>   Markt Murnau</h4>
+    <p class="lead">{{markt}}</p><br>
+  </div>
+  <div class="col-md-4">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info list-group-item-heading" style="background-color: #007BFF; color:white">Hausregeln</li>
+      <li class="list-group-item">Rauchen ist nicht erlaubt, jedoch auf der Terrasse gerne</li>
+      <li class="list-group-item">keine Parties oder Veranstaltungen</li>
+      <li class="list-group-item">nicht geeignet für Kinder (0 - 12 Jahren)</li>
+    </ul>
+  </div>
+</div>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="h1 text-center"><i class="fa fa-map-o" aria-hidden="true"></i>   Die Nachbarschaft</h4>
+      <p class="lead">{{nachbarschaft}}</p>
+    </div>
+    <div class="col-md-6">
+      <h4 class="h1 text-center"><i class="fa fa-question" aria-hidden="true"></i>   wo </h4>
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+    </div>
+<div class="row">
+  <div class="col-md-12">
+    <p class="lead"> In Hechendorf fährt ein Bus, allerdings nur selten. Am Bahnhof ist man zu Fuß in zwanzig Minuten, von dort ist man in einer Stunde in München und in 30 Minuten in Garmisch-Partenkrichen. Mir dem Fahrrad geht alles deutlich schneller.</p>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+
+<div class="d-flex flex-row flex-wrap ">
+  <div class="p-2 col-md-pull-3 col-sm-4" *ngFor="let img of imgs; let i = index" >
+    <div class="card">
+      <p class="text-center hidden-sm-up hidden-xs-down hidden-xs-up">{{desc[i]}}</p>
+      <a href=""><img src="{{img}}"  (click)="showImage(i)"  class="img-thumbnail"></a>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

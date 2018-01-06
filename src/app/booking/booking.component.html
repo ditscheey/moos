@@ -1,0 +1,43 @@
+<div class="backimg">
+  <form [formGroup]="bookingForm">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="first_name">Vorname</label>
+        <input type="text" class="form-control" id="first_name" placeholder="Vorname" formControlName="first_name">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="last_name">Nachname</label>
+        <input type="text" class="form-control" id="last_name" placeholder="Nachname" formControlName="last_name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" placeholder="youremail@example.com" formControlName="email">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="check_in">Check In</label>
+        <input type="text" class="form-control" id="check_in" placeholder="DD.MM.YYYY" formControlName="dateFrom">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="check_out">Check out</label>
+        <input type="text" class="form-control" id="check_out" placeholder="DD.MM.YYYY" formControlName="dateTo">
+      </div>
+      <div class="form-group col-md">
+        <p  style="" class="text-center" for="daterange">Zeitraum auswählen oder eintippen | Choose daterange or just type it</p>
+        <input daterangepicker id="daterange" (selected)="dateSelected($event)" [options]="pickerOptions" type="submit"
+               class="form-control btn btn-outline-info"
+               (cancelDaterangepicker)="calendarCanceled($event)" (applyDaterangepicker)="calendarApplied($event)"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="comment">Details zur Buchungsanfrage  | optional</label>
+      <textarea class="form-control" id="comment" rows="3" formControlName="comment"></textarea>
+    </div>
+    <div class="col-md">
+      <button *ngIf="bookingForm.valid"  type="submit" class="btn btn-block btn-outline-success" (click)="addBooking()">Absenden</button>
+    </div>
+  </form>
+</div>
+
+
