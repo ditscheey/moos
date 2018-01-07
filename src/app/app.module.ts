@@ -19,7 +19,7 @@ import { GalleryComponent } from './gallery/gallery.component';
 import {AgmCoreModule} from '@agm/core';
 
 const appRoutes: Routes = [
-  { path: '', component: InfoComponent },
+  { path: '', redirectTo: 'info' , pathMatch: 'full'},
   {  path: 'info', component: InfoComponent },
   {  path: 'gallery', component: GalleryComponent },
   {  path: 'booking', component: BookingComponent },
