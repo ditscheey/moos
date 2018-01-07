@@ -12,10 +12,32 @@
             <input type="text" class="form-control" id="last_name" placeholder="Nachname" formControlName="last_name">
           </div>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="youremail@example.com" formControlName="email">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="youremail@example.com" formControlName="email">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="people">Erwachsene</label>
+            <select class="form-control" id="people" name='people' formControlName="people">
+              <option selected>1</option>
+              <option >2</option>
+              <option >3</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="kids">Kinder | 2 - 12 Jahren</label>
+            <select class="form-control" name='kids' id="kids" formControlName="kids">
+              <option selected>0</option>
+              <option >1</option>
+              <option >2</option>
+              <option >3</option>
+              <option >4</option>
+            </select>
+          </div>
+
         </div>
+
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="check_in">Check In</label>
@@ -44,4 +66,15 @@
   </div>
 
 </div>
-
+<div class="row">
+  <div class="col-md-4">
+    <p class="lead text-justify"><i>{{preisInfo}}</i></p>
+  </div>
+    <div class="col-md-8 d-flex flex-wrap justify-content-center">
+      <span id="price" class=" badge badge-primary  p-2 justify-content-center">
+              <p class="lead p-2 ">{{nights}} * {{price}} € <small>pro Nacht </small>  + <b>30 €</b> <small>Reinigungsgebühr </small></p>
+        <p class="lead p-2"><b>=</b></p>
+              <h4 class="display-4 d-inline-flex justify-content-center">{{complete}} € </h4>
+            </span>
+    </div>
+</div>

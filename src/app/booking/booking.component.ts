@@ -16,8 +16,14 @@ export class BookingComponent implements OnInit {
   public pickerOptions: any;
   public bookings;
   public daterange: any = {};
-  public date = moment();
+  public  date = moment();
+  public nights = 0;
+  public price;
+public complete ;
 
+public preisInfo = 'Zu jeder Buchung kommen 30€ Reinigungsgebühr. Ab 3 Personen fallen zusätzlich 10€ pro Tag an. Für ein Haustier  5€ pro Tag. ' +
+  'In der Nebensaison von 07.01 bis zum 31.03 kostet die Nacht nur 42€ .'+
+  'Die Mittelsaison geht vom 31.03 bis zum 01.06 und kostet pro Nacht 44€';
   constructor(private fb: FormBuilder,
               private _elRef: ElementRef,
               private http: HttpClient,
@@ -34,7 +40,27 @@ export class BookingComponent implements OnInit {
   public calendarApplied(e: any) {
     this.bookingForm.get('dateFrom').patchValue(e.picker.startDate.format('DD.MM.YYYY'));
     this.bookingForm.get('dateTo').patchValue(e.picker.endDate.format('DD.MM.YYYY'));
+    this.nights = moment(e.picker.endDate).diff(e.picker.startDate,'days',false);
+    console.log('Nights: ' + this.nights);
+    this.price = this.checkSaison(e.picker.startDate);
+    this.complete =  this.price * Number(this.nights) + 30;
   }
+
+   checkSaison(selectedDate) {
+     const  nebensaison  = ['01.07.' + this.date.year(), '03.31.' + this.date.year()];
+     const  mittelsaison =  ['03.31.' + this.date.year(), '06.01.' + this.date.year()];;
+  //   let hauptsaison =  ['01.06.' + this.date.year(), '04.11.' + this.date.year()];
+     if (selectedDate.isBetween(moment(nebensaison[0]), moment(nebensaison[1]))) {
+            console.log('Nebensaison');
+            return 42;
+          } else if (selectedDate.isBetween(moment(mittelsaison[0]), moment(mittelsaison[1]))) {
+            console.log('mittel');
+            return 44;
+          } else {
+       console.log('no saison');
+       return 54;
+     }
+   }
 
   dateSelected(value: any) {
     this.daterange.startDate = value.start;
@@ -43,10 +69,10 @@ export class BookingComponent implements OnInit {
 
   addBooking() {
     console.log(this.bookingForm.value);
-    this.http.post('http://159.89.19.33/api/bookings', this.bookingForm.value).subscribe(data =>{
+  /*  this.http.post('http://159.89.19.33/api/bookings', this.bookingForm.value).subscribe(data =>{
       this.router.navigate(['./info']);
     }
-    );
+    );*/
   }
 
   public getBookings() {
@@ -82,6 +108,8 @@ export class BookingComponent implements OnInit {
       email: ['', Validators.email],
       dateFrom: [, Validators.required],
       dateTo: [, Validators.required],
+      people: [, Validators.required],
+      kids:'',
       comment: ''
     });
   }
