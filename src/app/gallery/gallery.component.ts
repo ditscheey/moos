@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, RouterModule, Routes} from '@angular/router';
 
 @Component({
   selector: 'app-gallery',
@@ -35,9 +36,9 @@ export class GalleryComponent implements OnInit {
     'Aussicht im Winter',
     'Aussicht im Winter 2'
   ];
-  constructor() { }
+  constructor(private router: Router) { }
   showImage (index){
-    console.log(index);
+    this.router.navigate(['/image/', index]);
   }
   ngOnInit() {
   }

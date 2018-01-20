@@ -14,52 +14,6 @@ const fs = require('fs');
 // declare mongojs & connect
 var mongojs = require('mongojs');
 var db = mongojs('max:max@ds119685.mlab.com:19685/moos');
-
-/* GET api listing. */
-router.get('/',function (req, res){
-  res.send('api works');
-});
-
-
-
-router.get('/bnb',function (req, res){
-  var dest     = __dirname + 'bo.ics';
-  var file = fs.createWriteStream(dest);
-  var request = https.get('https://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147', function(response) {
-    response.pipe(file);
-    file.on('finish', function() {
-      file.close();  // close() is async, call cb after close completes.
-    });
-  }).on('error', function(err) { // Handle errors
-    fs.unlink(dest); // Delete the file async. (But we don't check the result)
-
-  });
-});
-
-router.get('/download', function(request, response){
-  var file     = "https://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147";
-
-  var filename = path.basename( file );
-  var ssl      = file.split(':')[0];
-  var dest     = __dirname + 'bo.ics';
-  var stream   = fs.createWriteStream( dest );
-
-  if ( ssl == 'https') {
-      https.get( file, function( resp ) {
-          resp.pipe( stream );
-          response.send('file saved successfully.*');
-      }).on('error', function(e) {
-          response.send("error connecting" + e.message);
-      });
-  } else {
-      http.get( file, function( resp ) {
-          resp.pipe( stream );
-          response.send('file saved successfully.*');
-      }).on('error', function(e) {
-          response.send("error connecting" + e.message);
-      });
-  }
-});
 //Ical 'http://lanyrd.com/topics/nodejs/nodejs.ics'  || airbnb : https://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147
 router.get('/ical',function (req, res){
   ical.fromURL('http://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147',{}, function(err, data) {
@@ -228,7 +182,7 @@ router.put('/posts/:id', function(req, res, next){
 //Save Task
 router.post('/bookings', function(req, res, next){
   var booking = req.body;
-  if(!booking.email){
+  if(!booking.form.email){
     res.status(400);
     res.json({
       "error": "Bad Data"
@@ -241,16 +195,14 @@ router.post('/bookings', function(req, res, next){
       res.json(booking);
     });
   }
-
   const output = `
-  <h3>Details: </h3>
-  <ul>  
-    <li>Name: ${req.body.first_name} ${req.body.last_name}</li>
-    <li>Email: ${req.body.email}</li>
-    <li>Check-in: ${req.body.dateFrom} </li>
-    <li>Check-out: ${req.body.dateTo}</li>
-    <li>optionaler Kommentar : ${req.body.comment}</li>
-   </ul>
+  <h3>Buchungsbestätigung: </h3>
+  <p> Herzlich Willkommen  <strong><i>${req.body.form.first_name} ${req.body.form.last_name} </i></strong><br> Ihre Email Adresse lautet : ${req.body.form.email}. <br>
+  <br> Ihre gewünschte Buchung wurde gespeichert:  Check-In am <strong>${req.body.form.dateFrom} </strong> und Check-out <strong>${req.body.form.dateTo}</strong><br>
+ Gebucht sind ${req.body.form.people} Erwachsene und ${req.body.form.kids} Kinder. Außerdem ${req.body.form.pets} Haustiere.<br> Der Preis pro Nacht beträgt in der derzeitgen Saison <strong>${req.body.priceNight} € </strong>, damit der Gesamtaufenthalt in etwa <strong>${req.body.price} € </strong> (inkl. 30 € Reinigunsgebühr)<br>
+<br><br>Alle weiteren Informationen werden im folgenden Email Kontakt ausgetauscht. ng <br>Vielen Dank für Ihre Buchungsanfrage! 
+<br><br>mit freundlichen Grüßen <strong>Susanne Meyer-Keusch </strong>
+</p>
 `;
 
 // create reusable transporter object using the default SMTP transport
@@ -262,18 +214,20 @@ router.post('/bookings', function(req, res, next){
       pass: 'RcmGhKPRD6yNR83FkT'
   }
 }); */
-let transporter = nodemailer.createTransport({
+var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
          user: 'studiomurnauermoos@gmail.com',
          pass: 'studiomurnauermoos'
      }
  });
+
+var mail_recievers = 'studiomurnauermoos@gmail.com, '+booking.form.email;
 // setup email data with unicode symbols
-let mailOptions = {
-    from: '"Nodemailer Contact" <your@email.com>', // sender address
-    to: 'studiomurnauermoos@gmail.com', // list of receivers
-    subject: 'Neue Buchung auf Studio Murnauer Moos', // Subject line
+var mailOptions = {
+    from: '"Susanne Meyer Keusch" <your@email.com>',  // sender address
+    to: mail_recievers,   // list of receivers
+    subject: 'Neue Buchung auf Studio Murnauer Moos',   // Subject line
     html: output // html body
 };
 

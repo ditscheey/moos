@@ -3,32 +3,39 @@
     <div class="backimg">
       <form [formGroup]="bookingForm">
         <div class="form-row">
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
             <label for="first_name">Vorname</label>
             <input type="text" class="form-control" id="first_name" placeholder="Vorname" formControlName="first_name">
           </div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-3">
             <label for="last_name">Nachname</label>
             <input type="text" class="form-control" id="last_name" placeholder="Nachname" formControlName="last_name">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="youremail@example.com" formControlName="email">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="youremail@example.com" formControlName="email">
+            <label for="pets">Haustiere</label>
+            <select class="form-control" id="pets" name='pets' formControlName="pets" (change)="calcPrice()">
+              <option selected="selected"  value = "5">Kein Haustier</option>
+              <option  >1</option>
+            </select>
           </div>
           <div class="form-group col-md-4">
             <label for="people">Erwachsene</label>
-            <select class="form-control" id="people" name='people' formControlName="people">
-              <option selected>1</option>
+            <select class="form-control" id="people" name='people' formControlName="people" (change)="calcPrice()">
+              <option selected = "selected">1</option>
               <option >2</option>
               <option >3</option>
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label for="kids">Kinder | 2 - 12 Jahren</label>
+            <label for="kids">Kinder | bis 12 Jahren</label>
             <select class="form-control" name='kids' id="kids" formControlName="kids">
-              <option selected>0</option>
+              <option selected = "selected" >0</option>
               <option >1</option>
               <option >2</option>
               <option >3</option>
@@ -50,7 +57,7 @@
           <div class="form-group col-md">
             <p  style="" class="text-center" for="daterange">Zeitraum auswählen oder eintippen | Choose daterange or just type it</p>
             <input daterangepicker id="daterange" (selected)="dateSelected($event)" [options]="pickerOptions" type="submit"
-                   class="form-control btn btn-outline-info"
+                   class="form-control btn btn-info" style="background-color: #007BFF"
                    (cancelDaterangepicker)="calendarCanceled($event)" (applyDaterangepicker)="calendarApplied($event)"/>
           </div>
         </div>
@@ -59,20 +66,26 @@
           <textarea class="form-control" id="comment" rows="3" formControlName="comment"></textarea>
         </div>
         <div class="col-md">
-          <button *ngIf="bookingForm.valid"  type="submit" class="btn btn-block btn-outline-success" (click)="addBooking()">Absenden</button>
+          <button *ngIf="bookingForm.valid"   type="submit" class=" disabled btn btn-block btn-success" (click)="addBooking()">Absenden</button>
         </div>
       </form>
     </div>
   </div>
-
+  <br>
 </div>
 <div class="row">
-  <div class="col-md-4">
+  <p><br></p>
+</div>
+<div class="row">
+  <div class="col-md-4 d-flex ">
+    <br>
     <p class="lead text-justify"><i>{{preisInfo}}</i></p>
   </div>
-    <div class="col-md-8 d-flex flex-wrap justify-content-center">
+    <div class="col-md-8 d-flex flex-wrap justify-content-center justify-content-end">
+      <br>
       <span id="price" class=" badge badge-primary  p-2 justify-content-center">
-              <p class="lead p-2 ">{{nights}} * {{price}} € <small>pro Nacht </small>  + <b>30 €</b> <small>Reinigungsgebühr </small></p>
+        <p class="lead p-2">ungefähre Kosten: </p>
+              <p class="lead p-2 ">{{nights}} * {{price}} € <small>pro Nacht </small>  + 30 € <small>Reinigungsgebühr </small></p>
         <p class="lead p-2"><b>=</b></p>
               <h4 class="display-4 d-inline-flex justify-content-center">{{complete}} € </h4>
             </span>

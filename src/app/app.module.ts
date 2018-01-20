@@ -17,13 +17,15 @@ import { BookingComponent } from './booking/booking.component';
 import { AboutComponent } from './about/about.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import {AgmCoreModule} from '@agm/core';
+import { ImageComponent } from './image/image.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'info' , pathMatch: 'full'},
   {  path: 'info', component: InfoComponent },
   {  path: 'gallery', component: GalleryComponent },
   {  path: 'booking', component: BookingComponent },
-  {  path: 'about', component: AboutComponent }
+  {  path: 'about', component: AboutComponent },
+  { path: 'image/:id', component: ImageComponent}
 ];
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ const appRoutes: Routes = [
     InfoComponent,
     BookingComponent,
     AboutComponent,
-    GalleryComponent
+    GalleryComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+<div class="well">
+  <div class="row">
+    <img src="{{image_path}}" alt="" class="img rounded" style="width: 100%; height: 100%; padding: 5px">
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <button  type="submit" class="btn btn-block btn-outline-danger" (click)="prevImg()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+      <br>
+    </div>
+    <div class="col-md-8">
+      <h4 class="text-center align-middle" style="color: #007BFF">{{this.image_desc}}</h4>
+      <br>
+    </div>
+    <div class="col-md-2">
+      <button  type="submit" class="btn btn-block btn-outline-success" (click)="nextImg()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+      <br>
+    </div>
+  </div>
+</div>
+
