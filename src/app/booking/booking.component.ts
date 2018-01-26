@@ -126,7 +126,7 @@ public preisInfo = 'Zu jeder Buchung kommen 30€ Reinigungsgebühr. Ab 3 Person
       'price': this.complete,
     };
   //  console.log(post_value);
-      this.http.post('http://localhost:3000/api/bookings', post_value).subscribe(data =>{
+      this.http.post('http://159.89.19.33/api/bookings', post_value).subscribe(data =>{
       this.router.navigate(['./info']);
     }
 
