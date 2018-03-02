@@ -1,6 +1,3 @@
-/**
- * Created by ditsc on 16.10.2017.
- */
 const express = require('express');
 const router = express.Router();
 const ical = require('node-ical');
@@ -15,20 +12,6 @@ const fs = require('fs');
 var mongojs = require('mongojs');
 var db = mongojs('max:max@ds119685.mlab.com:19685/moos');
 //Ical 'http://lanyrd.com/topics/nodejs/nodejs.ics'  || airbnb : https://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147
-router.get('/ical',function (req, res){
-  ical.fromURL('http://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147',{}, function(err, data) {
-    for (var k in data ){
-      if(data.hasOwnProperty(k)){
-        var ev = data[k];
-        console.log("Conference",
-          ev.summary
-        )
-      }
-    }
-    res.send(data);
-  });
-});
-
 router.get('/file',function (req, res){
     let result = [];
     let dates = [];
@@ -95,20 +78,15 @@ router.get('/file',function (req, res){
     res.send(final);
 });
 
-router.get('/json',function(req,res){
-  var json_raw = ical2json.convert("bookings.ics");
-  res.json(json_raw);
-})
 //get all Posts
-router.get('/posts',function (req, res){
-  db.posts.find(function (err, posts){
+router.get('/info',function (req, res){
+  db.cms.find(function (err, info){
     if(err){
       res.send("Error found while loading the Data");
     }
-    res.json(posts);
+    res.json(info[0]);
   });
 });
-
 
 
 // Get Single post
@@ -140,29 +118,10 @@ router.post('/post', function(req, res, next){
   }
 });
 
-// Delete Task
-router.delete('/posts/:id', function(req, res, next){
-  db.posts.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, post){
-    if(err){
-      res.send(err);
-    }
-    res.json(post);
-  });
-});
 
 // Update Task
 router.put('/posts/:id', function(req, res, next){
-  var post = req.body;
   var updPost = {};
-/*
-  if(post.isDone){
-    updPost.isDone = post.isDone;
-  }
-
-  if(task.title){
-    updPost.title = post.title;
-  }
-*/
   if(!updPost){
     res.status(400);
     res.json({
@@ -199,21 +158,12 @@ router.post('/bookings', function(req, res, next){
   <h3>Buchungsbestätigung: </h3>
   <p> Herzlich Willkommen  <strong><i>${req.body.form.first_name} ${req.body.form.last_name} </i></strong><br> Ihre Email Adresse lautet : ${req.body.form.email}. <br>
   <br> Ihre gewünschte Buchung wurde gespeichert:  Check-In am <strong>${req.body.form.dateFrom} </strong> und Check-out <strong>${req.body.form.dateTo}</strong><br>
- Gebucht sind ${req.body.form.people} Erwachsene und ${req.body.form.kids} Kinder. Außerdem ${req.body.form.pets} Haustiere.<br> Der Preis pro Nacht beträgt in der derzeitgen Saison <strong>${req.body.priceNight} € </strong>, damit der Gesamtaufenthalt in etwa <strong>${req.body.price} € </strong> (inkl. 30 € Reinigunsgebühr)<br>
+ Gebucht sind ${req.body.form.people} Erwachsene und ${req.body.form.kids} Kinder. Außerdem wurden ${req.body.form.pets} Haustiere angemeldet.<br> Der Preis pro Nacht beträgt in der derzeitgen Saison <strong>${req.body.priceNight} € </strong>, damit der Gesamtaufenthalt in etwa <strong>${req.body.price} € </strong> (inkl. 30 € Reinigunsgebühr)<br>
 <br><br>Alle weiteren Informationen werden im folgenden Email Kontakt ausgetauscht. ng <br>Vielen Dank für Ihre Buchungsanfrage! 
 <br><br>mit freundlichen Grüßen <strong>Susanne Meyer-Keusch </strong>
 </p>
 `;
 
-// create reusable transporter object using the default SMTP transport
-/*let transporter = nodemailer.createTransport({
-  host: 'smtp.ethereal.email',
-  port: 587,
-  auth: {
-      user: 'vz7aismnzoa4wdga@ethereal.email',
-      pass: 'RcmGhKPRD6yNR83FkT'
-  }
-}); */
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -232,15 +182,15 @@ var mailOptions = {
 };
 
 //  send mail with defined transport object
+  /*
 transporter.sendMail(mailOptions, (error, info) => {
   if (error) {
       return console.log(error);
-  }
+  }  */
   console.log('Message sent: %s', info.messageId);
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  console.log(output);
 
 });
 
-});
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { Daterangepicker  } from 'ng2-daterangepicker';
+import {NgxEditorModule} from 'ngx-editor';
 
 // Components
 import { AppComponent } from './app.component';
@@ -18,6 +19,11 @@ import { AboutComponent } from './about/about.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import {AgmCoreModule} from '@agm/core';
 import { ImageComponent } from './image/image.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { EditInfoComponent } from './admin/edit-info/edit-info.component';
+import { EditAboutComponent } from './admin/edit-about/edit-about.component';
+
+
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'info' , pathMatch: 'full'},
@@ -25,7 +31,10 @@ const appRoutes: Routes = [
   {  path: 'gallery', component: GalleryComponent },
   {  path: 'booking', component: BookingComponent },
   {  path: 'about', component: AboutComponent },
-  { path: 'image/:id', component: ImageComponent}
+  { path: 'image/:id', component: ImageComponent},
+  { path: 'admin', component: DashboardComponent},
+  { path: 'admin/editInfo', component: EditInfoComponent},
+  { path: 'admin/editAbout', component: EditAboutComponent}
 ];
 @NgModule({
   declarations: [
@@ -34,12 +43,16 @@ const appRoutes: Routes = [
     BookingComponent,
     AboutComponent,
     GalleryComponent,
-    ImageComponent
+    ImageComponent,
+    DashboardComponent,
+    EditInfoComponent,
+    EditAboutComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     BrowserAnimationsModule,
+    NgxEditorModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

@@ -8,9 +8,6 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-
-
-
 // Get our API routes
 const api = require('./server/routes/api');
 
@@ -36,7 +33,7 @@ app.get('*', function (req, res){
 /**
  * Get port from environment and store in Express.
  */
-const port = process.env.PORT || '80';
+const port = process.env.PORT || '3000';
 app.set('port', port);
 
 /**
@@ -47,4 +44,4 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port, function (){console.log("API running on localhost:"+port)});
+server.listen(port, function (){console.log("API running on port:"+port)});
