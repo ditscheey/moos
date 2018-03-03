@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {environment} from '../../environments/environment';
+import {Router} from '@angular/router';
+import {FormBuilder} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-info',
@@ -6,21 +10,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info.component.css']
 })
 export class InfoComponent implements OnInit {
-  info1 = "Das Studio mit eigener Terrasse liegt am Ortsrand von Murnau-Hechendorf und man hat einen traumhaften Blick ins Moos und zum Heimgarten, ideal für alle, die gerne wandern, Fahrrad fahren, Berg steigen oder einfach mal ausspannen möchten.";
-  info2 = "Es hat einen separaten Eingang, der durch unseren Garten führt. Ein Stellplatz ist vorhanden und die Wiese vor dem Haus kann gerne zum Sonnen und Relaxen genutzt werden.";
-  gallerie = "Die Galerie mit den zwei Betten (80 cm und 90 cm) erreicht man wie abgebildet über eine Leiter. Wer das nicht mag, kann unten das Sofa in ein Bett verwandeln. In der Wohnung gibt es eine Nespressomaschine, einer Wasserkocher, Kaffeefilter, Thermoskanne und Teekanne.";
-  markt = " erhebt pro Person einen Kurbeitrag von 1,50 € in der Hauptsaison (15.04.-14.10) und 1,10 € in der Nebensaison. Dafür erhält jeder Gast eine elektronische Gästekarte und damit verbunden günstigere Eintrittspreise in Museen, Bäder usw., kostenloses Parken auf vielen gebührenpflichtigen Parkplätzen im Blauen Land und in den Ammergauer Alpen. Die meisten Buslinien im Landkreis sind in Verbindung mit der Karte ebenfalls kostenlos.";
 
-  nachbarschaft = 'In Hechendorf selbst ist ein netter Biergarten (200 m). In zwei Minuten ist man im Munauer Moos, abseits der Straße, entlag der Loisach mit Blick auf die Zugspitze kann bis nach Garmisch radeln.\n' +
-    '\n' +
-    'Mein Lieblingsort ist die Wirtschaft auf dem Gipfel vom Heimgarten, man hat dort einen gigantischen Blick. Hoch geht es von Ohlstadt (4 km) aus, man braucht etwa zwei Stunden. Wer es lieber fauler mag, legt sich an den Staffel-, Rieg- oder Froschsee. Radlfans fahren durch das Eschenlainetal bis zum Walchensee. Danach kann man noch nach Murnau in die Fußgängerzone fahren und sich ein Eis beim Gabrielli holen. Sagenhaft! Den schönsten Blick hat man vom Biergarten in Uffing direkt am Staffelsee'
+  public apiUrl = environment.apiUrl;
+  public info1;
+  public info2;
+  public markt;
+  public nachbarschaft1;
+  public nachbarschaft2;
+  public data;
+  public gallery;
 
   lat: number = 47.66332;
   lng: number = 11.20835;
 
-  constructor() { }
-
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient
+  ) { }
+  getInfo (){
+    this.http.get(this.apiUrl + 'api/info').subscribe( data =>   {
+      // this.info1 = data.info1;
+      this.data = data;
+      this.info1 = this.data.info1;
+      this.info2 = this.data.info2;
+      this.markt = this.data.markt;
+      this.nachbarschaft1 = this.data.nachbarschaft1;
+      this.nachbarschaft2 = this.data.nachbarschaft2;
+    });
+  }
   ngOnInit() {
+    this.getInfo();
   }
 
 }

@@ -4,8 +4,8 @@
   </div>
     <div class="col-md-6">
       <h4 class="h1 text-center"><i class="fa fa-info" aria-hidden="true"></i>   Allgemeine Informationen</h4>
-      <p class="lead">{{info1}} </p><br>
-      <p class="lead">{{info2}} </p>
+      <p class="lead" [innerHtml]="info1"></p><br>
+      <p class="lead" [innerHtml]="info2"> </p>
     </div>
 
 </div>
@@ -61,7 +61,7 @@
   <div class="row">
     <div class="col-md-6">
       <h4 class="h1 text-center"><i class="fa fa-map-o" aria-hidden="true"></i>   Die Nachbarschaft</h4>
-      <p class="lead">{{nachbarschaft}}</p>
+      <p class="lead" [innerHtml]="nachbarschaft1"></p>
     </div>
     <div class="col-md-6">
       <h4 class="h1 text-center">wo <i class="fa fa-question" aria-hidden="true"></i>   </h4>
@@ -72,6 +72,6 @@
     </div>
 <div class="row">
   <div class="col-md-12">
-    <p class="lead"> In Hechendorf fährt ein Bus, allerdings nur selten. Am Bahnhof ist man zu Fuß in zwanzig Minuten, von dort ist man in einer Stunde in München und in 30 Minuten in Garmisch-Partenkrichen. Mir dem Fahrrad geht alles deutlich schneller.</p>
+    <p class="lead" [innerHtml]="nachbarschaft2"></p>
   </div>
 </div>

@@ -5,21 +5,21 @@
         <div class="form-row">
           <div class="form-group col-md-3">
             <label for="first_name">Vorname</label>
-            <input type="text" class="form-control" id="first_name" placeholder="Vorname" formControlName="first_name">
+            <input type="text" class="form-control" id="first_name" placeholder="Vorname" formControlName="first_name" [ngClass] = " {'vali' : (!bookingForm.valid )  } ">
           </div>
           <div class="form-group col-md-3">
             <label for="last_name">Nachname</label>
-            <input type="text" class="form-control" id="last_name" placeholder="Nachname" formControlName="last_name">
+            <input type="text" class="form-control" id="last_name" placeholder="Nachname" formControlName="last_name" [ngClass] = " {'vali' : (!bookingForm.valid )  } ">
           </div>
           <div class="form-group col-md-6">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="youremail@example.com" formControlName="email">
+            <input type="email" class="form-control" id="email" placeholder="youremail@example.com"  [ngClass] = " {'vali' : (!bookingForm.valid )  } " formControlName="email">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="pets">Haustiere</label>
-            <select class="form-control" id="pets" name='pets' formControlName="pets" (change)="calcPrice()">
+            <select class="form-control" id="pets" name='pets' formControlName="pets"  (change)="calcPrice()">
               <option selected="selected"  value = "5">Kein Haustier</option>
               <option  >1</option>
               <option  >2</option>
@@ -27,7 +27,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="people">Erwachsene</label>
-            <select class="form-control" id="people" name='people' formControlName="people" (change)="calcPrice()">
+            <select class="form-control" id="people" name='people' formControlName="people" [ngClass] = " {'vali' : (!bookingForm.valid )  } " (change)="calcPrice()">
               <option selected = "selected">1</option>
               <option >2</option>
               <option >3</option>
@@ -47,16 +47,18 @@
         </div>
 
         <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="check_in">Check In</label>
-            <input type="text" class="form-control" id="check_in" placeholder="DD.MM.YYYY" formControlName="dateFrom">
+          <div class="form-group col-md-6 ">
+            <div class="  ">
+              <label for="check_in" >Check In</label>
+            </div>
+            <input type="text" class="form-control " [ngClass] = " {'vali' : (!bookingForm.valid )  } " id="check_in" placeholder="DD.MM.YYYY" formControlName="dateFrom">
           </div>
           <div class="form-group col-md-6">
             <label for="check_out">Check out</label>
-            <input type="text" class="form-control" id="check_out" placeholder="DD.MM.YYYY" formControlName="dateTo">
+            <input type="text" class="form-control" id="check_out" [ngClass] = " {'vali' : (!bookingForm.valid )  } " placeholder="DD.MM.YYYY" formControlName="dateTo">
           </div>
           <div class="form-group col-md">
-            <p  style="" class="text-center" for="daterange">Zeitraum auswählen oder eintippen | Choose daterange or just type it</p>
+            <p  style="" class="text-center" for="daterange">Button klicken oder eintippen | Choose daterange or just type it</p>
             <input daterangepicker id="daterange" (selected)="dateSelected($event)" [options]="pickerOptions" type="submit"
                    class="form-control btn btn-info" style="background-color: #007BFF"
                    (cancelDaterangepicker)="calendarCanceled($event)" (applyDaterangepicker)="calendarApplied($event)"/>
@@ -67,7 +69,7 @@
           <textarea class="form-control" id="comment" rows="3" formControlName="comment"></textarea>
         </div>
         <div class="col-md">
-          <button *ngIf="bookingForm.valid"   type="submit" class=" disabled btn btn-block btn-success" (click)="addBooking()">Absenden</button>
+          <button *ngIf="bookingForm.valid"   type="submit" class="  btn btn-block btn-success" (click)="addBooking()">Absenden</button>
         </div>
       </form>
     </div>
@@ -78,16 +80,14 @@
   <p><br></p>
 </div>
 <div class="row">
-  <div class="col-md-4 d-flex ">
+  <div class="col-md-5 d-flex ">
     <br>
     <p class="lead text-justify"><i>{{preisInfo}}</i></p>
   </div>
-    <div class="col-md-8 d-flex flex-wrap justify-content-center justify-content-end">
+    <div class="col-md-7 d-flex flex-wrap   badge-primary justify-content-center">
       <br>
-      <span id="price" class=" badge badge-primary  p-2 justify-content-center">
-        <p class="lead p-2">ungefähre Kosten: </p>
-              <p class="lead p-2 ">{{nights}} * {{price}} € <small>pro Nacht </small>  + 30 € <small>Reinigungsgebühr </small></p>
-        <p class="lead p-2"><b>=</b></p>
+      <span id="price" class=" badge badge-primary   justify-content-center">
+              <p class="lead p-4 align-baseline ">{{nights}} * {{price}} € <small> pro Nacht </small>  + 30 € <small> Reinigungsgebühr </small><b> =</b> </p>
               <h4 class="display-4 d-inline-flex justify-content-center">{{complete}} € </h4>
             </span>
     </div>

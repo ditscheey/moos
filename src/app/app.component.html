@@ -18,7 +18,8 @@
           </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
-          <a class="navbar-brand" style="color:aliceblue">Studio Murnauer Moos</a>
+          <a class="nav-link" (click)="auth.logout()" *ngIf="auth.isAuthenticated()">Logout</a>
+          <a class="navbar-brand" style="color:aliceblue" (click)="auth.login()">Studio Murnauer Moos</a>
         </ul>
       </div>
     </div>

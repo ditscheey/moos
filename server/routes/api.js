@@ -88,6 +88,27 @@ router.get('/info',function (req, res){
   });
 });
 
+//Save new content
+router.put('/cms',function (req, res){
+  var id = req.body._id;
+  var data = req.body;
+  //console.log(req.body.info2);
+  db.cms.findAndModify({
+    query: {_id : mongojs.ObjectId(id)},
+    update: { $set: {
+      info1: req.body.info1 ,
+      info2: req.body.info2 ,
+      nachbarschaft1: req.body.nachbarschaft1 ,
+      nachbarschaft2: req.body.nachbarschaft2 ,
+      markt: req.body.markt
+      } },
+    new: true
+  }, function (err, doc, lastErrorObject) {
+    // doc.tag === 'maintainer'
+    //console.log("got here");
+   // console.log(doc);
+  });
+});
 
 // Get Single post
 router.get('/posts/:id', function(req, res, next){

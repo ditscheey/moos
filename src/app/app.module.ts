@@ -4,13 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+
 
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { Daterangepicker  } from 'ng2-daterangepicker';
 import {NgxEditorModule} from 'ngx-editor';
-
+import {HttpClient} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 // Components
 import { AppComponent } from './app.component';
 import { InfoComponent } from './info/info.component';
@@ -22,19 +23,25 @@ import { ImageComponent } from './image/image.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { EditInfoComponent } from './admin/edit-info/edit-info.component';
 import { EditAboutComponent } from './admin/edit-about/edit-about.component';
-
+import { AuthService} from './auth.service';
+import {AuthGuardService} from './auth-guard.service';
+import { LoginComponent } from './login/login.component' ;
 
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'info' , pathMatch: 'full'},
   {  path: 'info', component: InfoComponent },
+  {  path: 'home', redirectTo: 'admin', pathMatch: 'full' },
   {  path: 'gallery', component: GalleryComponent },
   {  path: 'booking', component: BookingComponent },
   {  path: 'about', component: AboutComponent },
   { path: 'image/:id', component: ImageComponent},
-  { path: 'admin', component: DashboardComponent},
+  { path: 'admin', component: DashboardComponent , canActivate: [AuthGuardService]},
   { path: 'admin/editInfo', component: EditInfoComponent},
-  { path: 'admin/editAbout', component: EditAboutComponent}
+  { path: 'admin/editInfo/:detail', component: EditAboutComponent},
+  { path: 'login', component: LoginComponent},
+  { path: 'callback', redirectTo: 'admin'}
+
 ];
 @NgModule({
   declarations: [
@@ -46,13 +53,14 @@ const appRoutes: Routes = [
     ImageComponent,
     DashboardComponent,
     EditInfoComponent,
-    EditAboutComponent
+    EditAboutComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     BrowserAnimationsModule,
-    NgxEditorModule,
+   NgxEditorModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -66,7 +74,7 @@ const appRoutes: Routes = [
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [],
+  providers: [AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

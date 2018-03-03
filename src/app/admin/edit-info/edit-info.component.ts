@@ -11,30 +11,37 @@ import { environment} from '../../../environments/environment';
 export class EditInfoComponent implements OnInit {
   // Declare Variables
   public apiUrl = environment.apiUrl;
-  public infoForm: FormGroup;
   public info1;
   public info2;
   public markt;
-  public nachbarschaft;
+  public nachbarschaft1;
   public nachbarschaft2;
-  public gallerie;
+  public data;
+  public gallery;
+  lat = 47.66332;
+  lng = 11.20835;
+
   // Constructor
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient
-  ) { }
+  ) {
+    this.getInfo();
+  }
 
   ngOnInit() {
     this.getInfo();
-    this.infoForm = this.fb.group({
-      info1: ''
-       });
   }
 getInfo (){
     this.http.get(this.apiUrl + 'api/info').subscribe( data =>   {
      // this.info1 = data.info1;
-      console.log(data);
+      this.data = data;
+      this.info1 = this.data.info1;
+      this.info2 = this.data.info2;
+      this.markt = this.data.markt;
+      this.nachbarschaft1 = this.data.nachbarschaft1;
+      this.nachbarschaft2 = this.data.nachbarschaft2;
     });
 }
 }
