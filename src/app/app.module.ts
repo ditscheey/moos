@@ -12,6 +12,7 @@ import { Daterangepicker  } from 'ng2-daterangepicker';
 import {NgxEditorModule} from 'ngx-editor';
 import {HttpClient} from '@angular/common/http';
 import { HttpClientModule} from '@angular/common/http';
+import {MarkdownModule} from 'ngx-md';
 // Components
 import { AppComponent } from './app.component';
 import { InfoComponent } from './info/info.component';
@@ -23,9 +24,14 @@ import { ImageComponent } from './image/image.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { EditInfoComponent } from './admin/edit-info/edit-info.component';
 import { EditAboutComponent } from './admin/edit-about/edit-about.component';
+// Services
 import { AuthService} from './auth.service';
 import {AuthGuardService} from './auth-guard.service';
 import { LoginComponent } from './login/login.component' ;
+import {StarRatingModule} from 'angular-star-rating';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { CallbackComponent } from './callback/callback.component';
+
 
 
 const appRoutes: Routes = [
@@ -40,7 +46,7 @@ const appRoutes: Routes = [
   { path: 'admin/editInfo', component: EditInfoComponent},
   { path: 'admin/editInfo/:detail', component: EditAboutComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'callback', redirectTo: 'admin'}
+  { path: 'callback', component: CallbackComponent }
 
 ];
 @NgModule({
@@ -54,7 +60,9 @@ const appRoutes: Routes = [
     DashboardComponent,
     EditInfoComponent,
     EditAboutComponent,
-    LoginComponent
+    LoginComponent,
+    ReviewsComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +72,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    StarRatingModule,
+    MarkdownModule.forRoot(),
     Daterangepicker,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({

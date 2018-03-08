@@ -7,6 +7,7 @@
 </div>
 <br>
 <div class="row">
+  <span class="alert-danger" *ngIf="(this.routeInfo == 'email')"> alle Ausdrücke mit "form" nicht verändern. umschreiben des Textes jedoch möglich</span>
   <div class="editor block">
     <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='content'
                     [ngModelOptions]="{standalone: true}"></app-ngx-editor>
@@ -24,7 +25,3 @@
   <h6>HTML Output</h6>
   <p class="lead" [innerHtml]="content"></p>
 </div>
-
-
-
-

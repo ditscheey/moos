@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import * as moment from 'moment';
 import {Router} from '@angular/router';
@@ -25,9 +25,7 @@ export class BookingComponent implements OnInit {
   public priceNight;
 public apiUrl = environment.apiUrl;
 
-public preisInfo = 'Zu jeder Buchung kommen 30€ Reinigungsgebühr. Ab 3 Personen fallen zusätzlich 10€ pro Tag an. Für ein Haustier  5€ pro Tag. ' +
-  'In der Nebensaison von 07.01 bis zum 31.03 kostet die Nacht nur 42€ .'+
-  'Die Mittelsaison geht vom 31.03 bis zum 01.06 und kostet pro Nacht 44€';
+public preisInfo;
 
   constructor(private fb: FormBuilder,
               private _elRef: ElementRef,
@@ -38,6 +36,12 @@ public preisInfo = 'Zu jeder Buchung kommen 30€ Reinigungsgebühr. Ab 3 Person
     }
   public calendarCanceled(e: any) {
   //  console.log(e);
+  }
+  public getPreisInfo(){
+    this.http.get(this.apiUrl + 'api/info').subscribe( data =>   {
+      // this.info1 = data.info1;
+      this.preisInfo = data['preisInfo'];
+      });
   }
   public calendarApplied(e: any) {
     this.bookingForm.get('dateFrom').patchValue(e.picker.startDate.format('DD.MM.YYYY'));
@@ -139,13 +143,14 @@ public preisInfo = 'Zu jeder Buchung kommen 30€ Reinigungsgebühr. Ab 3 Person
 
   ngOnInit() {
     this.bookings = this.getBookings();
+    this.getPreisInfo();
     // Create Form set Validation
     this.bookingForm = this.fb.group({
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      email: ['', Validators.email],
-      dateFrom: [, Validators.required],
-      dateTo: [, Validators.required],
+      first_name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*'), Validators.minLength(3)]],
+      last_name: ['', [Validators.required,  Validators.pattern('^[a-zA-Z ]*') , Validators.minLength(3)]],
+      email: ['',  [Validators.required, Validators.minLength(5), Validators.email]] ,
+      dateFrom: [, [Validators.required, Validators.pattern('^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$')]],
+      dateTo: [,[Validators.required, Validators.pattern('^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$')]],
       people: [, Validators.required],
       pets:'',
       kids:'',

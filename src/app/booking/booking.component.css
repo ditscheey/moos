@@ -1,5 +1,15 @@
 .vali{
-  border-left-color: red;
+  border-color:  lightcoral;
   border-width: 2px;
+}
+.good{
+  border-color: green;
+  border-width: 2px;
+}
+.optional {
+  border-width: 2px;
+}
 
+.btn-info{
+  background-color: #007BFF
 }

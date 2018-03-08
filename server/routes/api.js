@@ -100,7 +100,9 @@ router.put('/cms',function (req, res){
       info2: req.body.info2 ,
       nachbarschaft1: req.body.nachbarschaft1 ,
       nachbarschaft2: req.body.nachbarschaft2 ,
-      markt: req.body.markt
+      markt: req.body.markt,
+        preisInfo: req.body.preisInfo,
+        email: req.body.mail
       } },
     new: true
   }, function (err, doc, lastErrorObject) {
@@ -215,3 +217,4 @@ transporter.sendMail(mailOptions, (error, info) => {
 
 
 module.exports = router;
+

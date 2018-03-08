@@ -1,7 +1,24 @@
-<div class="row"> <h4 class="display-4"><p class="text-center">Dashboard</p></h4></div>
+<div class="mx-auto" style="width: 200px"> <h4 class="display-4">Dashboard</h4></div>
 <br>
+{{profile | json}}
 <div class="row">
+  <div class="col-2"></div>
   <div class="col-4">
     <button  type="submit" class=" btn btn-block btn-success" routerLink="/admin/editInfo">Edit Info Page</button>
   </div>
+  <div class="col-4">
+    <button  type="submit" class=" btn btn-block btn-success" routerLink="/admin/editInfo/preisInfo">Buchungsseite aktualisieren </button>
+  </div>
+  <div class="col-2"></div>
+</div>
+<br>
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-4">
+    <button  type="submit" class=" btn btn-block btn-success" routerLink="">undefined</button>
+  </div>
+  <div class="col-4">
+    <button  type="submit" class=" btn btn-block btn-success" routerLink="/admin/editInfo/email">Text der Bestätigungs Email</button>
+  </div>
+  <div class="col-2"></div>
 </div>
