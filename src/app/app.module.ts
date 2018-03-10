@@ -31,6 +31,7 @@ import { LoginComponent } from './login/login.component' ;
 import {StarRatingModule} from 'angular-star-rating';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { CallbackComponent } from './callback/callback.component';
+import {AdminGuardService} from './admin-guard.service';
 
 
 
@@ -42,7 +43,7 @@ const appRoutes: Routes = [
   {  path: 'booking', component: BookingComponent },
   {  path: 'about', component: AboutComponent },
   { path: 'image/:id', component: ImageComponent},
-  { path: 'admin', component: DashboardComponent , canActivate: [AuthGuardService]},
+  { path: 'admin', component: DashboardComponent , canActivate: [AdminGuardService]},
   { path: 'admin/editInfo', component: EditInfoComponent},
   { path: 'admin/editInfo/:detail', component: EditAboutComponent},
   { path: 'login', component: LoginComponent},
@@ -84,7 +85,7 @@ const appRoutes: Routes = [
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [AuthService, AuthGuardService],
+  providers: [AuthGuardService, AdminGuardService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

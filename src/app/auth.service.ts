@@ -28,7 +28,7 @@ export class AuthService {
         window.location.hash = '';
         this.setSession(authResult);
         console.log('we got into the session yeah |autheservice')
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/info']);
       } else if (err) {
         this.router.navigate(['/login']);
         console.log('We failed in auth service');
@@ -40,11 +40,10 @@ export class AuthService {
   private setSession(authResult): void {
     // Set the time that the Access Token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-    localStorage.setItem('profile', JSON.stringify(authResult.idTokenPayload));
+    localStorage.setItem('name', authResult.idTokenPayload.name);
   }
 
   public logout(): void {
@@ -52,7 +51,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    localStorage.removeItem('profile');
+    localStorage.removeItem('name');
     // Go back to the home route
     this.router.navigate(['/info']);
   }
@@ -69,14 +68,19 @@ export class AuthService {
     if (!accessToken) {
       throw new Error('AccessToken has to be valid! login first');
     }
-    this.auth0.client.userInfo(accessToken,(err, profile) => {
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile) {
         this.userProfile = profile;
-        return true;
       }
       console.log('sorry');
       cb(err, profile);
     });
+    }
+  public isAdmin() {
+    if (localStorage.getItem('name') === 'Susanne Meyer-Keusch') {
+      return true;
+    } else {
+      return false;
+    }
   }
-
 }

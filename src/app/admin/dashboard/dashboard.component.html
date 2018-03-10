@@ -1,13 +1,13 @@
-<div class="mx-auto" style="width: 200px"> <h4 class="display-4">Dashboard</h4></div>
+<div class="mx-auto" style="width: 800px"> <h4 class="display-2">{{profile?.given_name}}'s Dashboard</h4></div>
 <br>
-{{profile | json}}
+
 <div class="row">
   <div class="col-2"></div>
   <div class="col-4">
-    <button  type="submit" class=" btn btn-block btn-success" routerLink="/admin/editInfo">Edit Info Page</button>
+    <button  type="submit" class=" btn btn-block btn-info" routerLink="/admin/editInfo"><i class="fa fa-info" aria-hidden="true"></i> Edit Info Page</button>
   </div>
   <div class="col-4">
-    <button  type="submit" class=" btn btn-block btn-success" routerLink="/admin/editInfo/preisInfo">Buchungsseite aktualisieren </button>
+    <button  type="submit" class=" btn btn-block btn-outline-info" routerLink="">bisherige Buchungen</button>
   </div>
   <div class="col-2"></div>
 </div>
@@ -15,10 +15,10 @@
 <div class="row">
   <div class="col-2"></div>
   <div class="col-4">
-    <button  type="submit" class=" btn btn-block btn-success" routerLink="">undefined</button>
+    <button  type="submit" class=" btn btn-block btn-primary" routerLink="/admin/editInfo/preisInfo"><i class="fa fa-book" aria-hidden="true"></i> Buchungsseite aktualisieren </button>
   </div>
   <div class="col-4">
-    <button  type="submit" class=" btn btn-block btn-success" routerLink="/admin/editInfo/email">Text der Bestätigungs Email</button>
+    <button  type="submit" class=" btn btn-block btn-primary" routerLink="/admin/editInfo/email"><i class="fa fa-mail-forward" aria-hidden="true"></i> Text der Bestätigungs Email</button>
   </div>
   <div class="col-2"></div>
 </div>

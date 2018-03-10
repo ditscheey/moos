@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="navbar navbar-expand-sm fixed-top navbar-dark bg-primary">
+  <div class="navbar navbar-expand-md fixed-top navbar-dark bg-primary">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,20 +8,23 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
           <li routerLinkActive="active" class="nav-item">
-            <a routerLink="info" class="nav-link" >Informationen</a>
+            <a class="navbar-brand" routerLink="info" style="color:aliceblue" >Studio Murnauer Moos</a>
+          </li>
+<!--          <li routerLinkActive="active" class="nav-item">
+            <a routerLink="info" class="nav-link" ><i class="fa fa-info" aria-hidden="true"></i> Informationen</a>
+          </li> -->
+          <li routerLinkActive="active" class="nav-item">
+            <a class="nav-link" routerLink="gallery"><i class="fa fa-image" aria-hidden="true"></i> Gallerie</a>
           </li>
           <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" routerLink="gallery">Gallerie</a>
-          </li>
-          <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" routerLink="booking">Buchung</a>
+            <a class="nav-link" routerLink="booking"><i class="fa fa-book" aria-hidden="true"></i> Buchung</a>
           </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
-          <a class="nav-link" routerLink="admin" >Dashboard</a>
-          <a class="nav-link" (click)="auth.login()" *ngIf="!auth.isAuthenticated()">Login</a>
-          <a class="nav-link" (click)="auth.logout()" *ngIf="auth.isAuthenticated()">Logout</a>
-          <a class="navbar-brand" style="color:aliceblue" >Studio Murnauer Moos</a>
+          <a class="nav-link" routerLink="admin" *ngIf="(auth.isAdmin() && auth.isAuthenticated() )" routerLinkActive="active-link"><i class="fa fa-gear" aria-hidden="true"></i> Dashboard</a>
+          <a class="nav-link" (click)="auth.login()" *ngIf="!auth.isAuthenticated()"> <i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+          <a class="nav-link" (click)="auth.logout()" *ngIf="auth.isAuthenticated()" ><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+
         </ul>
       </div>
     </div>

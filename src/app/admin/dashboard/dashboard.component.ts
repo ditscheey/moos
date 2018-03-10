@@ -27,7 +27,6 @@ profile: any;
   }
 
   ngOnInit() {
-    console.log("heck profile");
     this.checkProfile();
   }
 

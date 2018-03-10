@@ -11,6 +11,7 @@ const fs = require('fs');
 // declare mongojs & connect
 var mongojs = require('mongojs');
 var db = mongojs('max:max@ds119685.mlab.com:19685/moos');
+
 //Ical 'http://lanyrd.com/topics/nodejs/nodejs.ics'  || airbnb : https://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147
 router.get('/file',function (req, res){
     let result = [];
@@ -161,6 +162,16 @@ router.put('/posts/:id', function(req, res, next){
 });
 
 //Begin für Bookings api
+
+router.get('/bookings',function (req, res){
+  db.bookings.find(function (err, bookings){
+    if(err){
+      res.send("Error found while loading the Data");
+    }
+    res.json(bookings);
+  });
+});
+
 //Save Task
 router.post('/bookings', function(req, res, next){
   var booking = req.body;
