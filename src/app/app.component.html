@@ -24,7 +24,6 @@
           <a class="nav-link" routerLink="admin" *ngIf="(auth.isAdmin() && auth.isAuthenticated() )" routerLinkActive="active-link"><i class="fa fa-gear" aria-hidden="true"></i> Dashboard</a>
           <a class="nav-link" (click)="auth.login()" *ngIf="!auth.isAuthenticated()"> <i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
           <a class="nav-link" (click)="auth.logout()" *ngIf="auth.isAuthenticated()" ><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
-
         </ul>
       </div>
     </div>

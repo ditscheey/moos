@@ -16,12 +16,10 @@ profile: any;
   public checkProfile () {
     if (this.auth.userProfile) {
       this.profile = this.auth.userProfile;
-      console.log("profile was there");
+      //console.log("profile was there");
     } else {
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
-        console.log('profile had to be fetched');
-        console.log('profile');
       });
     }
   }

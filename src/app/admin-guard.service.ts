@@ -26,11 +26,12 @@ export class AdminGuardService implements CanActivate {
 
   canActivate(): boolean {
    // this.checkProfile();
-    console.log(localStorage.getItem('name'));
+    //console.log(localStorage.getItem('name'));
     if (localStorage.getItem('name') === 'Susanne Meyer-Keusch') {
       return true;
     }
-    console.log("admin failed");
+    //console.log("admin failed");
+    this.router.navigate(['info']);
     return false;
   }
 }

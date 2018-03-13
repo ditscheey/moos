@@ -44,8 +44,8 @@ const appRoutes: Routes = [
   {  path: 'about', component: AboutComponent },
   { path: 'image/:id', component: ImageComponent},
   { path: 'admin', component: DashboardComponent , canActivate: [AdminGuardService]},
-  { path: 'admin/editInfo', component: EditInfoComponent},
-  { path: 'admin/editInfo/:detail', component: EditAboutComponent},
+  { path: 'admin/editInfo', component: EditInfoComponent, canActivate: [AdminGuardService]},
+  { path: 'admin/editInfo/:detail', component: EditAboutComponent, canActivate: [AdminGuardService]},
   { path: 'login', component: LoginComponent},
   { path: 'callback', component: CallbackComponent }
 
