@@ -31,8 +31,6 @@ export class AuthService {
         this.router.navigate(['/info']);
       } else if (err) {
         this.router.navigate(['/login']);
-        console.log('We failed in auth service');
-        console.log(err);
       }
     });
   }

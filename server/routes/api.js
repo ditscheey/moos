@@ -114,6 +114,19 @@ router.put('/cms',function (req, res){
 });
 
 // Get Single post
+router.get('/posts', function(req, res, next){
+  db.posts.find( function(err, posts){
+    if(err){
+      res.send(err);
+    }
+    console.log("posts");
+    console.log(posts);
+    res.json(posts);
+  });
+});
+
+
+// Get Single post
 router.get('/posts/:id', function(req, res, next){
   db.posts.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, post){
     if(err){

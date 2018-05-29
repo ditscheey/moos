@@ -80,7 +80,7 @@
           <textarea class="form-control" id="comment" rows="3" formControlName="comment"></textarea>
         </div>
         <div class="col-md">
-          <button  [disabled]="!bookingForm.valid"   type="submit" class="  btn btn-block " [ngClass]="{'btn-primary':bookingForm.valid, 'btn-dangerx': bookingForm.invalid}"
+          <button  [disabled]="!bookingForm.valid"   type="submit" class="  btn btn-block " [ngClass]="{'btn-primary':bookingForm.valid, 'btn-danger': bookingForm.invalid}"
                    (click)="addBooking()">Absenden</button>
         </div>
       </form>

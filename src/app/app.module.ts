@@ -32,6 +32,9 @@ import {StarRatingModule} from 'angular-star-rating';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { CallbackComponent } from './callback/callback.component';
 import {AdminGuardService} from './admin-guard.service';
+import { BlogComponent } from './blog/blog.component';
+import {BlogService} from './blog.service';
+import { PostBlogComponent } from './post-blog/post-blog.component';
 
 
 
@@ -47,6 +50,8 @@ const appRoutes: Routes = [
   { path: 'admin/editInfo', component: EditInfoComponent, canActivate: [AdminGuardService]},
   { path: 'admin/editInfo/:detail', component: EditAboutComponent, canActivate: [AdminGuardService]},
   { path: 'login', component: LoginComponent},
+  { path: 'blog', component: BlogComponent},
+  { path: 'blog/post', component: PostBlogComponent},
   { path: 'callback', component: CallbackComponent }
 
 ];
@@ -63,7 +68,9 @@ const appRoutes: Routes = [
     EditAboutComponent,
     LoginComponent,
     ReviewsComponent,
-    CallbackComponent
+    CallbackComponent,
+    BlogComponent,
+    PostBlogComponent
   ],
   imports: [
     BrowserModule,
