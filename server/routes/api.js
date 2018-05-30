@@ -119,16 +119,27 @@ router.get('/posts', function(req, res, next){
     if(err){
       res.send(err);
     }
-    console.log("posts");
-    console.log(posts);
+
     res.json(posts);
   });
 });
 
 
 // Get Single post
-router.get('/posts/:id', function(req, res, next){
-  db.posts.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, post){
+router.get('/post/:id', function(req, res, next){
+  db.posts.findOne({_id: mongojs.ObjectId(1)}, function(err, post){
+    if(err){
+      res.send(err);
+    }
+    console.log(post);
+    res.json(post);
+  });
+});
+
+router.delete('/post/:id', function(req, res, next){
+  console.log("got in delete");
+  var id = req.body._id;
+  db.posts.remove({_id: mongojs.ObjectId(id)}, function(err, post){
     if(err){
       res.send(err);
     }
@@ -139,8 +150,9 @@ router.get('/posts/:id', function(req, res, next){
 
 //Save Task
 router.post('/post', function(req, res, next){
+  console.log("got here");
   var post = req.body;
-  if(!post.title || !(post.content + '')){
+  if(!post.title){
     res.status(400);
     res.json({
       "error": "Bad Data"
@@ -157,7 +169,7 @@ router.post('/post', function(req, res, next){
 
 
 // Update Task
-router.put('/posts/:id', function(req, res, next){
+router.put('/post/:id', function(req, res, next){
   var updPost = {};
   if(!updPost){
     res.status(400);

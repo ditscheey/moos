@@ -1,13 +1,18 @@
-<div class="well" *ngFor="let post of data">
-  <div class="col-md-7 offset-md-1 blogShort" >
-    <h1>{{post.title}}</h1>
-    <img src="" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail">
-    <article><p>
-      {{post.content}}
-    </p></article>
-    <div class="pull-left" ><span style="background-color: #007BFF" class="badge-light">{{post.tags}}</span></div>
-    <a class="btn btn-outline-info pull-right ">READ MORE</a>
+<div class="well" *ngFor="let post of data; let i = index">
+  <div class="col-md-7 offset-md-3">
+    <div class="card-header">
+      <h3 class="card-title">{{post.title}}<div class="pull-left" >    {{ post.tags }}</div>  </h3>
+
+    </div>
+    <div class="card card-inverse">
+      <div class="card-block">
+        <p class="card-text"[innerHtml]="post.content"></p>
+
+        <a class="btn btn-outline-info pull-right " routerLink="post/{{i}}">READ MORE</a>
+      </div>
+    </div>
   </div>
   <div class="col-md-3"></div>
   <div class="row"><br><br></div>
 </div>
+

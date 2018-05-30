@@ -33,8 +33,8 @@ import { ReviewsComponent } from './reviews/reviews.component';
 import { CallbackComponent } from './callback/callback.component';
 import {AdminGuardService} from './admin-guard.service';
 import { BlogComponent } from './blog/blog.component';
-import {BlogService} from './blog.service';
 import { PostBlogComponent } from './post-blog/post-blog.component';
+import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 
 
 
@@ -51,6 +51,7 @@ const appRoutes: Routes = [
   { path: 'admin/editInfo/:detail', component: EditAboutComponent, canActivate: [AdminGuardService]},
   { path: 'login', component: LoginComponent},
   { path: 'blog', component: BlogComponent},
+  { path: 'blog/post/:id', component: BlogDetailComponent},
   { path: 'blog/post', component: PostBlogComponent},
   { path: 'callback', component: CallbackComponent }
 
@@ -70,7 +71,8 @@ const appRoutes: Routes = [
     ReviewsComponent,
     CallbackComponent,
     BlogComponent,
-    PostBlogComponent
+    PostBlogComponent,
+    BlogDetailComponent
   ],
   imports: [
     BrowserModule,

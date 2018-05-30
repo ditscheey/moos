@@ -27,7 +27,7 @@ export class PostBlogComponent implements OnInit {
     'toolbar': [
       ['bold', 'italic', 'underline', 'strikeThrough', 'superscript', 'subscript'],
       ['fontSize', 'color'],
-      [ 'indent', 'outdent'],
+      ['indent', 'outdent'],
       ['cut', 'copy', 'delete', 'removeFormat', 'undo', 'redo'],
       ['paragraph', 'blockquote', 'removeBlockquote', 'horizontalLine', 'orderedList', 'unorderedList'],
       ['link', 'unlink', 'image'],
@@ -35,26 +35,44 @@ export class PostBlogComponent implements OnInit {
     ]
   };
 
-
+  blogForm: FormGroup;
   public content;
   public placeholder;
   public data;
   public routeInfo;
   public apiUrl = environment.apiUrl;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient , private router: Router) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     route.params.subscribe(params => {
       console.log(params);
       this.routeInfo = params.detail;
     });
   }
 
-
-
-
-  ngOnInit() {
+  public blogPost(){
+    let data = {
+      'title' : this.blogForm.get('title').value,
+      'tags' : this.blogForm.get('tags').value,
+      'content' : this.content
+    };
+    this.http.post(this.apiUrl + 'api/post', data).subscribe(next => {
+      this.router.navigate(['blog']);
+    } );
 
 
   }
 
+
+  ngOnInit() {
+    // Create Form set Validation
+    this.blogForm = this.fb.group({
+      title: [, Validators.required],
+      content: [, Validators.required],
+      tags: [, Validators.required]
+    });
+  }
+
 }
+
+
+

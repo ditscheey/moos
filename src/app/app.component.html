@@ -24,6 +24,7 @@
           </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
+          <a class="nav-link" routerLink="/blog/post"  *ngIf="((auth.isAdmin() && auth.isAuthenticated() )&& router.url==='/blog')" routerLinkActive="active-link"><i class="fa fa-pencil" aria-hidden="true"></i> Blog erstellen</a>
           <a class="nav-link" routerLink="blog"  routerLinkActive="active-link"><i class="fa fa-book" aria-hidden="true"></i> Blog</a>
           <a class="nav-link" routerLink="admin" *ngIf="(auth.isAdmin() && auth.isAuthenticated() )" routerLinkActive="active-link"><i class="fa fa-gear" aria-hidden="true"></i> Dashboard</a>
           <a class="nav-link" (click)="auth.login()" *ngIf="!auth.isAuthenticated()"> <i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
