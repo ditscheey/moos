@@ -12,7 +12,8 @@ const cors = require('cors');
 const api = require('./server/routes/api');
 
 const app = express();
-
+const fileUpload = require('express-fileupload');
+app.use(fileUpload({ safeFileNames: true }));
 app.use(cors());
 // Parsers for POST data
 app.use(bodyParser.json());

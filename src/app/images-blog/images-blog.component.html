@@ -1,0 +1,9 @@
+
+<div class="d-flex flex-row flex-wrap ">
+  <div class="p-2 col-md-pull-3 col-sm-4" *ngFor="let img of imgs; let i = index" >
+    <div class="card custom-background flex-wrap" >
+      <p class="lead text-center hidden-sm-up hidden-xs-down hidden-xs-up p-2 justify-content-center" style="color: #007BFF"><strong>{{desc[i]}}</strong></p>
+      <a ><img src="{{img}}"  (click)="showImage(i+1)"  class="img-thumbnail"></a>
+    </div>
+  </div>
+</div>

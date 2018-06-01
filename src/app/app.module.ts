@@ -35,6 +35,7 @@ import {AdminGuardService} from './admin-guard.service';
 import { BlogComponent } from './blog/blog.component';
 import { PostBlogComponent } from './post-blog/post-blog.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
+import { ImagesBlogComponent } from './images-blog/images-blog.component';
 
 
 
@@ -72,7 +73,8 @@ const appRoutes: Routes = [
     CallbackComponent,
     BlogComponent,
     PostBlogComponent,
-    BlogDetailComponent
+    BlogDetailComponent,
+    ImagesBlogComponent
   ],
   imports: [
     BrowserModule,

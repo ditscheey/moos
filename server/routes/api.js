@@ -147,6 +147,49 @@ router.delete('/post/:id', function(req, res, next){
   });
 });
 
+// Get all images on the server
+router.get('/imgs', function(req, res, next){
+  db.imgs.find( function(err, posts){
+    if(err){
+      res.send(err);
+    }
+    res.json(posts);
+  });
+});
+
+// Image Endpoint --> blog
+  router.post('/blog/image', function(req, res) {
+console.log("image entered");
+  if (!req.files)
+    return res.status(400).send('No files were uploaded.');
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let sampleFile = req.files.file;
+  console.log("current File:");
+  console.log(sampleFile );
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv('src/assets/blog/'+sampleFile.name, function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    var url = 'localhost:3000/assets/blog/' + sampleFile.name;
+    var url_prod = 'http://159.89.19.33/assets/blog/' + sampleFile.name;
+    // Create Entry in database to find image afterwards
+    let img = {
+      'name' : sampleFile.name,
+      'path' : url
+    }
+    db.imgs.save(img, function(err, post){
+      if(err){
+        res.send(err);
+      }
+      res.json(post);
+    });
+    // Change to Prod | Dev version
+    //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
+    res.json(url);
+  });
+});
 
 //Save Task
 router.post('/post', function(req, res, next){

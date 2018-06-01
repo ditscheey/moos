@@ -12,6 +12,8 @@ import {FormBuilder, FormControl, FormGroup, FormsModule, Validators} from '@ang
 })
 export class PostBlogComponent implements OnInit {
 
+  public apiUrl = environment.apiUrl;
+
   editorConfig = {
     'editable': true,
     'spellcheck': true,
@@ -23,7 +25,7 @@ export class PostBlogComponent implements OnInit {
     'enableToolbar': true,
     'showToolbar': true,
     'placeholder': 'Enter text here...',
-    'imageEndPoint': '',
+    'imageEndPoint': this.apiUrl + 'api/blog/image/',
     'toolbar': [
       ['bold', 'italic', 'underline', 'strikeThrough', 'superscript', 'subscript'],
       ['fontSize', 'color'],
@@ -40,13 +42,14 @@ export class PostBlogComponent implements OnInit {
   public placeholder;
   public data;
   public routeInfo;
-  public apiUrl = environment.apiUrl;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     route.params.subscribe(params => {
       console.log(params);
       this.routeInfo = params.detail;
+
     });
+    console.log(this.apiUrl + 'blog/image');
   }
 
   public blogPost(){
