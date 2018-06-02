@@ -37,42 +37,48 @@ export class PostBlogComponent implements OnInit {
     ]
   };
 
-  blogForm: FormGroup;
+  //postForm: FormGroup;
   public content;
+  public title;
+  public tags;
   public placeholder;
   public data;
   public routeInfo;
+  public img_name;
+  public img_url = this.apiUrl + 'api/blog/image';
+
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     route.params.subscribe(params => {
-      console.log(params);
       this.routeInfo = params.detail;
-
     });
-    console.log(this.apiUrl + 'blog/image');
+
   }
 
-  public blogPost(){
+
+
+  public addPost(){
+
     let data = {
-      'title' : this.blogForm.get('title').value,
-      'tags' : this.blogForm.get('tags').value,
+      'title' : this.title,
+      'tags' : this.tags,
+      'img_name': this.img_name,
       'content' : this.content
     };
+    console.log(data);
+
     this.http.post(this.apiUrl + 'api/post', data).subscribe(next => {
       this.router.navigate(['blog']);
     } );
-
-
   }
 
 
   ngOnInit() {
     // Create Form set Validation
-    this.blogForm = this.fb.group({
-      title: [, Validators.required],
-      content: [, Validators.required],
-      tags: [, Validators.required]
-    });
+    /*this.postForm = this.fb.group({
+      'title': [, Validators.required],
+      'tags': [, Validators.required]
+    }); */
   }
 
 }

@@ -1,43 +1,40 @@
-<form [formGroup]="blogForm">
-  <div class="container">
+
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <h4 class="display-4"><p class="text-center">Blog Post erstellen</p></h4>
+    </div>
+    <div class="col-2"></div>
+  </div>
+  <br>
 
     <div class="row">
-      <div class="col-2"></div>
-      <div class="col-8">
-        <h4 class="display-4"><p class="text-center">Blogeintrag erstellen</p></h4>
-      </div>
-      <div class="col-2"></div>
-    </div>
-    <br>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" placeholder="Title" formControlName="title">
-      </div>
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-4">
+        <label for="title">Title </label>
+        <input type="text" class="form-control" id="title" placeholder="Title" [(ngModel)]="title" ></div>
+
+      <div class="form-group col-md-4">
         <label for="tags">Tags</label>
-        <select class="form-control" id="tags" name='tags' formControlName="tags">
-          <option selected = "selected">Reisen</option>
-          <option >Kulinarisch</option>
-        </select>
+        <input type="text" class="form-control" id="tags" placeholder="tags" [(ngModel)]="tags">
       </div>
-    </div>
-    <div class="form-row">
-      <div class="editor block">
-        <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='content'
-                        [ngModelOptions]="{standalone: true}"></app-ngx-editor>
-      </div>
-      <br><br>
-      <div class="col-3"><button  type="submit" class=" btn btn-block btn-danger" routerLink="/admin/editInfo">back </button></div>
-      <div class="col-9"><button  type="submit" class=" btn btn-block btn-success" (click)="blogPost()">Blog erstellen  </button></div>
+      <div class="col-md-4 form-group">
+        <image-upload url="{{img_url}}" dropBoxMessage="Header Bild einfügen"></image-upload></div>
     </div>
 
-    <br>
-    <div *ngIf="content" class="htmlblock block">
-      <h6>HTML Output</h6>
-      <p class="lead" [innerHtml]="content"></p>
+  <div class="row">
+    <div class="editor block">
+      <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='content'
+                      [ngModelOptions]="{standalone: true}"></app-ngx-editor>
     </div>
-
-
   </div>
-</form>
+  <div class="row"><br><br></div>
+  <div class="row">
+    <br><br>
+    <button  type="submit" class=" btn btn-block btn-success" (click)="addPost()" >Post erstellen  </button>
+  </div>
+  <br>
+  <div *ngIf="content" class="htmlblock block">
+    <h6>HTML Output</h6>
+    <p class="lead" [innerHtml]="content"></p>
+  </div>
+

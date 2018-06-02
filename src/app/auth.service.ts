@@ -70,7 +70,7 @@ export class AuthService {
       if (profile) {
         this.userProfile = profile;
       }
-      console.log('sorry');
+      //console.log('sorry');
       cb(err, profile);
     });
     }

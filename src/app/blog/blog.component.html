@@ -1,14 +1,23 @@
 <div class="well" *ngFor="let post of data; let i = index">
   <div class="col-md-7 offset-md-3">
-    <div class="card-header">
-      <h3 class="card-title">{{post.title}}<div class="pull-left" >    {{ post.tags }}</div>  </h3>
 
-    </div>
     <div class="card card-inverse">
-      <div class="card-block">
-        <p class="card-text"[innerHtml]="post.content"></p>
+      <div class="card-header">
+        <h3 class="card-title">{{post.title}} </h3>
 
-        <a class="btn btn-outline-info pull-right " routerLink="post/{{i}}">READ MORE</a>
+      </div>
+      <div class="card-block">
+        <p class="card-text"[innerHtml]="post.content" ></p>
+      </div>
+      <div class="card-footer">
+        <div class="row">
+          <div class="col-md-3 flex-item">
+            <div class="badge-primary" > {{ post.tags }}</div>
+          </div>
+          <div class="col-md-4 offset-3">
+            <a class="btn btn-outline-info" routerLink="post/{{i}}">READ MORE</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

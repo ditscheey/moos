@@ -8,6 +8,7 @@ const path = require('path');
 const https = require('https');
 const fs = require('fs');
 
+
 // declare mongojs & connect
 var mongojs = require('mongojs');
 var db = mongojs('max:max@ds119685.mlab.com:19685/moos');
@@ -113,19 +114,18 @@ router.put('/cms',function (req, res){
   });
 });
 
-// Get Single post
+// Get all post
 router.get('/posts', function(req, res, next){
   db.posts.find( function(err, posts){
     if(err){
       res.send(err);
     }
-
     res.json(posts);
   });
 });
 
 
-// Get Single post
+// Get Single post ?? dafgug
 router.get('/post/:id', function(req, res, next){
   db.posts.findOne({_id: mongojs.ObjectId(1)}, function(err, post){
     if(err){
@@ -136,13 +136,38 @@ router.get('/post/:id', function(req, res, next){
   });
 });
 
+// update one post
+router.put('/post/:id',function (req, res){
+  var id = req.params.id;
+  console.log(id);
+  //console.log(req.body.info2);
+  db.posts.findAndModify({
+    query: {_id : mongojs.ObjectId(id)},
+    update: { $set: {
+        title: req.body.title ,
+        tags: req.body.tags ,
+        img_url: req.body.img_url ,
+        content: req.body.content
+      } },
+    new: true
+  }, function (err, doc, lastErrorObject) {
+    // doc.tag === 'maintainer'
+    //console.log("got here");
+    // console.log(doc);
+    res.json(doc);
+  });
+});
+
 router.delete('/post/:id', function(req, res, next){
   console.log("got in delete");
-  var id = req.body._id;
+  var id = req.params.id;
+  console.log(id);
   db.posts.remove({_id: mongojs.ObjectId(id)}, function(err, post){
     if(err){
+      console.log(err);
       res.send(err);
     }
+    console.log("should be fine");
     res.json(post);
   });
 });
@@ -157,37 +182,44 @@ router.get('/imgs', function(req, res, next){
   });
 });
 
+
+function getSecondPart(str) {
+  return str.split('/')[1];
+}
+
 // Image Endpoint --> blog
   router.post('/blog/image', function(req, res) {
-console.log("image entered");
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
 
+  console.log(req.files);
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.file;
-  console.log("current File:");
-  console.log(sampleFile );
+  const sampleFile = req.files.image;
+  console.log(sampleFile.name);
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('src/assets/blog/'+sampleFile.name, function(err) {
+  sampleFile.mv('src/assets/blog/'+sampleFile.name , function(err) {
     if (err)
       return res.status(500).send(err);
 
-    var url = 'localhost:3000/assets/blog/' + sampleFile.name;
-    var url_prod = 'http://159.89.19.33/assets/blog/' + sampleFile.name;
-    // Create Entry in database to find image afterwards
-    let img = {
-      'name' : sampleFile.name,
-      'path' : url
-    }
-    db.imgs.save(img, function(err, post){
-      if(err){
-        res.send(err);
+    var url = 'http://localhost:4200/assets/blog/' + sampleFile.name ;
+    var url_prod = 'http://159.89.19.33/assets/blog/' + sampleFile.name + '.' + getSecondPart(sampleFile.mimetype);
+
+      // Create Entry in database to find image afterwards
+      const img = {
+        'name' : sampleFile.name,
+        'path' : url
       }
-      res.json(post);
-    });
+      db.imgs.save(img, function(err, post){
+        if(err){
+          res.send(err);
+        }
+      });
+
     // Change to Prod | Dev version
     //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
-    res.json(url);
+    console.log(url);
+    //https.get('')
+   res.send(url);
   });
 });
 
@@ -236,8 +268,24 @@ router.get('/bookings',function (req, res){
     if(err){
       res.send("Error found while loading the Data");
     }
+    res.json(bookings.sort({dateFrom: +1}));
+  });
+});
+
+
+
+///        delete Booking
+router.delete('/bookings/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log(id);
+  db.bookings.remove({_id: mongojs.ObjectId(id)}, function(err, bookings){
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
     res.json(bookings);
   });
+
 });
 
 //Save Task
@@ -285,12 +333,12 @@ var mailOptions = {
 
 //  send mail with defined transport object
 
-transporter.sendMail(mailOptions, (error, info) => {
+/*transporter.sendMail(mailOptions, (error, info) => {
 
   console.log('Message sent: %s', info.messageId);
   console.log(output);
 
-});
+});*/
 });
 
 module.exports = router;

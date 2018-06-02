@@ -36,6 +36,11 @@ import { BlogComponent } from './blog/blog.component';
 import { PostBlogComponent } from './post-blog/post-blog.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { ImagesBlogComponent } from './images-blog/images-blog.component';
+import { AddBookingComponent } from './add-booking/add-booking.component';
+import {CKEditorModule} from 'ng2-ckeditor';
+import {ImageUploadModule} from 'angular2-image-upload';
+import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component';
+
 
 
 
@@ -49,10 +54,12 @@ const appRoutes: Routes = [
   { path: 'image/:id', component: ImageComponent},
   { path: 'admin', component: DashboardComponent , canActivate: [AdminGuardService]},
   { path: 'admin/editInfo', component: EditInfoComponent, canActivate: [AdminGuardService]},
+  { path: 'admin/addBooking', component: AddBookingComponent, canActivate: [AdminGuardService]},
   { path: 'admin/editInfo/:detail', component: EditAboutComponent, canActivate: [AdminGuardService]},
   { path: 'login', component: LoginComponent},
   { path: 'blog', component: BlogComponent},
   { path: 'blog/post/:id', component: BlogDetailComponent},
+  { path: 'blog/post/edit/:id', component: EditBlogPostComponent},
   { path: 'blog/post', component: PostBlogComponent},
   { path: 'callback', component: CallbackComponent }
 
@@ -74,7 +81,9 @@ const appRoutes: Routes = [
     BlogComponent,
     PostBlogComponent,
     BlogDetailComponent,
-    ImagesBlogComponent
+    ImagesBlogComponent,
+    AddBookingComponent,
+    EditBlogPostComponent
   ],
   imports: [
     BrowserModule,
@@ -86,6 +95,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     StarRatingModule,
     MarkdownModule.forRoot(),
+    ImageUploadModule.forRoot(),
     Daterangepicker,
     NgbModule.forRoot(),
     AgmCoreModule.forRoot({

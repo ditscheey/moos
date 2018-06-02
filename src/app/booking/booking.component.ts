@@ -23,7 +23,10 @@ export class BookingComponent implements OnInit {
   public flag = true;
   public flag2 = true;
   public priceNight;
-public apiUrl = environment.apiUrl;
+  public apiUrl = environment.apiUrl;
+  public ownDates = [];
+  public ownBookings;
+
 
 public preisInfo;
 
@@ -105,21 +108,43 @@ public preisInfo;
   }
 
   addBooking() {
-    let post_value = {
+    const post_value = {
       'form' : this.bookingForm.value,
       'nights' : this.nights,
       'priceNight': this.priceNight,
-      'price': this.complete,
+      'price': this.complete
     };
     console.log(post_value);
-    /*  this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
+      this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
       this.router.navigate(['./info']);
-    } ); */
+    } );
+  }
+  public getDbBookings(){
+    this.http.get(this.apiUrl + 'api/calendar').subscribe(bookings => {
+      console.log(bookings);
+    });
+
+  }
+
+  public getOwnBookings(){
+    this.http.get(this.apiUrl + 'api/bookings').subscribe(data => {
+      this.ownBookings = data;
+      this.ownBookings.forEach(booking => {
+        let start_date = moment(booking.form.dateFrom, 'DD.MM.YYYY');
+        this.ownDates.push(booking.form.dateFrom);
+        for (let d = 0; d < booking.nights; d ++) {
+          start_date.add(1, 'days');
+          this.ownDates.push(start_date.format('DD.MM.YYYY'));
+        }
+      });
+      //console.log(this.ownDates);
+    });
   }
 
   public getBookings() {
     this.http.get(this.apiUrl + 'api/file').subscribe(data => {
       this.bookings = data;
+      if (!this.ownBookings) { this.getOwnBookings(); }
    //   console.log(this.bookings);
       this.pickerOptions = {
         showDropdowns: true,
@@ -130,8 +155,14 @@ public preisInfo;
         alwaysShowCalendars: true,
         drops: 'down',
         isInvalidDate: date => {
-          for (var ii = 0; ii < this.bookings.length; ii++) {
-            if (date.format('DD.MM.YYYY') === this.bookings[ii]) {
+          for (var ii = 0; ii < this.ownDates.length; ii++) {
+            //console.log("date " + date.format('DD.MM.YYYY'));
+            if (date.format('DD.MM.YYYY') === this.ownDates[ii]) {
+              return true;
+            }
+          }
+          for (var jj = 0; jj < this.bookings.length; jj++) {
+            if (date.format('DD.MM.YYYY') === this.bookings[jj]) {
               return true;
             }
           }

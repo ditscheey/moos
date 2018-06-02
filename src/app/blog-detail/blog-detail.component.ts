@@ -3,6 +3,7 @@ import {FormBuilder} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import { environment} from '../../environments/environment';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -14,7 +15,7 @@ export class BlogDetailComponent implements OnInit {
   public post;
   public routeInfo;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public auth: AuthService) {
     route.params.subscribe(params => {
       this.routeInfo = params.id;
 
@@ -34,14 +35,14 @@ export class BlogDetailComponent implements OnInit {
     });
   }
 
-  public updatePost() {
+  public updatePost(index) {
     console.log("update");
-    this.router.navigate(['./blog/edit/' + this.routeInfo]);
+    this.router.navigate(['./blog/post/edit/' + index]);
   }
 
   public deletePost() {
-    console.log("delete");
-    this.http.delete(this.apiUrl + 'api/post/' + this.routeInfo).subscribe(data => {
+    console.log(this.post._id);
+    this.http.delete(this.apiUrl + 'api/post/' + this.post._id).subscribe(data => {
       this.router.navigate(['./blog/']);
     });
   }
