@@ -1,0 +1,12 @@
+URL transformed to HTTPS due to an HSTS policy
+--2018-06-03 08:31:01--  https://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147
+Resolving www.airbnb.de (www.airbnb.de)... 151.101.113.254
+Connecting to www.airbnb.de (www.airbnb.de)|151.101.113.254|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 16645 (16K) [text/calendar]
+Saving to: ‘bookings.ics’
+
+     0K .......... ......                                     100%  108M=0s
+
+2018-06-03 08:31:02 (108 MB/s) - ‘bookings.ics’ saved [16645/16645]
+

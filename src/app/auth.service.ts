@@ -11,7 +11,7 @@ export class AuthService {
     domain: 'studiomoos.eu.auth0.com',
     responseType: 'token id_token',
     audience: 'https://studiomoos.eu.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: 'http://159.89.19.33/callback',
     scope: this.requestedScopes
   });
   userProfile: any;
