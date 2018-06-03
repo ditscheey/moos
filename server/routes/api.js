@@ -201,13 +201,13 @@ function getSecondPart(str) {
     if (err)
       return res.status(500).send(err);
 
-    var url = 'http://localhost:4200/assets/blog/' + sampleFile.name ;
-    var url_prod = 'http://159.89.19.33/assets/blog/' + sampleFile.name + '.' + getSecondPart(sampleFile.mimetype);
+    var url = 'http://localhost:4200/assets/blog/' + date.now() + sampleFile.name ;
+    var url_prod = 'http://159.89.19.33/assets/blog/' + date.now() + sampleFile.name;
 
       // Create Entry in database to find image afterwards
       const img = {
         'name' : sampleFile.name,
-        'path' : url
+        'path' : url_prod
       }
       db.imgs.save(img, function(err, post){
         if(err){
@@ -217,9 +217,9 @@ function getSecondPart(str) {
 
     // Change to Prod | Dev version
     //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
-    console.log(url);
+    console.log(url_prod);
     //https.get('')
-   res.send(url);
+   res.send(url_prod);
   });
 });
 
