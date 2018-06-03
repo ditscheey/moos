@@ -1,11 +1,11 @@
 <div class="col-md7 offset-md2">
   <div class="card text-center">
-    <div class="card-header"><h3 class="display3">{{post?.title}}</h3></div>
+    <div class="card-header"><h3 class="display3 "><div class="text-center">{{post?.title}}</div></h3></div>
     <div class="card-body"[innerHtml]="post?.content"></div>
     <div class="card-footer">
       <div class="flex-row">
-        <a class="btn btn-outline-info  "  *ngIf="auth.isAdmin()" (click)="updatePost(routeInfo)">edit</a>
-        <a class="btn btn-outline-danger  "  *ngIf="auth.isAdmin()" (click)="deletePost()">delete</a>
+        <a class="btn btn-outline-info  "  *ngIf="auth.isAdmin() && auth.isAuthenticated()" (click)="updatePost(routeInfo)">edit</a>
+        <a class="btn btn-outline-danger  "  *ngIf="auth.isAdmin() && auth.isAuthenticated()" (click)="deletePost()">delete</a>
       </div>
     </div>
   </div>
