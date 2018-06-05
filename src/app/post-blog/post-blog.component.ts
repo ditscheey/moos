@@ -46,7 +46,10 @@ export class PostBlogComponent implements OnInit {
   public routeInfo;
   public img_name;
   public img_url = this.apiUrl + 'api/blog/image';
+  public tag;
 
+  public color_add;
+  public name;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     route.params.subscribe(params => {
@@ -56,12 +59,16 @@ export class PostBlogComponent implements OnInit {
   }
 
 
+  public setColor(){
+    console.log(this.tag.color);
+    this.color_add = this.tag.color;
+  }
 
   public addPost(){
 
     let data = {
       'title' : this.title,
-      'tags' : this.tags,
+      'tags' : this.tag,
       'img_name': this.img_name,
       'content' : this.content
     };
@@ -72,8 +79,15 @@ export class PostBlogComponent implements OnInit {
     } );
   }
 
+  public getTags(){
+    this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
+      this.tags = data;
+      console.log(this.tags);
+    });
+  }
 
   ngOnInit() {
+    this.getTags();
     // Create Form set Validation
     /*this.postForm = this.fb.group({
       'title': [, Validators.required],

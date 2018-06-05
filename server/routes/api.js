@@ -150,7 +150,7 @@ router.get('/posts', function(req, res, next){
 
 // Get Single post ?? dafgug
 router.get('/post/:id', function(req, res, next){
-  db.posts.findOne({_id: mongojs.ObjectId(1)}, function(err, post){
+  db.posts.findOne({_id: mongojs.ObjectId()}, function(err, post){
     if(err){
       res.send(err);
     }
@@ -191,6 +191,54 @@ router.delete('/post/:id', function(req, res, next){
       res.send(err);
     }
     console.log("should be fine");
+    res.json(post);
+  });
+});
+
+
+///
+//  Begin Tags api
+///
+
+
+router.post('/tags', function(req, res, next){
+  //console.log("got here");
+  var tag = req.body;
+  if(!tag.name){
+    res.status(400);
+    res.json({
+      "error": "Bad Data"
+    });
+  } else {
+    db.tags.save(tag, function(err, tag){
+      if(err){
+        res.send(err);
+      }
+      res.json(tag);
+    });
+  }
+});
+
+// Get all tags on the server
+router.get('/tags', function(req, res, next){
+  db.tags.find( function(err, tags){
+    if(err){
+      res.send(err);
+    }
+    console.log("inside tags");
+    res.json(tags);
+  });
+});
+
+router.delete('/tags/:id', function(req, res, next){
+  console.log("got in tags delete");
+  var id = req.params.id;
+  console.log(id);
+  db.tags.remove({_id: mongojs.ObjectId(id)}, function(err, post){
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
     res.json(post);
   });
 });
@@ -246,12 +294,16 @@ function getSecondPart(str) {
   });
 });
 
+
+
+
+
 //Save Task
 router.post('/post', function(req, res, next){
   //console.log("got here");
   var post = {
     'form': req.body,
-    'time': moment(new Date())
+    'time': moment(new Date()).format('DD.MM.YYYY')
   };
   if(!post.form.title){
     res.status(400);

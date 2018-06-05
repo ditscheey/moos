@@ -37,12 +37,12 @@ import { PostBlogComponent } from './post-blog/post-blog.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { ImagesBlogComponent } from './images-blog/images-blog.component';
 import { AddBookingComponent } from './add-booking/add-booking.component';
-import {CKEditorModule} from 'ng2-ckeditor';
+
 import {ImageUploadModule} from 'angular2-image-upload';
 import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component';
 import { ImpressumComponent } from './impressum/impressum.component';
-
-
+import { OrderModule } from 'ngx-order-pipe';
+import { TagsComponent } from './tags/tags.component';
 
 
 const appRoutes: Routes = [
@@ -58,6 +58,7 @@ const appRoutes: Routes = [
   { path: 'admin/editInfo', component: EditInfoComponent, canActivate: [AdminGuardService]},
   { path: 'admin/addBooking', component: AddBookingComponent, canActivate: [AdminGuardService]},
   { path: 'admin/editInfo/:detail', component: EditAboutComponent, canActivate: [AdminGuardService]},
+  { path: 'tags', component: TagsComponent, canActivate: [AdminGuardService]},
   { path: 'login', component: LoginComponent},
   { path: 'blog', component: BlogComponent},
   { path: 'blog/post/:id', component: BlogDetailComponent},
@@ -86,7 +87,8 @@ const appRoutes: Routes = [
     ImagesBlogComponent,
     AddBookingComponent,
     EditBlogPostComponent,
-    ImpressumComponent
+    ImpressumComponent,
+    TagsComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +103,7 @@ const appRoutes: Routes = [
     ImageUploadModule.forRoot(),
     Daterangepicker,
     NgbModule.forRoot(),
+    OrderModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDsNMb4RG2O66JAEHYPLcw_RwAG6yzcuJQ'
     }),
