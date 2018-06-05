@@ -1,12 +1,26 @@
-<div class="col-md7 offset-md2">
-  <div class="card text-center">
-    <div class="card-header"><h3 class="display3 "><div class="text-center">{{post?.title}}</div></h3></div>
-    <div class="card-body"[innerHtml]="post?.content"></div>
-    <div class="card-footer">
-      <div class="flex-row">
-        <a class="btn btn-outline-info  "  *ngIf="auth.isAdmin() && auth.isAuthenticated()" (click)="updatePost(routeInfo)">edit</a>
-        <a class="btn btn-outline-danger  "  *ngIf="auth.isAdmin() && auth.isAuthenticated()" (click)="deletePost()">delete</a>
+<br><br>
+<div class="container">
+  <div class="col-md7 offset-md2">
+    <div class="card text-center">
+      <!-- {{post?.form.header_url}} -->
+      <img class="card-img-top" src="http://159.89.19.33/assets/imgs/terasse.JPG" style="width: 70%;height: 200px;" alt="Card image">
+      <div class="card-header"><h3 class="display3 "><div class="text-center">{{post?.form.title}}</div></h3></div>
+      <br>
+      <div class="card-body"[innerHtml]="post?.form.content"></div>
+      <br>
+      <div class="card-footer">
+        <div class="flex-row">
+          <div class="col-md-3 flex-item mx-auto">
+            <div class="badge-primary text-center" > {{ post?.form.tags }}</div>
+          </div>
+        </div>
+        <div class="flex-row"  *ngIf="auth.isAdmin() && auth.isAuthenticated()">
+          <br>
+          <a class="btn btn-outline-info  "  (click)="updatePost(routeInfo)">edit</a>
+          <a class="btn btn-outline-danger  "  *ngIf="auth.isAdmin() && auth.isAuthenticated()" (click)="deletePost()">delete</a>
+        </div>
       </div>
     </div>
   </div>
+
 </div>

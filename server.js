@@ -45,4 +45,4 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port, function (){console.log("API running on port:"+port)});
+server.listen(port, function (){console.log("API running on port: "+port + " \n if in prod change to port:80 and update ngAuth0")});

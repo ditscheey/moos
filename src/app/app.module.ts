@@ -40,6 +40,7 @@ import { AddBookingComponent } from './add-booking/add-booking.component';
 import {CKEditorModule} from 'ng2-ckeditor';
 import {ImageUploadModule} from 'angular2-image-upload';
 import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component';
+import { ImpressumComponent } from './impressum/impressum.component';
 
 
 
@@ -49,8 +50,9 @@ const appRoutes: Routes = [
   {  path: 'info', component: InfoComponent },
   {  path: 'home', redirectTo: 'admin', pathMatch: 'full' },
   {  path: 'gallery', component: GalleryComponent },
-  {  path: 'booking', component: BookingComponent },
+  {  path: 'booking', component: BookingComponent , canActivate: [AdminGuardService]},
   {  path: 'about', component: AboutComponent },
+  { path: 'impressum', component: ImpressumComponent},
   { path: 'image/:id', component: ImageComponent},
   { path: 'admin', component: DashboardComponent , canActivate: [AdminGuardService]},
   { path: 'admin/editInfo', component: EditInfoComponent, canActivate: [AdminGuardService]},
@@ -83,7 +85,8 @@ const appRoutes: Routes = [
     BlogDetailComponent,
     ImagesBlogComponent,
     AddBookingComponent,
-    EditBlogPostComponent
+    EditBlogPostComponent,
+    ImpressumComponent
   ],
   imports: [
     BrowserModule,

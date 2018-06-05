@@ -16,24 +16,22 @@
           <li routerLinkActive="active" class="nav-item">
             <a class="nav-link" routerLink="gallery"><i class="fa fa-image" aria-hidden="true"></i> Gallerie</a>
           </li>
+          <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="blog"  routerLinkActive="active-link"><i class="fa fa-book" aria-hidden="true"></i> Blog</a></li>
           <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" routerLink="booking"><i class="fa fa-book" aria-hidden="true"></i> Buchung</a>
+            <a class="nav-link" routerLink="impressum"><i class="fa fa-key" aria-hidden="true"></i> Impressum</a>
           </li>
           <li routerLinkActive="active" class="nav-item" *ngIf="(router.url === '/admin/editInfo/preisInfo') || (router.url === '/admin/editInfo')">
             <a class="nav-link" routerLink="admin/editInfo"><i class="fa fa-edit" aria-hidden="true"></i> EDITIERMODUS</a>
           </li>
         </ul>
         <ul class="nav navbar-nav ml-auto">
-          <a class="nav-link" routerLink="/blog/post"  *ngIf="((auth.isAdmin() && auth.isAuthenticated() )&& router.url==='/blog')" routerLinkActive="active-link"><i class="fa fa-pencil" aria-hidden="true"></i> Post erstellen</a>
-          <a class="nav-link" routerLink="blog"  routerLinkActive="active-link"><i class="fa fa-book" aria-hidden="true"></i> Blog</a>
-          <a class="nav-link" routerLink="admin" *ngIf="(auth.isAdmin() && auth.isAuthenticated() )" routerLinkActive="active-link"><i class="fa fa-gear" aria-hidden="true"></i> Dashboard</a>
-          <a class="nav-link" (click)="auth.login()" *ngIf="!auth.isAuthenticated()"> <i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
-          <a class="nav-link" (click)="auth.logout()" *ngIf="auth.isAuthenticated()" ><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+          <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="admin" *ngIf="(auth.isAdmin() && auth.isAuthenticated() )" routerLinkActive="active-link"><i class="fa fa-gear" aria-hidden="true"></i> Dashboard</a></li>
+          <li routerLinkActive="active" class="nav-item"><a class="nav-link" (click)="auth.login()" *ngIf="!auth.isAuthenticated()"> <i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+          <li routerLinkActive="active" class="nav-item"><a class="nav-link" (click)="auth.logout()" *ngIf="auth.isAuthenticated()" ><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
         </ul>
       </div>
     </div>
   </div>
-</div><br><br><br>
-<div class="container "><br>
-  <router-outlet></router-outlet>
 </div>
+<br><br>
+<router-outlet></router-outlet>

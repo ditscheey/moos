@@ -1,27 +1,41 @@
-<div class="well" *ngFor="let post of data; let i = index">
-  <div class="col-md-7 offset-md-3">
+<br><br>
+<div class="row" *ngFor="let post of data; let i = index">
+
+  <div class="col-md-5 offset-md-1">
 
     <div class="card card-inverse">
       <div class="card-header">
-        <h3 class="card-title">{{post.title}} </h3>
+        <h3 class="card-title">{{post.form.title}} </h3>
+        <p class="pull-right">{{post.time}}</p>
 
       </div>
       <div class="card-block">
-        <p class="card-text"[innerHtml]="post.content" ></p>
+        <p class="card-text"[innerHtml]="post.form.content" ></p>
       </div>
       <div class="card-footer">
         <div class="row">
           <div class="col-md-3 flex-item">
-            <div class="badge-primary" > {{ post.tags }}</div>
+            <div class="badge-primary text-center" > {{ post.form.tags }}</div>
           </div>
-          <div class="col-md-4 offset-3">
+          <div class="col-md-4 offset-3 pull-right">
             <a class="btn btn-outline-info" routerLink="post/{{i}}">READ MORE</a>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-3"></div>
-  <div class="row"><br><br></div>
+  <br>
+  <div class="col-md-3">
+    <ul class="list-group text-center">
+      <!-- Todo: NG Class when active-->
+      <li class="list-group-item" >akutelle Posts</li>
+      <li class="list-group-item">alte Posts</li>
+      <li class="list-group-item">Top bewertet</li>
+      <li class="list-group-item">Am Diskutierten</li>
+    </ul>
+  </div>
 </div>
+
+  <div class="row"><br><br></div>
+
 

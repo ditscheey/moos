@@ -39,7 +39,7 @@ export class AddBookingComponent implements OnInit {
           this.ownDates.push(start_date.format('DD.MM.YYYY'));
           }
       });
-      //console.log(this.ownDates);
+      console.log(this.ownDates);
     });
   }
 
@@ -57,7 +57,7 @@ public checkDate(date) {
 }
   public getBookings() {
     this.http.get(this.apiUrl + 'api/file').subscribe(data => {
-      //console.log(data);
+      console.log(data);
       if (!this.ownBookings) { this.getOwnBookings(); }
       this.bookings = data;
       //   console.log(this.bookings);

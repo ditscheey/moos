@@ -23,9 +23,31 @@ router.get('/file',function (req, res){
     let final_pret = [];
     let today = moment();
 
+    let result2 = [];
 
     //Get Data from ICS FILE
     var data = ical.parseFile('server/routes/bookings.ics');
+
+  for (var k in data ){
+    if(data.hasOwnProperty(k)){
+      if(data[k].summary === 'Not available'){
+        var ev = {
+          'check_in': moment(data[k].start),
+          'check_out': moment(data[k].end)
+        };
+        var nights = Math.abs(ev.check_in.diff(ev.check_out,'days'));
+
+        //push days and nights
+        final.push(ev.check_in.format('DD.MM.YYYY'));
+        for (var i = 1; i <= nights; i++) {
+          night = moment(ev.check_in.add("1", "d"));
+          final.push(night.format('DD.MM.YYYY'));
+        }
+        final.push(ev.check_out.format('DD.MM.YYYY'));
+        }
+      }
+  }
+
     for (var k in data ){
       if(data.hasOwnProperty(k)){
         var ev = data[k];
@@ -77,6 +99,7 @@ router.get('/file',function (req, res){
 
    //Send JSON Data to endpoint
   //  console.log("final lenght");
+  //console.log(final);
     res.send(final);
 });
 
@@ -225,9 +248,12 @@ function getSecondPart(str) {
 
 //Save Task
 router.post('/post', function(req, res, next){
-  console.log("got here");
-  var post = req.body;
-  if(!post.title){
+  //console.log("got here");
+  var post = {
+    'form': req.body,
+    'time': moment(new Date())
+  };
+  if(!post.form.title){
     res.status(400);
     res.json({
       "error": "Bad Data"
@@ -264,11 +290,14 @@ router.put('/post/:id', function(req, res, next){
 //Begin für Bookings api
 
 router.get('/bookings',function (req, res){
+
   db.bookings.find(function (err, bookings){
     if(err){
       res.send("Error found while loading the Data");
     }
-    res.json(bookings.sort({dateFrom: +1}));
+    console.log("bookings");
+    console.log(bookings);
+    res.json(bookings);
   });
 });
 

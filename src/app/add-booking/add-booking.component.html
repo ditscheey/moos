@@ -1,41 +1,48 @@
+<div class="container">
+  <br><br>
+  <div class="row">
+    <input daterangepicker id="daterange"  [options]="pickerOptions" type="submit"
+           class="form-control btn btn-info" />
+  </div>
+  <br><br>
 
-<div class="row">
-  <input daterangepicker id="daterange"  [options]="pickerOptions" type="submit"
-         class="form-control btn btn-info" />
+<div class="well" *ngIf="!ownBookings[0].form.dateFrom">
+  <br><h2 class="display-2">Derzeit keine selbst eingetragen Buchungen.</h2>
+  <p class="lead">derzeit werden die Buchungen aus dem Airbnb-Kalendar synchronisiert.</p>
 </div>
-<br><br>
+  <div class="well" *ngFor="let booking of ownBookings; let i = index">
+    <div class="col-md-7 offset-md-3">
+      <div class="card-header">
+        <h3 class="card-title">{{booking.form.first_name }} {{booking.form.last_name}} <div class="pull-right" >    <span class="badge-danger">{{ ' ' + booking.price + ' '}} €</span></div>  </h3>
 
-<div class="well" *ngFor="let booking of ownBookings; let i = index">
-  <div class="col-md-7 offset-md-3">
-    <div class="card-header">
-      <h3 class="card-title">{{booking.form.first_name }} {{booking.form.last_name}} <div class="pull-right" >    <span class="badge-danger">{{ ' ' + booking.price + ' '}} €</span></div>  </h3>
+      </div>
+      <div class="card card-inverse">
+        <div class="card-block">
+          <div class="card-text">
+            <ul class="list-group">
+              <li class="list-group-item">Email: {{booking.form.email}} </li>
+              <li class="list-group-item">Check-in: {{booking.form.dateFrom}} || Check-out: {{booking.form.dateTo}}</li>
+              <li class="list-group-item">Erwachsene: {{booking.form.people}} || Kinder: {{booking.form.kids}} || Haustiere: {{booking.form.pets}}  </li>
+              <li class="list-group-item">Kommentar: {{booking.form.comment}} </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card card-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <button  type="submit" class=" btn btn-danger pull-right" (click)="deleteBooking(i)"><i class="fa fa-close" aria-hidden="true"></i> Ablehnen</button>
+          </div>
+          <div class="col-md-6">
+            <button  type="submit" class=" btn  btn-primary" routerLink="/admin/booking/accept"><i class="fa fa-check" aria-hidden="true"></i> Bestätigen</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    </div>
-    <div class="card card-inverse">
-      <div class="card-block">
-        <div class="card-text">
-          <ul class="list-group">
-            <li class="list-group-item">Email: {{booking.form.email}} </li>
-            <li class="list-group-item">Check-in: {{booking.form.dateFrom}} || Check-out: {{booking.form.dateTo}}</li>
-            <li class="list-group-item">Erwachsene: {{booking.form.people}} || Kinder: {{booking.form.kids}} || Haustiere: {{booking.form.pets}}  </li>
-            <li class="list-group-item">Kommentar: {{booking.form.comment}} </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="card card-footer">
-      <div class="row">
-        <div class="col-md-6">
-          <button  type="submit" class=" btn btn-danger pull-right" (click)="deleteBooking(i)"><i class="fa fa-close" aria-hidden="true"></i> Ablehnen</button>
-        </div>
-        <div class="col-md-6">
-          <button  type="submit" class=" btn  btn-primary" routerLink="/admin/booking/accept"><i class="fa fa-check" aria-hidden="true"></i> Bestätigen</button>
-        </div>
-      </div>
-      </div>
+    <div class="col-md-3"></div>
+    <div class="row"><br><br></div>
   </div>
 
-  <div class="col-md-3"></div>
-  <div class="row"><br><br></div>
-</div>
 
+</div>

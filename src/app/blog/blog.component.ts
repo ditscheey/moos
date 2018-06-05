@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import { environment} from '../..//environments/environment';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-blog',
   templateUrl: './blog.component.html',
@@ -26,7 +26,7 @@ export class BlogComponent implements OnInit {
   public getPosts(){
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
       this.data = data;
-      //this.content = data[this.routeInfo];
+
     });
   }
   }
