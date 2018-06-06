@@ -43,6 +43,7 @@ import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component
 import { ImpressumComponent } from './impressum/impressum.component';
 import { OrderModule } from 'ngx-order-pipe';
 import { TagsComponent } from './tags/tags.component';
+import { ImageOwnComponent } from './image-own/image-own.component';
 
 
 const appRoutes: Routes = [
@@ -88,7 +89,8 @@ const appRoutes: Routes = [
     AddBookingComponent,
     EditBlogPostComponent,
     ImpressumComponent,
-    TagsComponent
+    TagsComponent,
+    ImageOwnComponent
   ],
   imports: [
     BrowserModule,

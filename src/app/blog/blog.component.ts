@@ -32,6 +32,13 @@ export class BlogComponent implements OnInit {
     console.log(this.orderPipe.transform(this.data, this.order));
   }
 
+  public convertBadge(index) {
+    let temp_tag = this.tags[index];
+   // console.log(temp_tag.color.split('-')[1]);
+    let style = 'badge-' + temp_tag.color.split('-')[1];
+    //console.log(style);
+    return style;
+  }
 
   setOrder(value: string) {
     if (this.order === value) {
@@ -43,6 +50,7 @@ export class BlogComponent implements OnInit {
   setFilter(value: string) {
     if (this.order === value) {
       this.reverse = !this.reverse;
+      console.log("reverse   " + this.reverse);
     }
     this.order = value;
   }
@@ -61,6 +69,9 @@ export class BlogComponent implements OnInit {
           console.log(days);
         });
     });
+    this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
+        this.tags = data;
+      });
+    }
+  }
 
-  }
-  }

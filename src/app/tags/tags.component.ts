@@ -25,7 +25,7 @@ export class TagsComponent implements OnInit {
 
 
 
-  public addTag(){
+  public addTag() {
     let tag = {
       'name' : this.name,
       'color': this.color,
@@ -35,7 +35,7 @@ export class TagsComponent implements OnInit {
       if (err) {
         console.log(err);
       }
-      this.router.navigate(['blog']);
+
     });
   }
 }

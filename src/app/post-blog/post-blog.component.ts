@@ -45,9 +45,11 @@ export class PostBlogComponent implements OnInit {
   public data;
   public routeInfo;
   public img_name;
+  public img_id;
   public img_url = this.apiUrl + 'api/blog/image';
   public tag;
 
+  public own_imgs;
   public color_add;
   public name;
 
@@ -59,42 +61,44 @@ export class PostBlogComponent implements OnInit {
   }
 
 
-  public setColor(){
-    console.log(this.tag.color);
-    this.color_add = this.tag.color;
+  public getTagFromColor() {
+    for (let tag of this.tags) {
+      if (tag.color === this.color_add) {
+        return tag;
+      }
+      console.log("no tag found ");
+    }
   }
 
-  public addPost(){
-
-    let data = {
-      'title' : this.title,
-      'tags' : this.tag,
-      'img_name': this.img_name,
-      'content' : this.content
+  public addPost() {
+  this.tag = this.getTagFromColor();
+    let post = {
+      'title': this.title,
+      'tags': this.tag,
+      'img_id': this.img_id,
+      'img_url': this.img_url + this.img_name,
+      'content': this.content
     };
-    console.log(data);
+    console.log(post);
+  this.http.post(this.apiUrl + 'api/post', post).subscribe(err => {
+    console.log(err);
+  })
 
-    this.http.post(this.apiUrl + 'api/post', data).subscribe(next => {
-      this.router.navigate(['blog']);
-    } );
   }
 
-  public getTags(){
+  public getTags() {
     this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
       this.tags = data;
-      console.log(this.tags);
     });
+    this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
+      this.own_imgs = data;
+    });
+
   }
 
   ngOnInit() {
     this.getTags();
-    // Create Form set Validation
-    /*this.postForm = this.fb.group({
-      'title': [, Validators.required],
-      'tags': [, Validators.required]
-    }); */
   }
-
 }
 
 

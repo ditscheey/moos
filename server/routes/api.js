@@ -225,7 +225,6 @@ router.get('/tags', function(req, res, next){
     if(err){
       res.send(err);
     }
-    console.log("inside tags");
     res.json(tags);
   });
 });

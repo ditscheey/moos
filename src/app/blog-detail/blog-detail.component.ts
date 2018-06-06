@@ -14,6 +14,7 @@ export class BlogDetailComponent implements OnInit {
   public apiUrl = environment.apiUrl;
   public post;
   public routeInfo;
+  public own_imgs;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public auth: AuthService) {
     route.params.subscribe(params => {
@@ -25,14 +26,18 @@ export class BlogDetailComponent implements OnInit {
 
   ngOnInit() {
     //this.getCms();
+
   }
 
   public getPosts() {
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
       this.post = data[this.routeInfo];
-
-      console.log(data);
+      this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
+        this.own_imgs = data;
+        //console.log(this.own_imgs.find(x => x._id === this.post.img_id));
+      });
     });
+
   }
 
   public updatePost(index) {
