@@ -45,7 +45,8 @@ export class PostBlogComponent implements OnInit {
   public data;
   public routeInfo;
   public img_name;
-  public img_id;
+  public img;
+  public img_index;
   public img_url = this.apiUrl + 'api/blog/image';
   public tag;
 
@@ -60,7 +61,6 @@ export class PostBlogComponent implements OnInit {
 
   }
 
-
   public getTagFromColor() {
     for (let tag of this.tags) {
       if (tag.color === this.color_add) {
@@ -71,33 +71,46 @@ export class PostBlogComponent implements OnInit {
   }
 
   public addPost() {
-  this.tag = this.getTagFromColor();
+    console.log(this.img);
+    this.tag = this.getTagFromColor();
+    if (this.own_imgs) {
+      this.img = this.own_imgs[this.img_index];
+    } else {
+      this.getImgs();
+      this.img = this.own_imgs[this.img_index];
+    }
     let post = {
       'title': this.title,
       'tags': this.tag,
-      'img_id': this.img_id,
-      'img_url': this.img_url + this.img_name,
+      'img_id': this.img._id,
+      'img_url': this.img.path,
       'content': this.content
     };
     console.log(post);
-  this.http.post(this.apiUrl + 'api/post', post).subscribe(err => {
-    console.log(err);
-  })
+    this.http.post(this.apiUrl + 'api/posts', post).subscribe(err => {
+      if (err) {
+        console.log(err);
+      }
+      //this.router.navigate(['/admin']);
+    });
 
   }
 
   public getTags() {
     this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
       this.tags = data;
+
     });
+  }
+  public getImgs(){
     this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
       this.own_imgs = data;
     });
-
   }
 
   ngOnInit() {
     this.getTags();
+    this.getImgs();
   }
 }
 

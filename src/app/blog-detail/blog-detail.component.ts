@@ -15,7 +15,8 @@ export class BlogDetailComponent implements OnInit {
   public post;
   public routeInfo;
   public own_imgs;
-
+  public header;
+ public header_path = "http://localhost:4200/assets/blog/ponte_sisto_rome_italy-wallpaper-2560x1440.jpg";
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public auth: AuthService) {
     route.params.subscribe(params => {
       this.routeInfo = params.id;
@@ -29,24 +30,28 @@ export class BlogDetailComponent implements OnInit {
 
   }
 
+  get getImageUrl() {
+    if (this.post) {
+      console.log(`url("${this.post.form.img_url}")`);
+      return `url("${this.post.form.img_url}")`;
+    }
+
+    return null;
+  }
+
   public getPosts() {
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
       this.post = data[this.routeInfo];
-      this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
-        this.own_imgs = data;
-        //console.log(this.own_imgs.find(x => x._id === this.post.img_id));
-      });
+       //console.log(this.post);
     });
 
   }
 
   public updatePost(index) {
-    console.log("update");
     this.router.navigate(['./blog/post/edit/' + index]);
   }
 
   public deletePost() {
-    console.log(this.post._id);
     this.http.delete(this.apiUrl + 'api/post/' + this.post._id).subscribe(data => {
       this.router.navigate(['./blog/']);
     });

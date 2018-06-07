@@ -7,7 +7,7 @@ const moment = require('moment');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
-
+const uuidv4 = require('uuid/v4');
 
 // declare mongojs & connect
 var mongojs = require('mongojs');
@@ -160,17 +160,21 @@ router.get('/post/:id', function(req, res, next){
 });
 
 // update one post
-router.put('/post/:id',function (req, res){
+router.put('/posts/:id',function (req, res){
   var id = req.params.id;
   console.log(id);
   //console.log(req.body.info2);
   db.posts.findAndModify({
     query: {_id : mongojs.ObjectId(id)},
     update: { $set: {
-        title: req.body.title ,
-        tags: req.body.tags ,
-        img_url: req.body.img_url ,
-        content: req.body.content
+        'form' : {
+          title: req.body.title ,
+          tags: req.body.tags ,
+          img_url: req.body.img_url,
+          img_id: req.body.img_id,
+          content: req.body.content
+        },
+        'time' : req.body.time
       } },
     new: true
   }, function (err, doc, lastErrorObject) {
@@ -252,44 +256,58 @@ router.get('/imgs', function(req, res, next){
   });
 });
 
+router.delete('/imgs/:id', function(req, res, next){
+  console.log("got in imgs delete");
+  var id = req.params.id;
+  console.log(id);
+  db.imgs.remove({_id: mongojs.ObjectId(id)}, function(err, post){
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.json(post);
+  });
+});
+
 
 function getSecondPart(str) {
   return str.split('/')[1];
 }
 
 // Image Endpoint --> blog
-  router.post('/blog/image', function(req, res) {
+  router.post('/imgs', function(req, res) {
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
-
-  console.log(req.files);
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   const sampleFile = req.files.image;
-  console.log(sampleFile.name);
+  //console.log(sampleFile.name);
   // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv('src/assets/blog/'+sampleFile.name , function(err) {
+    //const token = uuidv4() + path.extname(sampleFile.name);
+    const token = sampleFile.name;
+  sampleFile.mv('src/assets/blog/' + token , function(err) {
     if (err)
       return res.status(500).send(err);
 
-    var url = 'http://localhost:4200/assets/blog/' + date.now() + sampleFile.name ;
-    var url_prod = 'http://159.89.19.33/assets/blog/' + date.now() + sampleFile.name;
+    var url = 'http://localhost:4200/assets/blog/' + token;
+    var url_prod = 'http://159.89.19.33/assets/blog/' + token ;
 
       // Create Entry in database to find image afterwards
       const img = {
         'name' : sampleFile.name,
-        'path' : url_prod
-      }
+        'path' : url
+      };
+    console.log(url);
       db.imgs.save(img, function(err, post){
         if(err){
           res.send(err);
         }
+        console.log("img_uploaded");
       });
 
     // Change to Prod | Dev version
     //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
-    console.log(url_prod);
-    //https.get('')
-   res.send(url_prod);
+    console.log(url);
+   res.send(true);
   });
 });
 
@@ -298,7 +316,7 @@ function getSecondPart(str) {
 
 
 //Save Task
-router.post('/post', function(req, res, next){
+router.post('/posts', function(req, res, next){
   //console.log("got here");
   var post = {
     'form': req.body,

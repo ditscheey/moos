@@ -44,6 +44,7 @@ import { ImpressumComponent } from './impressum/impressum.component';
 import { OrderModule } from 'ngx-order-pipe';
 import { TagsComponent } from './tags/tags.component';
 import { ImageOwnComponent } from './image-own/image-own.component';
+import {FilterPipeModule} from 'ngx-filter-pipe';
 
 
 const appRoutes: Routes = [
@@ -100,6 +101,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    FilterPipeModule,
     StarRatingModule,
     MarkdownModule.forRoot(),
     ImageUploadModule.forRoot(),

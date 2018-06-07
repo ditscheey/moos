@@ -35,7 +35,7 @@ export class TagsComponent implements OnInit {
       if (err) {
         console.log(err);
       }
-
+      this.router.navigate(['/admin']);
     });
   }
 }

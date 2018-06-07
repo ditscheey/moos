@@ -1,43 +1,53 @@
+<div class="header "  [ngStyle]="{'background': '#fff url(' + getUrl() + ')'}">
+<br>
 <div class="container">
-
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
-      <h4 class="display-4"><p class="text-center">Post ändern</p></h4>
-    </div>
-    <div class="col-2"></div>
-  </div>
   <br>
+  <div class="container" *ngIf = "post?.form">
+    <div class="card">
+      <div class="card-header " [ngClass]="color_add"><h3 class="display-3 text-center" >{{post?.form.title}}</h3></div>
+      <div class="card-body"><div class="container">
 
-  <div class="row">
-    <div class="form-group col-md-4">
-      <label for="title">Title </label>
-      <input type="text" class="form-control" id="title" placeholder="Title" [(ngModel)]="title" ></div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="title">Title </label>
+            <input type="text" class="form-control" id="title" placeholder="Title" [(ngModel)]="post.form.title" ></div>
 
-    <div class="form-group col-md-4">
-      <label for="tags">Tags</label>
-      <input type="text" class="form-control" id="tags" placeholder="tags" [(ngModel)]="tags">
+          <div class="form-group col-md-4">
+            <label for="tag">Kategorie</label>
+            <select class="form-control optional" id="tag" (onchange)="getTagFromColor()" [(ngModel)]="color_add">
+              <option *ngFor = "let tag of tags" [value]="tag.color" >{{tag.name }}</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="img_url">Header Image</label>
+            <select class="form-control optional" id="img_url"  [(ngModel)]="img_index">
+              <option *ngFor = "let img of own_imgs, index as index" [value]="index" >{{img.name}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="editor block">
+            <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='post.form.content'
+                            [ngModelOptions]="{standalone: true}"></app-ngx-editor>
+          </div>
+        </div>
+        <div class="row"><br></div>
+        <div class="row">
+          <br>
+          <button  type="submit" class=" btn btn-block btn-success" (click)="addPost()" >Post erstellen  </button>
+        </div>
+        <br>
+        <div *ngIf="content" class="htmlblock block">
+          <h6>HTML Output</h6>
+          <p class="lead" [innerHtml]="content"></p>
+        </div>
+      </div>
+      </div>
     </div>
-    <div class="col-md-4 form-group">
-      <image-upload url="{{img_url}}" dropBoxMessage="Header Bild einfügen"></image-upload></div>
   </div>
 
-  <div class="row">
-    <div class="editor block">
-      <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='content'
-                      [ngModelOptions]="{standalone: true}"></app-ngx-editor>
-    </div>
-  </div>
-  <div class="row"><br><br></div>
-  <div class="row">
-    <br><br>
-    <button  type="submit" class=" btn btn-block btn-primary" (click)="updatePost()" >sichern</button>
-  </div>
+
   <br>
-  <div *ngIf="content" class="htmlblock block">
-    <h6>HTML Output</h6>
-    <p class="lead" [innerHtml]="content"></p>
-  </div>
-
-
 </div>

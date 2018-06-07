@@ -17,28 +17,30 @@
 <div class="row ">
   <div class="mx-auto"></div>
 </div>
-
-<div class="row"  >
-  <div class="col-md-7 offset-2" *ngFor="let post of data | orderBy: order : reverse ; index as i" >
-    <div class="card card-inverse" routerLink="post/{{i}}">
-      <div class="card-img-top"></div>
-      <div class="card-header">
-        <h3 class="card-title text-center">{{post?.form.title}} </h3>
-        <p class="pull-right">{{post?.time}}</p>
-      </div>
-      <div class="card-block">
-        <p class="card-text text-center mx-auto"[innerHtml]="post.form.content" ></p>
-      </div>
-      <div class="">
-        <div class="row">
-          <div class="col-md-3 pull-right">
-            <div class="badge-light text-center" > {{ post?.form.tags }}</div>
+<div class="container">
+  <div class="row"  >
+    <div class="col-md-12 " *ngFor="let post of data | orderBy: order : reverse ; index as i" >
+      <div class="card card-inverse"  routerLink="post/{{i}}">
+        <div class="card-img-top ">
+          <img [src]=post?.form.img_url class="img-thumbnail" alt="preview_image">
+        </div>
+        <div class="card-header" [ngClass]="post?.form.tags.color">
+          <h3 class="card-title text-center">{{post?.form.title}} </h3>
+          <p class="pull-right">{{post?.time}}</p>
+        </div>
+        <div class="card-block">
+          <p class="card-text text-center mx-auto"[innerHtml]="post.form.content" ></p>
+        </div>
+        <div class="">
+          <div class="row">
+            <div class="col-md-3 pull-right">
+              <div class="badge-light text-center" > {{ post?.form.tags.name }}</div>
+            </div>
           </div>
-
         </div>
       </div>
+      <br>
     </div>
-    <br>
   </div>
 </div>
 

@@ -12,26 +12,50 @@ export class ImageOwnComponent implements OnInit {
   public apiUrl = environment.apiUrl;
   public tags;
   public own_imgs;
+  public preview;
 
-  // selected id --> to get preview and copy link
-  public img_id;
-
+  public filter = {'name' : ''};
   //upload adress for post request
-  public img_endpoint = this.apiUrl + 'api/blog/image';
+  public img_endpoint = this.apiUrl + 'api/imgs';
   constructor(private http: HttpClient) { }
 
+  public setPreview(index){
+    this.preview = this.own_imgs[index];
+    console.log(this.preview);
+  }
+
+  public deleteImg(index) {
+    let temp = this.own_imgs[index];
+    console.log("temp");
+    console.log(temp);
+    this.http.delete(this.apiUrl + 'api/imgs/' + temp._id).subscribe(err => {
+      if (err) {
+        console.log(err);
+      }
+      this.own_imgs.splice(index, 1);
+      this.preview = null;
+    });
+  }
+
+  public addImg($event) {
+    console.log($event);
+    this.getTags();
+  }
 
   public getTags() {
     this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
       this.tags = data;
     });
+  }
+
+  public getImgs() {
     this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
       this.own_imgs = data;
     });
-
   }
 
   ngOnInit() {
     this.getTags();
+    this.getImgs();
   }
 }

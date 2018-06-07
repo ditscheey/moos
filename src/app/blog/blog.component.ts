@@ -40,6 +40,7 @@ export class BlogComponent implements OnInit {
     return style;
   }
 
+
   setOrder(value: string) {
     if (this.order === value) {
       this.reverse = !this.reverse;
