@@ -1,40 +1,46 @@
 <br><br>
 <!-- using pill badges to navigate -->
-<div class="row ">
-  <div class="mx-auto ">
-    <span class="badge badge-pill badge-dark flex-item text-center" (click)="setOrder('time')"> <p class="lead"> Aktuell</p></span>
-    <span class="badge badge-pill badge-dark flex-item text-center"  (click)="setOrder('form.title')"> <p class="lead">Kommentare</p></span>
-    <span class="badge badge-pill badge-dark  text-center " (click)="setOrder('form.tags')"> <p class="lead">Top Bewertet</p></span>
-    <span class="badge badge-pill flex-item text-center" *ngFor="let tag of tags, index as i" [ngClass]="convertBadge(i)" (click)="setFilter(tag.name)"> <p class="lead">{{tag?.name}}</p></span>
-  </div><!--
-      <span class="badge badge-pill badge-primary text-center"  (click)="setOrder('time')"> <p class="lead">Reisen</p></span>
-      <span class="badge badge-pill badge-danger text-center" (click)="setOrder('form.title')"> <p class="lead">Kulinarisch</p></span>
-      <span class="badge badge-pill badge-success text-center " (click)="setOrder('form.tags')"> <p class="lead">tags</p></span>
-  </div> -->
+<div class="container">
+  <div class="row ">
+    <div class="col-md-3 ">
+      <span class="badge badge-pill badge-dark flex-item text-center" (click)="setOrder('time')"> <p class="lead"> Aktuell</p></span>
+      <span class="badge badge-pill badge-dark flex-item text-center"  (click)="setOrder('form.title')"> <p class="lead">Kommentare</p></span>
+    </div>
+    <div class="col-md-6" >
+      <span class="badge badge-pill flex-item text-center"
+            *ngFor="let tag of tags, index as i" [ngClass]="convertBadge(i)" (click)="setFilter(tag.name)">
+        <p class="lead">{{tag?.name}}</p></span>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Filtern: </span>
+        </div>
+        <input type="text" class="form-control" [(ngModel)]="filter.form.title">
+      </div>
 
+    </div>
+  </div>
 </div>
 <br>
-<div class="row ">
-  <div class="mx-auto"></div>
-</div>
 <div class="container">
   <div class="row"  >
-    <div class="col-md-12 " *ngFor="let post of data | orderBy: order : reverse ; index as i" >
+    <div class="col-md-4 " *ngFor="let post of data | orderBy: order : reverse | filterBy: filter; index as i" >
       <div class="card card-inverse"  routerLink="post/{{i}}">
+        <div class="card-header" >
+          <h5 class="text-center">{{post?.form.title}} </h5>
+        </div>
         <div class="card-img-top ">
-          <img [src]=post?.form.img_url class="img-thumbnail" alt="preview_image">
+          <img [src]=post?.form.img_url class="img-thumbnail " style="opacity: 0.9"  alt="preview_image">
         </div>
-        <div class="card-header" [ngClass]="post?.form.tags.color">
-          <h3 class="card-title text-center">{{post?.form.title}} </h3>
-          <p class="pull-right">{{post?.time}}</p>
-        </div>
-        <div class="card-block">
-          <p class="card-text text-center mx-auto"[innerHtml]="post.form.content" ></p>
-        </div>
-        <div class="">
+
+        <div class="card-footer " [ngClass]="post?.form.tags.color">
           <div class="row">
-            <div class="col-md-3 pull-right">
-              <div class="badge-light text-center" > {{ post?.form.tags.name }}</div>
+            <div class="col-md-6">
+              <p class="lead " > {{ post?.form.tags.name }}</p>
+            </div>
+            <div class="col-md-6">
+              <p class="lead text-right" > {{ post?.time }}</p>
             </div>
           </div>
         </div>
@@ -43,7 +49,6 @@
     </div>
   </div>
 </div>
-
-  <div class="row"><br><br></div>
+<div class="row"><br><br></div>
 
 

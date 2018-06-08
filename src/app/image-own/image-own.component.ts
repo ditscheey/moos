@@ -13,21 +13,20 @@ export class ImageOwnComponent implements OnInit {
   public tags;
   public own_imgs;
   public preview;
-
+  public clipboard;
   public filter = {'name' : ''};
   //upload adress for post request
   public img_endpoint = this.apiUrl + 'api/imgs';
   constructor(private http: HttpClient) { }
 
-  public setPreview(index){
+  public setPreview(index) {
     this.preview = this.own_imgs[index];
-    console.log(this.preview);
+    //console.log(this.preview);
   }
 
   public deleteImg(index) {
     let temp = this.own_imgs[index];
-    console.log("temp");
-    console.log(temp);
+
     this.http.delete(this.apiUrl + 'api/imgs/' + temp._id).subscribe(err => {
       if (err) {
         console.log(err);

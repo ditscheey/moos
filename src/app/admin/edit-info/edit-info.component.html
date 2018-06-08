@@ -1,80 +1,83 @@
-<div class="custom-bg">
-  <div class="row">
-    <div class="col-md-6">
-      <img src="http://159.89.19.33/assets/imgs/terasse.JPG" alt="" class="img-thumbnail">
+<br><div class="container">
+  <div class="custom-bg">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="http://159.89.19.33/assets/imgs/terasse.JPG" alt="" class="img-thumbnail">
+      </div>
+      <div class="col-md-6">
+        <h4 class="h1 text-center"><i class="fa fa-info" aria-hidden="true"></i>   Allgemeine Informationen</h4>
+        <p routerLink="info1" class="lead" [innerHtml]="info1"> </p><br>
+        <p routerLink="info2" class="lead" [innerHtml]="info2"> </p>
+      </div>
+
     </div>
-    <div class="col-md-6">
-      <h4 class="h1 text-center"><i class="fa fa-info" aria-hidden="true"></i>   Allgemeine Informationen</h4>
-      <p routerLink="info1" class="lead" [innerHtml]="info1"> </p><br>
-      <p routerLink="info2" class="lead" [innerHtml]="info2"> </p>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="h1 text-center"><i class="fa fa-gears" aria-hidden="true"></i>   Ausstattung</h4>
+      </div>
+      <div class="col-md-3">
+        <ul class="list-group">
+          <li class="list-group-item d-flex"> <i class="fa fa-bed" aria-hidden="true"></i>    &nbsp;1 Doppelbett (1,80 × 2 m) und eine Schlafcouch</li>
+          <li class="list-group-item "> <i class="fa fa-cutlery" aria-hidden="true"></i>  Küche</li>
+          <li class="list-group-item "> <i class="fa fa-paw" aria-hidden="true"></i>  Haustiere erlaubt</li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="list-group">
+          <li class="list-group-item "> <i class="fa fa-wifi" aria-hidden="true"></i>  Wlan</li>
+          <li class="list-group-item "> <i class="fa fa-car" aria-hidden="true"></i>  kostenloser Parkplatz</li>
+          <li class="list-group-item "> <i class="fa fa-television" aria-hidden="true"></i>  Kabelfernsehen</li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="list-group">
+          <li class="list-group-item "> <i class="fa fa-thermometer-2 " aria-hidden="true"></i>  Heizung</li>
+          <li class="list-group-item "> <i class="fa fa-star-o" aria-hidden="true"></i>  Wesentliches </li>
+          <li class="list-group-item "> <i class="fa fa-shower " aria-hidden="true"></i>  Wc mit Dusche </li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="list-group">
+          <li class="list-group-item "> <i class="fa fa-plug" aria-hidden="true"></i>  Föhn</li>
+          <li class="list-group-item "> <i class="fa fa-laptop" aria-hidden="true"></i>  Arbeitsplatz für Laptops geeignet </li>
+          <li class="list-group-item "> <i class="fa fa-key" aria-hidden="true"></i>  Privater Eingang </li>
+        </ul>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-8">
+        <h4 class="h1 text-center"><i class="fa fa-bank" aria-hidden="true"></i>   Markt Murnau</h4>
+        <p class="lead" [innerHtml]="markt" routerLink="markt"></p><br>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-info list-group-item-heading" style="background-color: #007BFF; color:white">Hausregeln</li>
+          <li class="list-group-item">Rauchen ist nicht erlaubt, jedoch auf der Terrasse gerne</li>
+          <li class="list-group-item">keine Parties oder Veranstaltungen</li>
+          <li class="list-group-item">nicht geeignet für Kinder (0 - 12 Jahren)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="h1 text-center"><i class="fa fa-map-o" aria-hidden="true"></i>   Die Nachbarschaft</h4>
+        <p class="lead" [innerHtml]="nachbarschaft1" routerLink="nachbarschaft1"></p>
+      </div>
+      <div class="col-md-6">
+        <h4 class="h1 text-center">wo <i class="fa fa-question" aria-hidden="true"></i>   </h4>
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        </agm-map>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <p class="lead"  [innerHtml]="nachbarschaft2" routerLink="nachbarschaft2"></p>
+      </div>
     </div>
 
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-12">
-      <h4 class="h1 text-center"><i class="fa fa-gears" aria-hidden="true"></i>   Ausstattung</h4>
-    </div>
-    <div class="col-md-3">
-      <ul class="list-group">
-        <li class="list-group-item d-flex"> <i class="fa fa-bed" aria-hidden="true"></i>    &nbsp;1 Doppelbett (1,80 × 2 m) und eine Schlafcouch</li>
-        <li class="list-group-item "> <i class="fa fa-cutlery" aria-hidden="true"></i>  Küche</li>
-        <li class="list-group-item "> <i class="fa fa-paw" aria-hidden="true"></i>  Haustiere erlaubt</li>
-      </ul>
-    </div>
-    <div class="col-md-3">
-      <ul class="list-group">
-        <li class="list-group-item "> <i class="fa fa-wifi" aria-hidden="true"></i>  Wlan</li>
-        <li class="list-group-item "> <i class="fa fa-car" aria-hidden="true"></i>  kostenloser Parkplatz</li>
-        <li class="list-group-item "> <i class="fa fa-television" aria-hidden="true"></i>  Kabelfernsehen</li>
-      </ul>
-    </div>
-    <div class="col-md-3">
-      <ul class="list-group">
-        <li class="list-group-item "> <i class="fa fa-thermometer-2 " aria-hidden="true"></i>  Heizung</li>
-        <li class="list-group-item "> <i class="fa fa-star-o" aria-hidden="true"></i>  Wesentliches </li>
-        <li class="list-group-item "> <i class="fa fa-shower " aria-hidden="true"></i>  Wc mit Dusche </li>
-      </ul>
-    </div>
-    <div class="col-md-3">
-      <ul class="list-group">
-        <li class="list-group-item "> <i class="fa fa-plug" aria-hidden="true"></i>  Föhn</li>
-        <li class="list-group-item "> <i class="fa fa-laptop" aria-hidden="true"></i>  Arbeitsplatz für Laptops geeignet </li>
-        <li class="list-group-item "> <i class="fa fa-key" aria-hidden="true"></i>  Privater Eingang </li>
-      </ul>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-md-8">
-      <h4 class="h1 text-center"><i class="fa fa-bank" aria-hidden="true"></i>   Markt Murnau</h4>
-      <p class="lead" [innerHtml]="markt" routerLink="markt"></p><br>
-    </div>
-    <div class="col-md-4">
-      <ul class="list-group">
-        <li class="list-group-item list-group-item-info list-group-item-heading" style="background-color: #007BFF; color:white">Hausregeln</li>
-        <li class="list-group-item">Rauchen ist nicht erlaubt, jedoch auf der Terrasse gerne</li>
-        <li class="list-group-item">keine Parties oder Veranstaltungen</li>
-        <li class="list-group-item">nicht geeignet für Kinder (0 - 12 Jahren)</li>
-      </ul>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <h4 class="h1 text-center"><i class="fa fa-map-o" aria-hidden="true"></i>   Die Nachbarschaft</h4>
-      <p class="lead" [innerHtml]="nachbarschaft1" routerLink="nachbarschaft1"></p>
-    </div>
-    <div class="col-md-6">
-      <h4 class="h1 text-center">wo <i class="fa fa-question" aria-hidden="true"></i>   </h4>
-      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
-        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-      </agm-map>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <p class="lead"  [innerHtml]="nachbarschaft2" routerLink="nachbarschaft2"></p>
-    </div>
   </div>
 
 </div>

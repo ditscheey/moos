@@ -50,6 +50,7 @@ export class PostBlogComponent implements OnInit {
   public img_url = this.apiUrl + 'api/blog/image';
   public tag;
 
+  public endpoint = this.apiUrl + 'api/imgs';
   public own_imgs;
   public color_add;
   public name;
@@ -86,14 +87,20 @@ export class PostBlogComponent implements OnInit {
       'img_url': this.img.path,
       'content': this.content
     };
+    this.setImgClass();
     console.log(post);
     this.http.post(this.apiUrl + 'api/posts', post).subscribe(err => {
       if (err) {
         console.log(err);
       }
-      //this.router.navigate(['/admin']);
+      this.router.navigate(['/blog']);
     });
 
+  }
+
+  public setImgClass() {
+    let re = /<img /gi;
+    this.content = this.content.replace(re,'<img class="img-fluid" ');
   }
 
   public getTags() {

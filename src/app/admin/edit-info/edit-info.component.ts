@@ -33,15 +33,16 @@ export class EditInfoComponent implements OnInit {
   ngOnInit() {
     this.getInfo();
   }
-getInfo (){
+getInfo () {
     this.http.get(this.apiUrl + 'api/info').subscribe( data =>   {
      // this.info1 = data.info1;
-      this.data = data;
+      this.data = data[1];
       this.info1 = this.data.info1;
       this.info2 = this.data.info2;
       this.markt = this.data.markt;
       this.nachbarschaft1 = this.data.nachbarschaft1;
       this.nachbarschaft2 = this.data.nachbarschaft2;
+
     });
 }
 }

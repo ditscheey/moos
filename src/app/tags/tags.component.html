@@ -1,5 +1,6 @@
-<br><div class="container">
-  <div class="card  ">
+<br>
+<div class="container" *ngIf="tags_upd">
+  <div class="card  " >
     <div class="card-header " [ngClass]="color"><h3 class="display-3 text-center" >Kategorie hinzufügen</h3></div>
     <br>
     <div class="card-body">
@@ -15,13 +16,13 @@
             <div class="form-group">
               <label for="color">Farbe auswählen</label>
               <select class="form-control "  id="color" [(ngModel)]="color"  >
-                <option selected = "selected" value="bg-primary">primary</option>
-                <option  value="bg-secondary">secondary</option>
-                <option  value="bg-info">info</option>
-                <option  value="bg-white">white</option>
-                <option  value="bg-danger">danger</option>
-                <option  value="bg-warning">warning</option>
-                <option  value="bg-light">light</option>
+                <option selected = "selected" value="bg-primary" *ngIf="filterColors()">primary</option>
+                <option  value="bg-secondary" *ngIf="filterColors()">secondary</option>
+                <option  value="bg-info" *ngIf="filterColors()">info</option>
+                <option  value="bg-white" *ngIf="filterColors()">white</option>
+                <option  value="bg-danger" *ngIf="filterColors()">danger</option>
+                <option  value="bg-warning" *ngIf="filterColors()">warning</option>
+                <option  value="bg-light" *ngIf="filterColors()">light</option>
               </select>
             </div>
           </div>
@@ -30,8 +31,22 @@
             <button  id="bt" type="submit" class=" btn btn-block btn-primary"  (click)="addTag()"><i class="fa fa-add" aria-hidden="true"></i> hinzufügen</button>
           </div>
         </div>
+
+        <div class="row" *ngIf="tags_upd">
+          <div class="form-group col-md-6">
+            <label for="tag">Kategorie</label>
+            <select class="form-control optional" id="tag" (onchange)="getTagFromColorUpd()" [(ngModel)]="color">
+              <option *ngFor = "let tag of tags_upd" [value]="tag.color" >{{tag.name }}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="bt_up">&nbsp;</label>
+            <button  id="bt_up" type="submit" class=" btn btn-block btn-info"  (click)="updateTag()"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> update</button>
+          </div>
+        </div>
       </div>
     </div>
-
   </div>
 </div>
+
+

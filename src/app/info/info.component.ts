@@ -19,6 +19,7 @@ export class InfoComponent implements OnInit {
   public nachbarschaft2;
   public data;
   public gallery;
+  public headings;
 
   lat: number = 47.66332;
   lng: number = 11.20835;
@@ -28,15 +29,17 @@ export class InfoComponent implements OnInit {
     private router: Router,
     private http: HttpClient
   ) { }
-  getInfo (){
+  getInfo () {
     this.http.get(this.apiUrl + 'api/info').subscribe( data =>   {
       // this.info1 = data.info1;
-      this.data = data;
+      this.data = data[1];
       this.info1 = this.data.info1;
       this.info2 = this.data.info2;
       this.markt = this.data.markt;
       this.nachbarschaft1 = this.data.nachbarschaft1;
       this.nachbarschaft2 = this.data.nachbarschaft2;
+
+      this.headings = data[0];
     });
   }
   ngOnInit() {

@@ -45,6 +45,9 @@ import { OrderModule } from 'ngx-order-pipe';
 import { TagsComponent } from './tags/tags.component';
 import { ImageOwnComponent } from './image-own/image-own.component';
 import {FilterPipeModule} from 'ngx-filter-pipe';
+import {ClipboardModule} from 'ngx-clipboard';
+import { HeadingInfoComponent } from './heading-info/heading-info.component';
+import {IconPickerModule} from 'ngx-icon-picker';
 
 
 const appRoutes: Routes = [
@@ -91,7 +94,8 @@ const appRoutes: Routes = [
     EditBlogPostComponent,
     ImpressumComponent,
     TagsComponent,
-    ImageOwnComponent
+    ImageOwnComponent,
+    HeadingInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -102,10 +106,12 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FilterPipeModule,
+    ClipboardModule,
     StarRatingModule,
     MarkdownModule.forRoot(),
     ImageUploadModule.forRoot(),
     Daterangepicker,
+    IconPickerModule,
     NgbModule.forRoot(),
     OrderModule,
     AgmCoreModule.forRoot({

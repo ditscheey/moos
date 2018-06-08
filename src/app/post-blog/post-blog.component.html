@@ -1,15 +1,15 @@
 <br>
-<div class="container">
+<div class="container" (onchange)="setImgClass()">
   <div class="card">
     <div class="card-header " [ngClass]="color_add"><h3 class="display-3 text-center" >Post erstellen</h3></div>
     <div class="card-body"><div class="container">
 
       <div class="row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
           <label for="title">Title </label>
           <input type="text" class="form-control" id="title" placeholder="Title" [(ngModel)]="title" ></div>
 
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
           <label for="tag">Kategorie</label>
           <select class="form-control optional" id="tag" (onchange)="getTagFromColor()" [(ngModel)]="color_add">
             <option *ngFor = "let tag of tags" [value]="tag.color" >{{tag.name }}</option>
@@ -22,11 +22,18 @@
             <option *ngFor = "let img of own_imgs, index as index" [value]="index" >{{img.name}}</option>
           </select>
         </div>
+
+        <div class="col-md-2 form-group">
+          <label for="imgClass">Bilder </label>
+          <button  type="submit" class=" btn btn-block btn-primary" id="imgClass" (click)="setImgClass()" >skalieren  </button>
+
+        </div>
       </div>
 
       <div class="row">
         <div class="editor block">
-          <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='content'
+          <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true"
+                          [(ngModel)]='content' [imageEndPoint]="endpoint"
                           [ngModelOptions]="{standalone: true}"></app-ngx-editor>
         </div>
       </div>

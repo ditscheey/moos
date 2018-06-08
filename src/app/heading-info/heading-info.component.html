@@ -1,0 +1,42 @@
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="display-4 "><p class="text-center">Überschriften </p></h5>
+        </div>
+        <div class="card-body" *ngIf="raw">
+          <ul class="list-group ">
+            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h1"></li>
+            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h2"></li>
+            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h3"></li>
+            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h4"></li>
+            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h5"></li>
+            <li class="list-group-item"><button class="btn btn-block btn-primary"  (click)="updateHeadings()">speichern</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="display-4 "><p class="text-center">Austattung </p></h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Kabelfernsehen" [(ngModel)]="gear">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button" (click)="addGear()">Hinzufügen</button>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item" *ngFor="let gear of gears, index as index" >{{gear | async}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

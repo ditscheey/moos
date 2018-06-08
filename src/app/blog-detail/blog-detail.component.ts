@@ -16,7 +16,9 @@ export class BlogDetailComponent implements OnInit {
   public routeInfo;
   public own_imgs;
   public header;
- public header_path = "http://localhost:4200/assets/blog/ponte_sisto_rome_italy-wallpaper-2560x1440.jpg";
+
+
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public auth: AuthService) {
     route.params.subscribe(params => {
       this.routeInfo = params.id;

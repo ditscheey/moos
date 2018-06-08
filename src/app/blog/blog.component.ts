@@ -21,6 +21,11 @@ export class BlogComponent implements OnInit {
 
   public order = 'time';
   public reverse = false;
+  public filter_input = null;
+  public filter = {'form' : {
+      'title' : '',
+      'tags' : '',
+    }};
 
   constructor(private route: ActivatedRoute, private http: HttpClient , private router: Router, private orderPipe: OrderPipe) {
     console.log(this.orderPipe.transform(this.data, this.order));

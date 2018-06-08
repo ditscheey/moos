@@ -109,7 +109,7 @@ router.get('/info',function (req, res){
     if(err){
       res.send("Error found while loading the Data");
     }
-    res.json(info[0]);
+    res.json(info);
   });
 });
 
@@ -136,6 +136,30 @@ router.put('/cms',function (req, res){
    // console.log(doc);
   });
 });
+
+//update new Heading
+router.put('/cms/headings/',function (req, res){
+  var id = req.body.id;
+  var data = req.body;
+  //console.log(req.body.info2);
+  db.cms.findAndModify({
+    query: {_id : mongojs.ObjectId(id)},
+    update: { $set: {
+        h1: req.body.h1 ,
+        h2: req.body.h2 ,
+        h3: req.body.h3 ,
+        h4: req.body.h4 ,
+        h5: req.body.h5,
+        gears: req.body.gears
+         } },
+    new: true
+  }, function (err, doc, lastErrorObject) {
+    // doc.tag === 'maintainer'
+    //console.log("got here");
+    // console.log(doc);
+  });
+});
+
 
 // Get all post
 router.get('/posts', function(req, res, next){
@@ -233,6 +257,26 @@ router.get('/tags', function(req, res, next){
   });
 });
 
+router.put('/tags/:id',function (req, res){
+  var id = req.params.id;
+
+  //console.log(req.body.info2);
+  db.tags.findAndModify({
+    query: {_id : mongojs.ObjectId(id)},
+    update: { $set: {
+        'name' : req.body.name,
+        'color': req.body.color
+      } },
+    new: true
+  }, function (err, doc, lastErrorObject) {
+    // doc.tag === 'maintainer'
+    //console.log("got here");
+    // console.log(doc);
+    res.json(doc);
+  });
+});
+
+
 router.delete('/tags/:id', function(req, res, next){
   console.log("got in tags delete");
   var id = req.params.id;
@@ -279,7 +323,7 @@ function getSecondPart(str) {
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  const sampleFile = req.files.image;
+  const sampleFile = req.files.image || req.files.file;
   //console.log(sampleFile.name);
   // Use the mv() method to place the file somewhere on your server
     //const token = uuidv4() + path.extname(sampleFile.name);
@@ -307,7 +351,7 @@ function getSecondPart(str) {
     // Change to Prod | Dev version
     //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
     console.log(url);
-   res.send(true);
+   res.json(url);
   });
 });
 
