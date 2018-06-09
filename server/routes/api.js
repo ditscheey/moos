@@ -345,7 +345,7 @@ function getSecondPart(str) {
   // Use the mv() method to place the file somewhere on your server
     //const token = uuidv4() + path.extname(sampleFile.name);
     const token = sampleFile.name;
-  sampleFile.mv('src/assets/blog/' + token , function(err) {
+  sampleFile.mv('dist/assets/blog/' + token , function(err) {
     if (err)
       return res.status(500).send(err);
 
@@ -355,7 +355,7 @@ function getSecondPart(str) {
       // Create Entry in database to find image afterwards
       const img = {
         'name' : sampleFile.name,
-        'path' : url
+        'path' : url_prod
       };
     console.log(url);
       db.imgs.save(img, function(err, post){
@@ -367,8 +367,8 @@ function getSecondPart(str) {
 
     // Change to Prod | Dev version
     //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
-    console.log(url);
-   res.json(url);
+
+   res.json(url_prod);
   });
 });
 
