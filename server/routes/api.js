@@ -270,10 +270,27 @@ router.put('/tags/:id',function (req, res){
     new: true
   }, function (err, doc, lastErrorObject) {
     // doc.tag === 'maintainer'
-    //console.log("got here");
     // console.log(doc);
+
+    // update existing blog posts
+    //console.log(req.body.info2);
+    db.posts.findAndModify({
+      query: {'posts.tags._id': mongojs.ObjectId(id)},
+
+      update: { $set: {
+          'tags.name' : req.body.name,
+          'tags.color': req.body.color
+        } },
+      new: true
+    }, function (err, doc, lastErrorObject) {
+      // doc.tag === 'maintainer'
+       console.log(err);
+       console.log(doc);
+
+    });
     res.json(doc);
   });
+
 });
 
 
@@ -400,6 +417,77 @@ router.put('/post/:id', function(req, res, next){
   }
 });
 
+/////
+//Begin Gears Api
+/////
+router.get('/gears',function (req, res){
+  db.gears.find(function (err, gears){
+    if(err){
+      res.send("Error found while loading the Data");
+    }
+    res.json(gears);
+  });
+});
+
+
+//Save Task
+router.post('/gears', function(req, res, next){
+  console.log(req.body);
+  var gear = {
+    'name': req.body.name,
+    'icon': req.body.icon,
+    'position': req.body.position
+  };
+  if(!gear.name){
+    res.status(400);
+    res.json({
+      "error": "Bad Data"
+    });
+  } else {
+    db.gears.save(gear, function(err, gear){
+      if(err){
+        res.send(err);
+      }
+      res.json(gear);
+    });
+  }
+});
+
+
+// Update gear
+router.put('/gears/:id',function (req, res){
+  var id = req.params.id;
+  //console.log(req.body.info2);
+  db.gears.findAndModify({
+    query: {_id : mongojs.ObjectId(id)},
+    update: { $set: {
+        'icon' : req.body.icon,
+        'name': req.body.name
+      } },
+    new: true
+  }, function (err, doc, lastErrorObject) {
+    // doc.tag === 'maintainer'
+    //console.log("got here");
+    // console.log(doc);
+    res.json(doc);
+  });
+});
+
+
+/// delete
+router.delete('/gears/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log(id);
+  db.gears.remove({_id: mongojs.ObjectId(id)}, function(err, gears){
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.json(gears);
+  });
+});
+
+
 //Begin für Bookings api
 
 router.get('/bookings',function (req, res){
@@ -414,8 +502,6 @@ router.get('/bookings',function (req, res){
   });
 });
 
-
-
 ///        delete Booking
 router.delete('/bookings/:id', function(req, res, next){
   var id = req.params.id;
@@ -427,7 +513,6 @@ router.delete('/bookings/:id', function(req, res, next){
     }
     res.json(bookings);
   });
-
 });
 
 //Save Task

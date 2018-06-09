@@ -13,23 +13,25 @@ import {AuthService} from '../auth.service';
 export class BlogDetailComponent implements OnInit {
   public apiUrl = environment.apiUrl;
   public post;
+  public posts;
   public routeInfo;
   public own_imgs;
   public header;
-
-
+  public url;
+  public ident;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public auth: AuthService) {
     route.params.subscribe(params => {
       this.routeInfo = params.id;
-
+      this.url = 'http://localhost:4200/blog/post/#!newthread';
+      console.log(this.url);
     });
     this.getPosts();
   }
 
   ngOnInit() {
     //this.getCms();
-
+    this.getPosts();
   }
 
   get getImageUrl() {
@@ -43,8 +45,9 @@ export class BlogDetailComponent implements OnInit {
 
   public getPosts() {
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
-      this.post = data[this.routeInfo];
-       //console.log(this.post);
+      this.posts = data;
+     var temp = this.posts.filter(x => x._id === this.routeInfo);
+       this.post = temp[0];
     });
 
   }

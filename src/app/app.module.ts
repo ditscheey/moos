@@ -48,6 +48,10 @@ import {FilterPipeModule} from 'ngx-filter-pipe';
 import {ClipboardModule} from 'ngx-clipboard';
 import { HeadingInfoComponent } from './heading-info/heading-info.component';
 import {IconPickerModule} from 'ngx-icon-picker';
+import {DisqusModule} from 'ngx-disqus';
+import {GearService} from './gear.service';
+import {CalendarModule} from 'angular-calendar';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 const appRoutes: Routes = [
@@ -69,7 +73,8 @@ const appRoutes: Routes = [
   { path: 'blog/post/:id', component: BlogDetailComponent},
   { path: 'blog/post/edit/:id', component: EditBlogPostComponent},
   { path: 'blog/post', component: PostBlogComponent},
-  { path: 'callback', component: CallbackComponent }
+  { path: 'callback', component: CallbackComponent },
+  { path: 'calendar', component: CalendarComponent }
 
 ];
 @NgModule({
@@ -95,7 +100,8 @@ const appRoutes: Routes = [
     ImpressumComponent,
     TagsComponent,
     ImageOwnComponent,
-    HeadingInfoComponent
+    HeadingInfoComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -113,16 +119,20 @@ const appRoutes: Routes = [
     Daterangepicker,
     IconPickerModule,
     NgbModule.forRoot(),
+    CalendarModule.forRoot(),
     OrderModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDsNMb4RG2O66JAEHYPLcw_RwAG6yzcuJQ'
     }),
+    DisqusModule.forRoot( 'studiomurnauermoos'),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [AuthGuardService, AdminGuardService, AuthService],
+  providers: [AuthGuardService, AdminGuardService, AuthService, GearService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  private static CalendarModule: any;
+}

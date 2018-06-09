@@ -1,42 +1,45 @@
 <br>
 <div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="display-4 "><p class="text-center">Überschriften </p></h5>
-        </div>
-        <div class="card-body" *ngIf="raw">
-          <ul class="list-group ">
-            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h1"></li>
-            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h2"></li>
-            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h3"></li>
-            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h4"></li>
-            <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h5"></li>
-            <li class="list-group-item"><button class="btn btn-block btn-primary"  (click)="updateHeadings()">speichern</button></li>
-          </ul>
-        </div>
-      </div>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="display-4 "><p class="text-center">{{h2}} </p></h5>
     </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="display-4 "><p class="text-center">Austattung </p></h5>
-        </div>
-        <div class="card-body">
-          <ul class="list-group">
-            <li class="list-group-item">
+    <div class="card-body">
+      <ul class="list-group" >
+        <li class="list-group-item bg-primary">
+          <div class="row">
+            <div class="col-md-2">
+              <label for="ic"></label>
+              <span class="input-group-text" id="ic"><i [ngClass]="newIcon"></i> </span>
+            </div>
+            <div class="col-md-10">
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Kabelfernsehen" [(ngModel)]="gear">
+                <input type="text" id="gear" class="form-control" placeholder="z.B 'Kabelfernsehen' -> icon nächstes Feld" [(ngModel)]="gear">
                 <div class="input-group-append">
-                  <button class="btn btn-primary" type="button" (click)="addGear()">Hinzufügen</button>
+                  <input [iconPicker]="newIcon" id=picker size="10"  class="form-control"   [ipPosition]="'bottom'"  [ipPlaceHolder]="newIcon"
+                         [ipFallbackIcon]="fallbackIcon" (iconPickerSelect)="onIconPickerSelect($event)"/>
+                  <button *ngIf="!update?.id" class="btn btn-info" type="button" (click)="addGear()">hinzufügen</button>
+                  <button *ngIf="update?.id" class="btn btn-success" type="button" (click)="updateGear(update?.id, update?.index)">ändern</button>
                 </div>
               </div>
-            </li>
-            <li class="list-group-item" *ngFor="let gear of gears, index as index" >{{gear | async}}</li>
-          </ul>
-        </div>
-      </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item"  *ngFor="let gear of gears, index as index" >
+          <div class="row">
+            <div class="col-md-1">
+              <span class="input-group-text"><i [ngClass]="gear.icon"> </i>&nbsp;</span>
+            </div>
+            <div class="col-md-6 my-auto text-center"><p class="lead" >{{gear.name}}</p></div>
+            <div class="col-md-2"><button class="btn btn-outline-primary btn-block" (click)="setFlag(gear?._id, index)">ändern&nbsp;<i class="fa fa-circle-o-notch"  aria-hidden="true"></i></button></div>
+            <div class="col-md-3"><button class="btn btn-outline-danger btn-block" (click)="deleteGear(gear?._id, index)">löschen&nbsp;<i class="fa fa-close"  aria-hidden="true"></i></button></div>
+          </div>
+        </li>
+
+
+      </ul>
     </div>
   </div>
-</div>
+    </div>
+<br>

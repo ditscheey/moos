@@ -1,7 +1,7 @@
 <br>
 <div class="container" *ngIf="tags_upd">
   <div class="card  " >
-    <div class="card-header " [ngClass]="color"><h3 class="display-3 text-center" >Kategorie hinzufügen</h3></div>
+    <div class="card-header " [ngClass]="color"><h3 class="display-3 text-center" >Kategorie </h3></div>
     <br>
     <div class="card-body">
       <div class="container">
@@ -16,32 +16,35 @@
             <div class="form-group">
               <label for="color">Farbe auswählen</label>
               <select class="form-control "  id="color" [(ngModel)]="color"  >
-                <option selected = "selected" value="bg-primary" *ngIf="filterColors()">primary</option>
-                <option  value="bg-secondary" *ngIf="filterColors()">secondary</option>
-                <option  value="bg-info" *ngIf="filterColors()">info</option>
-                <option  value="bg-white" *ngIf="filterColors()">white</option>
-                <option  value="bg-danger" *ngIf="filterColors()">danger</option>
-                <option  value="bg-warning" *ngIf="filterColors()">warning</option>
-                <option  value="bg-light" *ngIf="filterColors()">light</option>
+                <option selected = "selected" value="bg-primary"  >primary</option>
+                <option  value="bg-secondary" >secondary</option>
+                <option  value="bg-info" >info</option>
+                <option  value="bg-danger" >danger</option>
+                <option  value="bg-warning" >warning</option>
+                <option  value="bg-light" >light</option>
               </select>
             </div>
           </div>
           <div class="col-md-4">
             <label for="bt">&nbsp;</label>
-            <button  id="bt" type="submit" class=" btn btn-block btn-primary"  (click)="addTag()"><i class="fa fa-add" aria-hidden="true"></i> hinzufügen</button>
+            <button  id="bt" *ngIf="!update?.id" type="submit" class=" btn btn-block btn-primary"  (click)="addTag()"><i class="fa fa-add" aria-hidden="true"></i> hinzufügen</button>
+            <button  *ngIf="update?.id" id="bt2" type="submit" class=" btn btn-block btn-info"  (click)="updateTag(update?.id,update?.index)"><i class="fa fa-add" aria-hidden="true"></i> ändern</button>
           </div>
         </div>
-
-        <div class="row" *ngIf="tags_upd">
-          <div class="form-group col-md-6">
-            <label for="tag">Kategorie</label>
-            <select class="form-control optional" id="tag" (onchange)="getTagFromColorUpd()" [(ngModel)]="color">
-              <option *ngFor = "let tag of tags_upd" [value]="tag.color" >{{tag.name }}</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="bt_up">&nbsp;</label>
-            <button  id="bt_up" type="submit" class=" btn btn-block btn-info"  (click)="updateTag()"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i> update</button>
+      <div class="row">
+        <h5 class="display-4 mx-auto">bereits vorhanden</h5>
+      </div>
+        <div class="row" *ngIf="tags_upd" >
+          <div class="col-md-12">
+            <ul class="list-group">
+              <li class="list-group-item"  *ngFor="let tag of tags_upd, index as index" >
+                <div class="row">
+                  <div class="col-md-7 my-auto text-center"><h5 class="display-5" [ngClass]="showUsed(tag.color)">{{tag.name}}</h5>         </div>
+                  <div class="col-md-2"><button class="btn btn-outline-primary btn-block" (click)="setFlag(tag?._id, index)">ändern &nbsp;<i class="fa fa-circle-o-notch"  aria-hidden="true"></i></button></div>
+                  <div class="col-md-3"><button class="btn btn-outline-danger btn-block" (click)="deleteTag(tag?._id, index)">löschen &nbsp;<i class="fa fa-close"  aria-hidden="true"></i></button></div>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>

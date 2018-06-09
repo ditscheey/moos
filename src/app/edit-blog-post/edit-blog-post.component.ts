@@ -50,6 +50,7 @@ export class EditBlogPostComponent implements OnInit {
   public img_url = this.apiUrl + 'api/blog/image';
   public tag;
 
+
   public own_imgs;
   public color_add;
   public name;

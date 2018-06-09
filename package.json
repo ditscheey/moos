@@ -25,6 +25,7 @@
     "@angular/router": "^5.2.7",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0",
     "@types/jquery": "^3.3.0",
+    "angular-calendar": "^0.24.1",
     "angular-star-rating": "^3.0.8",
     "angular2-image-upload": "^1.0.0-rc.1",
     "auth0-js": "^9.3.1",

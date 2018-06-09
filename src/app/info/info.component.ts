@@ -21,6 +21,8 @@ export class InfoComponent implements OnInit {
   public gallery;
   public headings;
 
+  public gear_counter;
+  public gears;
   lat: number = 47.66332;
   lng: number = 11.20835;
 
@@ -29,6 +31,7 @@ export class InfoComponent implements OnInit {
     private router: Router,
     private http: HttpClient
   ) { }
+
   getInfo () {
     this.http.get(this.apiUrl + 'api/info').subscribe( data =>   {
       // this.info1 = data.info1;
@@ -44,6 +47,24 @@ export class InfoComponent implements OnInit {
   }
   ngOnInit() {
     this.getInfo();
+    this.getGears();
+  }
+
+  public getGears() {
+    this.http.get(this.apiUrl + 'api/gears').subscribe(gears => {
+      this.gears = gears;
+      console.log(this.gears.length);
+      //console.log(this.gears);
+    });
+  }
+
+  public checkIndex(index){
+
+    var temp = index / 3;
+    console.log(temp);
+    if (Number.isInteger(temp) ){
+      return true;
+    }
   }
 
 }

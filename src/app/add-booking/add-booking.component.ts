@@ -39,7 +39,7 @@ export class AddBookingComponent implements OnInit {
           this.ownDates.push(start_date.format('DD.MM.YYYY'));
           }
       });
-      console.log(this.ownDates);
+      //console.log(this.ownDates);
     });
   }
 

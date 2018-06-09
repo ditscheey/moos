@@ -18,8 +18,10 @@ export class TagsComponent implements OnInit {
   public tag_upd_name;
   color_upd;
   public tags_upd ;
+  public update;
 
-
+  public colors_used = [];
+  public colors_options = ['bg-info', 'bg-primary', 'bg-secondary', 'bg-light' , 'bg-dark','bg-warning', 'bg-danger'];
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -29,63 +31,18 @@ export class TagsComponent implements OnInit {
     this.getTags();
   }
 
-
-public updateTag() {
- let temp = this.getTagFromColorUpd();
-  if (this.color === null) {
-    this.color = temp.color;
+public filterColor(color) {
+  for ( const col of this.colors_options ) {
+    if (color === col) {
+      return false;
+    } else {
+      return true;
+    }
   }
-  let tag = {
-    'name' : this.name,
-    'color': this.color
-  };
 
-
-  this.http.put(this.apiUrl + 'api/tags/' + temp._id, tag).subscribe(err => {
-    if (err) {
-      console.log(err);
-    }
-
-    for (let i of this.tags_upd) {
-      if (i._id === temp._id) {
-        i.name = this.name;
-        i.color = this.color;
-      }
-    }
-    this.router.navigate(['./admin']);
-  });
 }
 
 
-
-  public filterColors() {
-      for (let tag of this.tags_upd) {
-        switch (tag.color) {
-          case 'bg-primary': {
-            return false;
-          }
-          case 'bg-secondary': {
-            return false;
-          }
-          case 'bg-info': {
-            return false;
-          }
-          case 'bg-white': {
-            return false;
-          }
-          case 'bg-danger': {
-            return false;
-          }
-          case 'bg-dark': {
-            return false;
-          }
-          case 'bg-light': {
-            return false;
-          }
-        }
-      }
-
-  }
   public getTagFromColorUpd() {
     for (let tag of this.tags_upd) {
       console.log(tag);
@@ -97,6 +54,11 @@ public updateTag() {
     }
   }
 
+  public showUsed(tag_color) {
+    if (tag_color === this.color) {
+      return tag_color;
+    } else { return false; }
+  }
   public getTags() {
     this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
       this.tags_upd = data;
@@ -113,7 +75,38 @@ public updateTag() {
       if (err) {
         console.log(err);
       }
+      this.tags_upd.push(tag);
       this.router.navigate(['./admin']);
     });
   }
+
+  public updateTag(id, index) {
+    let tag = {
+      'name' : this.name,
+      'color': this.color
+    };
+    this.http.put(this.apiUrl + 'api/tags/' + id, tag).subscribe(err => {
+      if (err) {console.log(err);}
+        this.tags_upd[index] = tag;
+    });
+  }
+
+
+  public setFlag (id, index) {
+      this.update = {
+        'id' : id,
+        'index' : index
+      };
+      this.color = this.tags_upd[index].color;
+      this.name = this.tags_upd[index].name;
+  }
+
+  public deleteTag(id, index) {
+    this.http.delete(this.apiUrl + 'api/tags/' + id).subscribe(err =>{
+      if ( err) {console.log(err);}
+      this.tags_upd.splice(index, 1);
+      });
+  }
+
+
 }

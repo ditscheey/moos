@@ -20,13 +20,20 @@ export class BlogComponent implements OnInit {
   public apiUrl = environment.apiUrl;
 
   public order = 'time';
-  public reverse = false;
+  public reverse = true;
   public filter_input = null;
   public filter = {'form' : {
       'title' : '',
-      'tags' : '',
+      'tags' : {
+        'name': ''
+      }
     }};
 
+  public orde = {
+    'tags': {
+      'name' : ''
+    }
+  };
   constructor(private route: ActivatedRoute, private http: HttpClient , private router: Router, private orderPipe: OrderPipe) {
     console.log(this.orderPipe.transform(this.data, this.order));
 }
@@ -34,9 +41,12 @@ export class BlogComponent implements OnInit {
 
   ngOnInit() {
     this.getPosts();
-    console.log(this.orderPipe.transform(this.data, this.order));
+    //console.log(this.orderPipe.transform(this.data, this.order));
   }
 
+  public clearOrder() {
+    this.filter.form.tags.name = '';
+  }
   public convertBadge(index) {
     let temp_tag = this.tags[index];
    // console.log(temp_tag.color.split('-')[1]);
@@ -54,11 +64,10 @@ export class BlogComponent implements OnInit {
   }
 
   setFilter(value: string) {
-    if (this.order === value) {
-      this.reverse = !this.reverse;
-      console.log("reverse   " + this.reverse);
-    }
-    this.order = value;
+    this.filter.form.tags.name = value;
+    this.filter.form.title = '';
+    console.log(value);
+
   }
 
   public getPosts() {
@@ -72,7 +81,7 @@ export class BlogComponent implements OnInit {
            let hours= moment().diff(temp, 'hours');
            let mins = moment().diff(temp, 'minutes');
 
-          console.log(days);
+        //  console.log(days);
         });
     });
     this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
