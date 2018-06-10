@@ -1,50 +1,60 @@
-<br><div class="container">
-  <div class="custom-bg">
-    <div class="row">
-      <div class="col-md-6">
-        <img src="http://159.89.19.33/assets/imgs/terasse.JPG" alt="" class="img-thumbnail">
-      </div>
-      <div class="col-md-6">
-        <h4 class="h1 text-center"><i class="fa fa-info" aria-hidden="true"></i>   Allgemeine Informationen</h4>
-        <p routerLink="info1" class="lead" [innerHtml]="info1"> </p><br>
-        <p routerLink="info2" class="lead" [innerHtml]="info2"> </p>
-      </div>
-
+<br><br><div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="http://159.89.19.33/assets/imgs/terasse.JPG" alt="" class="img-thumbnail">
     </div>
-    <br>
-
-    <div class="row">
-      <div class="col-md-8">
-        <h4 class="h1 text-center"><i class="fa fa-bank" aria-hidden="true"></i>   Markt Murnau</h4>
-        <p class="lead" [innerHtml]="markt" routerLink="markt"></p><br>
-      </div>
-      <div class="col-md-4">
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-info list-group-item-heading" style="background-color: #007BFF; color:white">Hausregeln</li>
-          <li class="list-group-item">Rauchen ist nicht erlaubt, jedoch auf der Terrasse gerne</li>
-          <li class="list-group-item">keine Parties oder Veranstaltungen</li>
-          <li class="list-group-item">nicht geeignet für Kinder (0 - 12 Jahren)</li>
-        </ul>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <h4 class="h1 text-center"><i class="fa fa-map-o" aria-hidden="true"></i>   Die Nachbarschaft</h4>
-        <p class="lead" [innerHtml]="nachbarschaft1" routerLink="nachbarschaft1"></p>
-      </div>
-      <div class="col-md-6">
-        <h4 class="h1 text-center">wo <i class="fa fa-question" aria-hidden="true"></i>   </h4>
-        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
-          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-        </agm-map>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <p class="lead"  [innerHtml]="nachbarschaft2" routerLink="nachbarschaft2"></p>
-      </div>
+    <div class="col-md-6">
+      <h4 class="h1 text-center"><i class="fa fa-info" aria-hidden="true"></i>  {{headings?.h1}}</h4>
+      <p class="lead" [innerHtml]="info1" routerLink="info1"></p><br>
+      <p class="lead" [innerHtml]="info2" routerLink="info2"> </p>
     </div>
 
   </div>
-
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="h1 text-center"><i class="fa fa-gears" aria-hidden="true"></i>   {{headings?.h2}}</h4><br>
+    </div>
+    <div class="table_flex">
+      <div class="items">
+        <div *ngFor="let gear of gears, index as index">
+          <li class=" list-group-item item" ><span class="mx-auto"><i [ngClass]="gear.icon"></i> </span> {{gear.name}} </li>&nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="h1 text-center"><i class="fa fa-bank" aria-hidden="true"></i>   {{headings?.h3}}</h4>
+      <p class="lead" routerLink="markt">{{markt}}</p><br>
+    </div>
+    <div class="col-md-4">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-info list-group-item-heading" style="background-color: #007BFF; color:white"><div class="text-center">{{preis1}}</div></li>
+        <li class="list-group-item text-center">{{preis2}}</li>
+        <li class="list-group-item text-center">{{preis3}}</li>
+        <li class="list-group-item text-center">{{preis4}}</li>
+        <li class="list-group-item text-center">{{preis5}}</li>
+      </ul>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <h4 class="h1 text-center"><i class="fa fa-map-o" aria-hidden="true"></i>   {{headings?.h4}}</h4>
+      <p class="lead" [innerHtml]="nachbarschaft1"></p>
+    </div>
+    <div class="col-md-6">
+      <h4 class="h1 text-center">{{headings?.h5}} <i class="fa fa-question" aria-hidden="true"></i>   </h4>
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="10">
+        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+      </agm-map>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <p class="lead" [innerHtml]="nachbarschaft2"></p>
+    </div>
+  </div>
 </div>

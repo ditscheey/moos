@@ -52,6 +52,7 @@ import {DisqusModule} from 'ngx-disqus';
 import {GearService} from './gear.service';
 import {CalendarModule} from 'angular-calendar';
 import { CalendarComponent } from './calendar/calendar.component';
+import { GalleryBoardComponent } from './gallery-board/gallery-board.component';
 
 
 const appRoutes: Routes = [
@@ -101,7 +102,8 @@ const appRoutes: Routes = [
     TagsComponent,
     ImageOwnComponent,
     HeadingInfoComponent,
-    CalendarComponent
+    CalendarComponent,
+    GalleryBoardComponent
   ],
   imports: [
     BrowserModule,

@@ -13,7 +13,7 @@ export class AuthService {
     domain: 'studiomoos.eu.auth0.com',
     responseType: 'token id_token',
     audience: 'https://studiomoos.eu.auth0.com/userinfo',
-    redirectUri: 'http://studiomurnauermoos.de/',
+    redirectUri: 'http://localhost:4200/',
     scope: this.requestedScopes
   });
   userProfile: any;
@@ -29,7 +29,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        console.log('we got into the session yeah |autheservice')
+       // console.log('we got into the session yeah |autheservice')
         this.router.navigate(['/info']);
       } else if (err) {
         this.router.navigate(['/']);

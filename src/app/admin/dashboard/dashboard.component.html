@@ -13,28 +13,40 @@
     <div class="card-body">
       <div class="container ">
         <div class="row">
-          <div class="col-md-6"><br><br>
+          <h4 class="display-5 mx-auto">Absätze formatieren</h4>
+          <button  type="submit" class=" btn btn-block btn-dark" routerLink="/admin/editInfo"><i class="fa fa-info" aria-hidden="true"></i> Absätze formatieren</button>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
             <div class=" my-auto">
-              <h5 class="display-5 text-center">Absätze formatieren</h5>
-              <button  type="submit" class=" btn btn-block btn-info" routerLink="/admin/editInfo"><i class="fa fa-info" aria-hidden="true"></i> Info Seite aktualisieren</button>
-              <br><br><br><h5 class="display-5 text-center">Buchungsystem | defekt </h5>
-              <button  type="submit" class=" btn btn-block btn-dark" routerLink="/admin/addBooking"><i class="fa fa-plus" aria-hidden="true"></i> Derzeitige Blockaden</button>
-              <br><button  type="submit" class=" btn btn-block btn-dark"  routerLink="/booking"><i class="fa fa-address-book" aria-hidden="true"></i> Kalendar blockieren</button>
+              <div class="card-body" *ngIf="headings">
+                <h5 class="display-5 text-center">Preise</h5>
+                <ul class="list-group ">
+                  <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="preis1"></li>
+                  <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="preis2"></li>
+                  <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="preis3"></li>
+                  <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="preis4"></li>
+                  <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="preis5"></li>
+                </ul>
+              </div>
 
             </div>
           </div>
           <div class="col-md-6">
-            <div class="card-body" *ngIf="raw">
+            <div class="card-body" *ngIf="headings">
+              <h5 class="display-5 text-center">Sektionen</h5>
               <ul class="list-group ">
                 <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h1"></li>
                 <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h2"></li>
                 <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h3"></li>
                 <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h4"></li>
                 <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h5"></li>
-                <li class="list-group-item"><button class="btn btn-block btn-primary"  (click)="updateHeadings()">speichern</button></li>
               </ul>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <button class="btn btn-block btn-primary"  (click)="updateHeadings()">Preise & Sektionen speichern</button>
         </div>
       </div>
     </div>
@@ -47,4 +59,5 @@
     <app-tags></app-tags>
   <app-post-blog></app-post-blog>
   <app-image-own></app-image-own>
-
+  <br><br>
+  <app-gallery-board></app-gallery-board>

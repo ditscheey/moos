@@ -16,6 +16,7 @@ export class BlogDetailComponent implements OnInit {
   public posts;
   public routeInfo;
   public own_imgs;
+  public font_color;
   public header;
   public url;
   public ident;
@@ -43,11 +44,15 @@ export class BlogDetailComponent implements OnInit {
     return null;
   }
 
+
   public getPosts() {
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
       this.posts = data;
      var temp = this.posts.filter(x => x._id === this.routeInfo);
        this.post = temp[0];
+       this.font_color = 'text-' + this.post.form.tags.color.split('-')[1];
+      console.log(this.font_color);
+
     });
 
   }

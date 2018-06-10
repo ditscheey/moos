@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./impressum.component.css']
 })
 export class ImpressumComponent implements OnInit {
-
+  public details = false;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  public toogle() {
+    if (this.details) {
+      this.details = false;
+    } else {
+      this.details = true;
+    }
   }
 
 }

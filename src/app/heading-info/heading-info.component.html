@@ -15,13 +15,14 @@
             <div class="col-md-10">
               <div class="input-group">
                 <input type="text" id="gear" class="form-control" placeholder="z.B 'Kabelfernsehen' -> icon nächstes Feld" [(ngModel)]="gear">
-                <div class="input-group-append">
-                  <input [iconPicker]="newIcon" id=picker size="10"  class="form-control"   [ipPosition]="'bottom'"  [ipPlaceHolder]="newIcon"
-                         [ipFallbackIcon]="fallbackIcon" (iconPickerSelect)="onIconPickerSelect($event)"/>
+                <div >
+
                   <button *ngIf="!update?.id" class="btn btn-info" type="button" (click)="addGear()">hinzufügen</button>
                   <button *ngIf="update?.id" class="btn btn-success" type="button" (click)="updateGear(update?.id, update?.index)">ändern</button>
                 </div>
               </div>
+              <input [iconPicker]="newIcon" id=picker size="10"  class="form-control"   [ipPosition]="'bottom'"  [ipPlaceHolder]="newIcon"
+                     [ipFallbackIcon]="fallbackIcon" (iconPickerSelect)="onIconPickerSelect($event)"/>
             </div>
           </div>
         </li>
@@ -43,3 +44,8 @@
   </div>
     </div>
 <br>
+<br><div class="container">
+  <input [iconPicker]="newIcon" id=picker2 size="10"  class="form-control"   [ipPosition]="'bottom'"  [ipPlaceHolder]="newIcon"
+         [ipFallbackIcon]="fallbackIcon" (iconPickerSelect)="onIconPickerSelect($event)"/>
+</div>
+

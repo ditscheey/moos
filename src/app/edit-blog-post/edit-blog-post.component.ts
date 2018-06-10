@@ -39,7 +39,7 @@ export class EditBlogPostComponent implements OnInit {
   //postForm: FormGroup;
   public content;
   public title;
-  public tags;
+  public tags; public ta;
   public placeholder;
   public data;
   public routeInfo;
@@ -49,7 +49,7 @@ export class EditBlogPostComponent implements OnInit {
   public img_index;
   public img_url = this.apiUrl + 'api/blog/image';
   public tag;
-
+  public raw;
 
   public own_imgs;
   public color_add;
@@ -59,21 +59,22 @@ export class EditBlogPostComponent implements OnInit {
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     route.params.subscribe(params => {
       this.routeInfo = params.id;
+      console.log(this.routeInfo);
     });
 
   }
 
+
   public getTagFromColor() {
     for (let tag of this.tags) {
       if (tag.color === this.color_add) {
-        console.log(tag);
         return tag;
       }
       console.log("no tag found ");
     }
   }
 
-  public addPost() {
+  public updatePost() {
     console.log(this.img);
     this.tag = this.getTagFromColor();
     if (this.own_imgs) {
@@ -83,15 +84,15 @@ export class EditBlogPostComponent implements OnInit {
       this.img = this.own_imgs[this.img_index];
     }
     let post = {
-      'title': this.post.form.title,
-      'tags': this.post.form.title,
+      'title': this.title,
+      'tags': this.tag,
       'img_id': this.img._id,
       'img_url': this.img.path,
-      'content': this.post.form.content,
-      'time' : this.post.time
+      'content': this.content
     };
+    this.setImgClass();
     console.log(post);
-    this.http.put(this.apiUrl + 'api/posts/' + this.post._id, post).subscribe(err => {
+    this.http.post(this.apiUrl + 'api/posts', post).subscribe(err => {
       if (err) {
         console.log(err);
       }
@@ -100,13 +101,21 @@ export class EditBlogPostComponent implements OnInit {
 
   }
 
+
+  public setImgClass() {
+    let re = /<img /gi;
+    this.content = this.content.replace(re,'<img class="img-fluid" ');
+  }
+
   public getTags() {
     this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
       this.tags = data;
+      this.ta = this.tags[0];
+    console.log(this.tags);
     });
+    console.log("tags should be finished");
   }
-
-  public getImgs() {
+  public getImgs(){
     this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
       this.own_imgs = data;
     });
@@ -114,18 +123,16 @@ export class EditBlogPostComponent implements OnInit {
 
   public getPosts() {
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
-      this.post = data[this.routeInfo];
+      this.raw = data;
+       let temp = this.raw.filter(x => x._id === this.routeInfo);
+      this.post = temp[0];
+      this.title = this.post.form.title;
+     // this.tags = this.post.form.tag;
+      this.content = this.post.form.content;
     });
   }
 
-  public getUrl(){
-    if (this.img_index) {
-      let temp = this.own_imgs[this.img_index];
-      return temp.path;
-    } else {
-      return null;
-    }
-  }
+
   ngOnInit() {
     this.getPosts();
     this.getTags();

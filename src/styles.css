@@ -8,3 +8,9 @@
   opacity: 0.2;
 }
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+.own_box {
+  background-color: black;
+  opacity: 0.5;
+  color: white;
+}

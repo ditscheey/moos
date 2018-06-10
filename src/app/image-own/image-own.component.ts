@@ -16,7 +16,7 @@ export class ImageOwnComponent implements OnInit {
   public clipboard;
   public filter = {'name' : ''};
   //upload adress for post request
-  public img_endpoint = this.apiUrl + 'api/imgs';
+  public img_endpoint = this.apiUrl + 'api/imgs/';
   constructor(private http: HttpClient) { }
 
   public setPreview(index) {
@@ -39,6 +39,7 @@ export class ImageOwnComponent implements OnInit {
   public addImg($event) {
     console.log($event);
     this.getTags();
+    this.getImgs();
   }
 
   public getTags() {

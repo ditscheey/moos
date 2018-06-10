@@ -41,14 +41,16 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.getBookings();
-    this.getOwnBookings();
+    //this.getOwnBookings();
 
   }
 
   beforeMonthViewRender({body}: { body: CalendarMonthViewDay[] }): void {
+
     body.forEach(day => {
-      if (day.date.getDate() % 2 === 1 && day.inMonth) {
-        day.cssClass = 'reserved';
+      if (day.events.length && day.inMonth) {
+        day.cssClass = 'odd-cell';
+        console.log(day.events.length);
       }
     });
   }
@@ -70,16 +72,17 @@ export class CalendarComponent implements OnInit {
   }
 
   public getBookings() {
-    this.http.get(this.apiUrl + 'api/file').subscribe(data => {
+    this.http.get(this.apiUrl + 'api/fewo').subscribe(data => {
       this.bookings = data;
+      //console.log(this.bookings)
       this.createEvents();
     });
   }
 
   public createEvents() {
     if (this.bookings) {
-      this.bookings.forEach(date => {
-        let ev = {'start': moment(date, 'DD.MM.YYYY').toDate(), 'title': 'nicht verfügbar'};
+      this.bookings.forEach(booking => {
+        let ev = {'start': moment(booking.start).toDate(), 'end': moment(booking.end).subtract(1, 'd').toDate(), 'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
         this.events.push(ev);
       });
     }

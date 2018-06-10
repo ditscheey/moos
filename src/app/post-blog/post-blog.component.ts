@@ -55,6 +55,11 @@ export class PostBlogComponent implements OnInit {
   public color_add;
   public name;
 
+  //gogle maps
+  public mapActive = false;
+  public latitude; public longitude; public zoom;
+  public lat; public lng; public markers;
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     route.params.subscribe(params => {
       this.routeInfo = params.detail;
@@ -115,6 +120,17 @@ export class PostBlogComponent implements OnInit {
     });
   }
 
+  public setMap() {
+    if (this.mapActive) {
+      this.mapActive = false;
+    } else {
+      this.mapActive = true;
+    }
+  }
+
+  public addMarker() {
+    this.markers.push({'lat': this.lat , 'lng': this.lng});
+  }
   ngOnInit() {
     this.getTags();
     this.getImgs();

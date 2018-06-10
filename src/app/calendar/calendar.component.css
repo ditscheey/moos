@@ -1,3 +1,7 @@
 .reserved {
-  background-color: #171e42;
+  background-color: red !important;
+  color: red;
+}
+.odd-cell {
+  background-color: pink !important;
 }

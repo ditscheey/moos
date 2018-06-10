@@ -11,7 +11,7 @@ const uuidv4 = require('uuid/v4');
 
 // declare mongojs & connect
 var mongojs = require('mongojs');
-var db = mongojs('max:max@ds119685.mlab.com:19685/moos');
+var db = mongojs('max:studio97.@ds161346.mlab.com:61346/moo');
 
 //Ical 'http://lanyrd.com/topics/nodejs/nodejs.ics'  || airbnb : https://www.airbnb.de/calendar/ical/6713316.ics?s=1c409705409c6f5b9de6118abe596147
 router.get('/file',function (req, res){
@@ -103,6 +103,33 @@ router.get('/file',function (req, res){
     res.send(final);
 });
 
+router.get('/fewo',function (req, res){
+  let result = [];
+  let dates = [];
+  let ints =  [];
+  let sliced = [];
+  let final = [];
+  let final_pret = [];
+  let today = moment();
+
+  let result2 = [];
+
+  //Get Data from ICS FILE
+  var data = ical.parseFile('server/routes/bookings.ics');
+
+  for (var k in data ){
+    if(data.hasOwnProperty(k)){
+      //console.log(data[k].start + " \t " + data[k].end);
+      final.push({
+        'start': data[k].start,
+        'end': data[k].end
+      })
+    }
+  }
+
+  res.send(final);
+});
+
 //get all Posts
 router.get('/info',function (req, res){
   db.cms.find(function (err, info){
@@ -150,7 +177,11 @@ router.put('/cms/headings/',function (req, res){
         h3: req.body.h3 ,
         h4: req.body.h4 ,
         h5: req.body.h5,
-        gears: req.body.gears
+        preis1: req.body.preis1,
+        preis2: req.body.preis2,
+        preis3: req.body.preis3,
+        preis4: req.body.preis4,
+        preis5: req.body.preis5
          } },
     new: true
   }, function (err, doc, lastErrorObject) {
@@ -344,8 +375,11 @@ function getSecondPart(str) {
   //console.log(sampleFile.name);
   // Use the mv() method to place the file somewhere on your server
     //const token = uuidv4() + path.extname(sampleFile.name);
+
+    // --> setting PROD MODE
+    // change src | dist --> switch urls | use one variable maybe?
     const token = sampleFile.name;
-  sampleFile.mv('dist/assets/blog/' + token , function(err) {
+  sampleFile.mv('src/assets/blog/' + token , function(err) {
     if (err)
       return res.status(500).send(err);
 
@@ -355,9 +389,10 @@ function getSecondPart(str) {
       // Create Entry in database to find image afterwards
       const img = {
         'name' : sampleFile.name,
-        'path' : url_prod
+        'path' : url
       };
     console.log(url);
+
       db.imgs.save(img, function(err, post){
         if(err){
           res.send(err);
@@ -368,7 +403,7 @@ function getSecondPart(str) {
     // Change to Prod | Dev version
     //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
 
-   res.json(url_prod);
+   res.json(url);
   });
 });
 
