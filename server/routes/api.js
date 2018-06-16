@@ -390,7 +390,7 @@ function getSecondPart(str) {
       // Create Entry in database to find image afterwards
       const img = {
         'name' : sampleFile.name,
-        'path' : url
+        'path' : url_prod
       };
     console.log(url);
 
@@ -404,7 +404,7 @@ function getSecondPart(str) {
     // Change to Prod | Dev version
     //res.json('http://159.89.19.33/api/blog/imgs/' + sampleFile.name);
 
-   res.json(url);
+   res.json(url_prod);
   });
 });
 
