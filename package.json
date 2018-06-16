@@ -66,6 +66,7 @@
     "sharp": "^0.20.3",
     "string": "^3.3.3",
     "uuid": "^3.2.1",
+    "wget-improved": "^3.0.1",
     "zone.js": "^0.8.20"
   },
   "devDependencies": {

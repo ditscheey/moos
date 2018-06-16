@@ -8,6 +8,7 @@ const path = require('path');
 const https = require('https');
 const fs = require('fs');
 const uuidv4 = require('uuid/v4');
+const wget = require('wget-improved');
 
 // declare mongojs & connect
 var mongojs = require('mongojs');
@@ -114,6 +115,15 @@ router.get('/fewo',function (req, res){
 
   let result2 = [];
 
+  const src= "https://www.traum-ferienwohnungen.de/ical/88889a307404dc3fea1ebc83a44d0bc38214472f/95395/179210.ics?provider=1";
+  const output = 'server/routes/bookings.ics';
+  var download = wget.download(src,output);
+  download.on('error', function(err) {
+    console.log(err);
+  });
+  download.on('start', function(fileSize) {
+    console.log(fileSize);
+  });
   //Get Data from ICS FILE
   var data = ical.parseFile('server/routes/bookings.ics');
 
