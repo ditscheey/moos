@@ -66,6 +66,15 @@ export class BlogDetailComponent implements OnInit {
       this.router.navigate(['./blog/']);
     });
   }
+
+  public isInvert2(bool) {
+    if (bool) {
+      return 'white';
+    } else {
+      return 'black';
+    }
+  }
+
 }
 
 

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, RouterModule, Routes} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {enterView} from '@angular/core/src/render3/instructions';
+import {environment} from '../../environments/environment';
+import {ImageService} from '../image.service';
 
 @Component({
   selector: 'app-gallery',
@@ -36,11 +40,55 @@ export class GalleryComponent implements OnInit {
     'Aussicht im Winter',
     'Aussicht im Winter 2'
   ];
-  constructor(private router: Router) { }
-  showImage (index){
+  public apiUrl = environment.apiUrl;
+  public gallery;
+
+  public own_imgs; public img;
+  public preview;
+  public clipboard;
+  public filter = {'name' : ''};
+  //upload adress for post request
+  public img_endpoint = this.apiUrl + 'api/gallery/img';
+  constructor(private router: Router, private http: HttpClient, private imgService: ImageService) {
+
+  }
+  showImage (index) {
     this.router.navigate(['/image/', index]);
   }
   ngOnInit() {
+    this.getGallery();
   }
 
+  public getGallery() {
+    this.http.get(this.apiUrl + 'api/gallery').subscribe(gallery => {
+      this. gallery = gallery;
+    });
+  }
+
+  public setPreview(index) {
+    this.preview = this.imgService.imgs[index];
+    //console.log(this.preview);
+  }
+
+  public deleteImg(index) {
+    //let temp = this.own_imgs[index];
+    this.imgService.deleteImg(index);
+    /*this.http.delete(this.apiUrl + 'api/imgs/' + temp._id).subscribe(err => {
+      if (err) {
+        console.log(err);
+      }
+      this.own_imgs.splice(index, 1);
+          });*/
+    this.preview = this.imgService.imgs[index-1];
+  }
+
+
+
+
+  public getImgs() {
+    /* this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
+       this.own_imgs = data;
+     });*/
+
+  }
 }

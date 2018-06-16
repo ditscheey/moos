@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {ImageService} from '../image.service';
 
 @Component({
   selector: 'app-image-own',
@@ -11,35 +12,36 @@ export class ImageOwnComponent implements OnInit {
 
   public apiUrl = environment.apiUrl;
   public tags;
-  public own_imgs;
+  public own_imgs; public img;
   public preview;
   public clipboard;
   public filter = {'name' : ''};
   //upload adress for post request
   public img_endpoint = this.apiUrl + 'api/imgs/';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public imgService: ImageService) { }
 
   public setPreview(index) {
-    this.preview = this.own_imgs[index];
+    this.preview = this.imgService.imgs[index];
     //console.log(this.preview);
   }
 
   public deleteImg(index) {
-    let temp = this.own_imgs[index];
-
-    this.http.delete(this.apiUrl + 'api/imgs/' + temp._id).subscribe(err => {
+    //let temp = this.own_imgs[index];
+    this.imgService.deleteImg(index);
+    /*this.http.delete(this.apiUrl + 'api/imgs/' + temp._id).subscribe(err => {
       if (err) {
         console.log(err);
       }
       this.own_imgs.splice(index, 1);
-      this.preview = null;
-    });
+          });*/
+    this.preview = this.imgService.imgs[index-1];
   }
 
   public addImg($event) {
-    console.log($event);
+    //console.log($event);
     this.getTags();
-    this.getImgs();
+    this.own_imgs = this.imgService.getImgs();
+    //location.reload();
   }
 
   public getTags() {
@@ -49,13 +51,14 @@ export class ImageOwnComponent implements OnInit {
   }
 
   public getImgs() {
-    this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
+   /* this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
       this.own_imgs = data;
-    });
+    });*/
+
   }
 
   ngOnInit() {
     this.getTags();
-    this.getImgs();
+    this.own_imgs = this.imgService.getImgs();
   }
 }

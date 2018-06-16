@@ -8,7 +8,7 @@
           <div class="col-md-12 form-group">
             <image-upload url="{{img_endpoint}}"  dropBoxMessage="Bilder drop zone"  (uploadFinished)="addImg($event)"></image-upload></div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="imgService.getImgs()">
           <div class="col-md-6 form-group">
             <ul class="list-group">
               <li class="list-group-item ">
@@ -16,7 +16,7 @@
                 <input type="text" id="filter" class="form-control" [(ngModel)]="filter.name" placeholder="suchen">
               </li>
               <li class="list-group-item text-center "
-                  [ngClass]="{'active': img?._id === preview?._id}" *ngFor="let img of own_imgs |filterBy:filter; index as index"
+                  [ngClass]="{'active': img?._id === preview?._id}" *ngFor="let img of imgService.imgs |filterBy:filter; index as index"
                   (click)="setPreview(index)" ngxClipboard [cbContent]="img.path" >
               <div class="row">
                 <div class="col-md-7 mx-auto text-center">{{img.name}}</div>

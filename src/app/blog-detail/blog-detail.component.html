@@ -2,7 +2,7 @@
   <div class="  header " *ngIf="post?.form" [ngStyle]="{'background': '#fff url(' + post?.form.img_url + ')'}">
     <br><br>
     <div class="container card">
-      <div class=" card-title row" style="color: white" [ngClass] = "post?.form.tags.color">
+      <div class=" card-title row"  [ngClass] = "post?.form.tags.color">
         <div class="col-1">
           <h4 class="display-2 align-content-center"   ><i class="fa fa-arrow-left "   routerLink="/blog" aria-hidden="true"></i></h4>
         </div>

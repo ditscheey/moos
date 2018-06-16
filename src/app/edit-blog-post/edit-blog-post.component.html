@@ -1,7 +1,11 @@
 <br>
 <div class="container" (onchange)="setImgClass()" *ngIf="tags">
   <div class="card">
-    <div class="card-header " [ngClass]="color_add"><h3 class="display-3 text-center" >Post ändern</h3></div>
+    <div class="card-header " [ngClass]="color_add"><h3 class="display-3 text-center" >Post ändern</h3>
+      <div class="mx-auto">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="invert">
+        <label class="form-check-label" for="exampleCheck1">Schriftfarbe invertieren</label>
+      </div></div>
     <div class="card-body"><div class="container">
 
       <div class="row">

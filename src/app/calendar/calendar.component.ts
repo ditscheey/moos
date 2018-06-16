@@ -19,11 +19,13 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CalendarComponent implements OnInit {
   viewDate: Date = new Date();
+
   view: string = 'month';
   public apiUrl = environment.apiUrl;
   public bookings;
   public ownDates = [];
   public ownBookings;
+
   //public  date = moment();
   public book;
 
@@ -87,6 +89,10 @@ export class CalendarComponent implements OnInit {
       });
     }
 
+  }
+
+  public updateCalendar(){
+    console.log("send request to putty server --> download new boookings file");
   }
 }
 

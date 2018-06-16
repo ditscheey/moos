@@ -523,8 +523,80 @@ router.delete('/gears/:id', function(req, res, next){
 });
 
 
-//Begin für Bookings api
+/////
+//Begin Gears Api
+/////
+router.get('/preise',function (req, res){
+  db.preise.find(function (err, gears){
+    if(err){
+      res.send("Error found while loading the Data");
+    }
+    res.json(gears);
+  });
+});
 
+
+//Save Task
+router.post('/preise', function(req, res, next){
+  console.log(req.body);
+  var gear = {
+    'color': req.body.color,
+    'content': req.body.content,
+    'invert': req.body.invert
+  };
+  if(!gear.content){
+    res.status(400);
+    res.json({
+      "error": "Bad Data"
+    });
+  } else {
+    db.preise.save(gear, function(err, gear){
+      if(err){
+        res.send(err);
+      }
+      res.json(gear);
+    });
+  }
+});
+
+
+// Update gear
+router.put('/preise/:id',function (req, res){
+  var id = req.params.id;
+  //console.log(req.body.info2);
+  db.preise.findAndModify({
+    query: {_id : mongojs.ObjectId(id)},
+    update: { $set: {
+        'color' : req.body.color,
+        'content': req.body.content,
+        'invert': req.body.invert
+      } },
+    new: true
+  }, function (err, doc, lastErrorObject) {
+    // doc.tag === 'maintainer'
+    //console.log("got here");
+    // console.log(doc);
+    res.json(doc);
+  });
+});
+
+
+/// delete
+router.delete('/preise/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log(id);
+  db.preise.remove({_id: mongojs.ObjectId(id)}, function(err, gears){
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.json(gears);
+  });
+});
+
+///*
+//Begin für Bookings api
+/////
 router.get('/bookings',function (req, res){
 
   db.bookings.find(function (err, bookings){

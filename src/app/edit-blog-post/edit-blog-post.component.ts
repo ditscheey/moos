@@ -44,7 +44,7 @@ export class EditBlogPostComponent implements OnInit {
   public data;
   public routeInfo;
   public img_name;
-  public img;
+  public img; public invert;
   public post;
   public img_index;
   public img_url = this.apiUrl + 'api/blog/image';
@@ -88,7 +88,8 @@ export class EditBlogPostComponent implements OnInit {
       'tags': this.tag,
       'img_id': this.img._id,
       'img_url': this.img.path,
-      'content': this.content
+      'content': this.content,
+      'invert': this.invert
     };
     this.setImgClass();
     console.log(post);

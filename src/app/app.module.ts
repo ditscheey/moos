@@ -53,6 +53,7 @@ import {GearService} from './gear.service';
 import {CalendarModule} from 'angular-calendar';
 import { CalendarComponent } from './calendar/calendar.component';
 import { GalleryBoardComponent } from './gallery-board/gallery-board.component';
+import {ImageService} from './image.service';
 
 
 const appRoutes: Routes = [
@@ -132,7 +133,7 @@ const appRoutes: Routes = [
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [AuthGuardService, AdminGuardService, AuthService, GearService],
+  providers: [AuthGuardService, AdminGuardService, AuthService, GearService, ImageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

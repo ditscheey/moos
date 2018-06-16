@@ -46,7 +46,7 @@ export class PostBlogComponent implements OnInit {
   public routeInfo;
   public img_name;
   public img;
-  public img_index;
+  public img_index; public invert;
   public img_url = this.apiUrl + 'api/blog/image';
   public tag;
 
@@ -75,6 +75,16 @@ export class PostBlogComponent implements OnInit {
       console.log("no tag found ");
     }
   }
+  public isInvert() {
+    if (this.invert) {
+      //this.invert = false;
+      return 'white';
+    } else {
+      //6this.invert = true;
+      return 'black';
+    }
+  }
+
 
   public addPost() {
     console.log(this.img);
@@ -90,10 +100,12 @@ export class PostBlogComponent implements OnInit {
       'tags': this.tag,
       'img_id': this.img._id,
       'img_url': this.img.path,
-      'content': this.content
+      'content': this.content,
+      'invert': this.invert
     };
     this.setImgClass();
     console.log(post);
+
     this.http.post(this.apiUrl + 'api/posts', post).subscribe(err => {
       if (err) {
         console.log(err);

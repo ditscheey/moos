@@ -20,6 +20,7 @@ export class InfoComponent implements OnInit {
   public data;
   public gallery;
   public headings;
+  public preise;
   public preis1; public preis2; public preis3; public preis4; public preis5;
   public gear_counter;
   public gears;
@@ -59,6 +60,7 @@ export class InfoComponent implements OnInit {
   ngOnInit() {
     this.getInfo();
     this.getGears();
+    this.getPreise();
   }
 
   public getGears() {
@@ -68,6 +70,13 @@ export class InfoComponent implements OnInit {
       //console.log(this.gears);
     });
   }
+
+  public getPreise() {
+    this.http.get(this.apiUrl + 'api/preise').subscribe(data => {
+      this.preise = data;
+    });
+  }
+
 
   public checkIndex(index){
 
