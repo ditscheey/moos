@@ -24,7 +24,7 @@ export class BlogDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private router: Router, public auth: AuthService) {
     route.params.subscribe(params => {
       this.routeInfo = params.id;
-      this.url = 'http://studiomurnauermoos/blog/post/#!newthread';
+      this.url = 'http://studiomurnauermoos.de/blog/post/#!newthread';
     });
     this.getPosts();
   }
