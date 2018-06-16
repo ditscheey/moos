@@ -13,12 +13,14 @@ export class AuthService {
     domain: 'studiomoos.eu.auth0.com',
     responseType: 'token id_token',
     audience: 'https://studiomoos.eu.auth0.com/userinfo',
-    redirectUri: 'http://159.89.19.33/',
+    redirectUri: 'http://studiomurnauermoos.de/',
     scope: this.requestedScopes
   });
   userProfile: any;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+    console.log('http:studiomurnauermoos.de/');
+  }
 
   public login(): void {
     this.auth0.authorize();
