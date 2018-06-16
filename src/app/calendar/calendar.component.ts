@@ -62,8 +62,8 @@ export class CalendarComponent implements OnInit {
       this.ownBookings = data;
       this.ownBookings.forEach(booking => {
         let start_date = moment(booking.form.dateFrom, 'DD.MM.YYYY');
-        this.ownDates.push(booking.form.dateFrom);
-        for (let d = 0; d < booking.nights; d++) {
+        //this.ownDates.push(booking.form.dateFrom);
+        for (let d = 1; d < booking.nights; d++) {
           start_date.add(1, 'days');
           this.ownDates.push(start_date.format('DD.MM.YYYY'));
         }
@@ -84,7 +84,10 @@ export class CalendarComponent implements OnInit {
   public createEvents() {
     if (this.bookings) {
       this.bookings.forEach(booking => {
-        let ev = {'start': moment(booking.start).toDate(), 'end': moment(booking.end).subtract(1, 'd').toDate(), 'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
+        let ev = {
+          'start': moment(booking.start).toDate(),
+          'end': moment(booking.end).subtract(2, 'd').toDate(),
+          'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
         this.events.push(ev);
       });
     }

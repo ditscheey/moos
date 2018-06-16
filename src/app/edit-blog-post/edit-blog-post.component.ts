@@ -44,7 +44,7 @@ export class EditBlogPostComponent implements OnInit {
   public data;
   public routeInfo;
   public img_name;
-  public img; public invert;
+  public img; public invert; public font;
   public post;
   public img_index;
   public img_url = this.apiUrl + 'api/blog/image';
@@ -75,7 +75,7 @@ export class EditBlogPostComponent implements OnInit {
   }
 
   public updatePost() {
-    console.log(this.img);
+   // console.log(this.img);
     this.tag = this.getTagFromColor();
     if (this.own_imgs) {
       this.img = this.own_imgs[this.img_index];
@@ -83,17 +83,18 @@ export class EditBlogPostComponent implements OnInit {
       this.getImgs();
       this.img = this.own_imgs[this.img_index];
     }
+    //this.isInvert();
     let post = {
       'title': this.title,
       'tags': this.tag,
       'img_id': this.img._id,
       'img_url': this.img.path,
       'content': this.content,
-      'invert': this.invert
+      'font': this.font
     };
     this.setImgClass();
     console.log(post);
-    this.http.post(this.apiUrl + 'api/posts', post).subscribe(err => {
+    this.http.put(this.apiUrl + 'api/posts/' + this.post._id, post).subscribe(err => {
       if (err) {
         console.log(err);
       }
@@ -129,8 +130,20 @@ export class EditBlogPostComponent implements OnInit {
       this.post = temp[0];
       this.title = this.post.form.title;
      // this.tags = this.post.form.tag;
+      this.font = this.post.form.font;
       this.content = this.post.form.content;
     });
+  }
+
+  public isInvert() {
+    if (!this.invert) {
+      this.font = 'white';
+      this.invert = true;
+    } else {
+      this.font = 'black';
+      this.invert = false;
+    }
+    console.log(this.font);
   }
 
 

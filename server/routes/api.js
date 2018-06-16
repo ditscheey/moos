@@ -227,7 +227,8 @@ router.put('/posts/:id',function (req, res){
           tags: req.body.tags ,
           img_url: req.body.img_url,
           img_id: req.body.img_id,
-          content: req.body.content
+          content: req.body.content,
+          font: req.body.font
         },
         'time' : req.body.time
       } },
@@ -524,7 +525,82 @@ router.delete('/gears/:id', function(req, res, next){
 
 
 /////
-//Begin Gears Api
+//Begin Gallery Api
+/////
+router.get('/gallery',function (req, res){
+  db.gallery.find(function (err, gears){
+    if(err){
+      res.send("Error found while loading the Data");
+    }
+    res.json(gears);
+  });
+});
+
+
+//Save Task
+router.post('/gallery', function(req, res, next){
+  console.log(req.body);
+  var gear = {
+    'title': req.body.title,
+    'img_path': req.body.img_path,
+    'position': req.body.position
+  };
+  if(!gear.title){
+    res.status(400);
+    res.json({
+      "error": "Bad Data"
+    });
+  } else {
+    db.gallery.save(gear, function(err, gear){
+      if(err){
+        res.send(err);
+      }
+      res.json(gear);
+    });
+  }
+});
+
+
+// Update gear
+router.put('/gallery/:id',function (req, res){
+  var id = req.params.id;
+  console.log(id);
+  //console.log(req.body.info2);
+  db.gallery.findAndModify({
+    query: {_id : mongojs.ObjectId(id)},
+    update: { $set: {
+        'title' : req.body.title,
+        'img_path': req.body.img_path,
+        'position': req.body.position
+      } },
+    new: true
+  }, function (err, doc, lastErrorObject) {
+    // doc.tag === 'maintainer'
+    //console.log("got here");
+    // console.log(doc);
+    res.json(doc);
+  });
+});
+
+
+/// delete
+router.delete('/gallery/:id', function(req, res, next){
+  var id = req.params.id;
+  console.log(id);
+  db.gallery.remove({_id: mongojs.ObjectId(id)}, function(err, gears){
+    if(err){
+      console.log(err);
+      res.send(err);
+    }
+    res.json(gears);
+  });
+});
+
+
+
+
+/////
+//Begin Preis Api
 /////
 router.get('/preise',function (req, res){
   db.preise.find(function (err, gears){
@@ -542,7 +618,7 @@ router.post('/preise', function(req, res, next){
   var gear = {
     'color': req.body.color,
     'content': req.body.content,
-    'invert': req.body.invert
+    'font': req.body.font
   };
   if(!gear.content){
     res.status(400);
@@ -569,7 +645,7 @@ router.put('/preise/:id',function (req, res){
     update: { $set: {
         'color' : req.body.color,
         'content': req.body.content,
-        'invert': req.body.invert
+        'font': req.body.font
       } },
     new: true
   }, function (err, doc, lastErrorObject) {

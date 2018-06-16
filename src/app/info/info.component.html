@@ -31,7 +31,7 @@
     </div>
     <div class="col-md-4" *ngIf="preise">
       <ul class="list-group">
-        <li class="list-group-item text-center" *ngFor="let preis of preise" [style.color]="preis?.invert" [ngClass]="preis.color">{{preis.content}}</li>
+        <li class="list-group-item text-center" *ngFor="let preis of preise" [style.color]="preis?.font" [ngClass]="preis.color">{{preis.content}}</li>
       </ul>
     </div>
   </div>

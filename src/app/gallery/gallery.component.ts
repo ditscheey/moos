@@ -52,7 +52,7 @@ export class GalleryComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, private imgService: ImageService) {
 
   }
-  showImage (index) {
+  showImage (id,index) {
     this.router.navigate(['/image/', index]);
   }
   ngOnInit() {
@@ -85,10 +85,4 @@ export class GalleryComponent implements OnInit {
 
 
 
-  public getImgs() {
-    /* this.http.get(this.apiUrl + 'api/imgs').subscribe(data => {
-       this.own_imgs = data;
-     });*/
-
-  }
 }

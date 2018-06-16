@@ -44,7 +44,7 @@ export class HeadingInfoComponent implements OnInit {
       'name' : this.gear,
       'icon' : this.newIcon,
     };
-  console.log(ge);
+ // console.log(ge);
     this.http.post(this.apiUrl + 'api/gears', ge).subscribe(err => {
       if (err) {
         console.log(err);
@@ -86,7 +86,7 @@ export class HeadingInfoComponent implements OnInit {
     this.http.get(this.apiUrl + 'api/gears').subscribe(gears => {
       this.gears = gears;
       this.success = true;
-      console.log(this.gears);
+      //console.log(this.gears);
     });
   }
 

@@ -51,7 +51,7 @@ export class BlogDetailComponent implements OnInit {
      var temp = this.posts.filter(x => x._id === this.routeInfo);
        this.post = temp[0];
        this.font_color = 'text-' + this.post.form.tags.color.split('-')[1];
-      console.log(this.font_color);
+      console.log(this.post);
 
     });
 

@@ -15,8 +15,8 @@ import {HttpClient} from '@angular/common/http';
 export class DashboardComponent implements OnInit {
 profile: any;
   public apiUrl = environment.apiUrl;
-  public raw; public font;
-  public headings; public invert;
+  public raw; public font = 'black';
+  public headings; public invert = true;
   public h1; public h2; public h3; public h4; public h5;
   public preise ; public preis_neu; public color; public update; public content;
   constructor(private auth: AuthService , private http: HttpClient, private router: Router) { }
@@ -83,7 +83,7 @@ profile: any;
     let preis = {
       'content' : this.content,
       'color': this.color,
-      'invert': this.invert
+      'font': this.font
     };
     this.http.post(this.apiUrl + 'api/preise', preis).subscribe(err => {
       if (err) {
@@ -98,7 +98,7 @@ profile: any;
     let preis = {
       'content' : this.content,
       'color': this.color,
-      'invert': this.invert
+      'font': this.font
     };
     this.http.put(this.apiUrl + 'api/preise/' + id, preis).subscribe(err => {
       if (err) {console.log(err); }
@@ -128,15 +128,16 @@ profile: any;
     } else { return false; }
   }
 
-/* public isInvert() {
+ public isInvert() {
     if (this.invert) {
       this.font = 'white';
-      return this.font;
+      this.invert = false;
     } else {
       this.font = 'black';
-      return this.font;
+      this.invert = true;
     }
+
   }
-*/
+
 
 }

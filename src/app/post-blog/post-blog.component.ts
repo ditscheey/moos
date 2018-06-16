@@ -46,13 +46,13 @@ export class PostBlogComponent implements OnInit {
   public routeInfo;
   public img_name;
   public img;
-  public img_index; public invert;
+  public img_index; public invert; public font = 'white';
   public img_url = this.apiUrl + 'api/blog/image';
   public tag;
 
   public endpoint = this.apiUrl + 'api/imgs';
   public own_imgs;
-  public color_add;
+  public color_add = 'bg-primary';
   public name;
 
   //gogle maps
@@ -76,12 +76,12 @@ export class PostBlogComponent implements OnInit {
     }
   }
   public isInvert() {
-    if (this.invert) {
-      //this.invert = false;
-      return 'white';
+    if (!this.invert) {
+      this.font = 'white';
+      this.invert = true;
     } else {
-      //6this.invert = true;
-      return 'black';
+      this.font = 'black';
+      this.invert = false;
     }
   }
 
@@ -95,13 +95,14 @@ export class PostBlogComponent implements OnInit {
       this.getImgs();
       this.img = this.own_imgs[this.img_index];
     }
+    this.isInvert();
     let post = {
       'title': this.title,
       'tags': this.tag,
       'img_id': this.img._id,
       'img_url': this.img.path,
       'content': this.content,
-      'invert': this.invert
+      'font': this.font
     };
     this.setImgClass();
     console.log(post);

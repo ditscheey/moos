@@ -9,7 +9,10 @@ export class ImageService {
   public apiUrl = environment.apiUrl;
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.getImgs();
+    this.getGallery();
+  }
 
   public getImgs () {
       if (this.imgs) {
@@ -46,6 +49,14 @@ export class ImageService {
         console.log(err);
       }
       this.gallery.splice(index, 1);
+    });
+  }
+
+  public addItemGallery(img) {
+
+    this.http.post(this.apiUrl + 'api/gallery/' , img).subscribe(err => {
+      if (err) {console.log(err); }
+      //this.gallery.push(img);
     });
   }
 

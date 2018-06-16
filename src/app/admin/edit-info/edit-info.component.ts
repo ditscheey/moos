@@ -19,7 +19,7 @@ export class EditInfoComponent implements OnInit {
   public data;
   public gallery;
   public headings;
-  public gears;
+  public gears; public preise;
   lat = 47.66332;
   lng = 11.20835;
   public preis1;  public preis2;  public preis3;  public preis4; public preis5;
@@ -34,8 +34,15 @@ export class EditInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPreise();
     this.getInfo();
     this.getGears();
+  }
+
+  public getPreise() {
+    this.http.get(this.apiUrl + 'api/preise').subscribe(data => {
+      this.preise = data;
+    });
   }
 
   public getGears() {
