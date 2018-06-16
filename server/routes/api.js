@@ -380,7 +380,7 @@ function getSecondPart(str) {
     // --> setting PROD MODE
     // change src | dist --> switch urls | use one variable maybe?
     const token = sampleFile.name;
-  sampleFile.mv('src/assets/blog/' + token , function(err) {
+  sampleFile.mv('dist/assets/blog/' + token , function(err) {
     if (err)
       return res.status(500).send(err);
 
