@@ -36,7 +36,7 @@ export class BlogDetailComponent implements OnInit {
 
   get getImageUrl() {
     if (this.post) {
-      console.log(`url("${this.post.form.img_url}")`);
+    //  console.log(`url("${this.post.form.img_url}")`);
       return `url("${this.post.form.img_url}")`;
     }
 
@@ -50,7 +50,7 @@ export class BlogDetailComponent implements OnInit {
      var temp = this.posts.filter(x => x._id === this.routeInfo);
        this.post = temp[0];
        this.font_color = 'text-' + this.post.form.tags.color.split('-')[1];
-      console.log(this.post);
+     // console.log(this.post);
 
     });
 

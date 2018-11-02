@@ -111,7 +111,7 @@ router.get('/fewo',function (req, res){
   let sliced = [];
   let final = [];
   let final_pret = [];
-  let today = moment();
+  let today = moment().subtract(1,'m');
 
   let result2 = [];
 
@@ -130,12 +130,16 @@ router.get('/fewo',function (req, res){
   for (var k in data ){
     if(data.hasOwnProperty(k)){
       //console.log(data[k].start + " \t " + data[k].end);
-      final.push({
-        'start': data[k].start,
-        'end': data[k].end
-      })
+      //console.log(today);
+      if(moment(data[k].start).isAfter(today)){
+        final.push({
+          'start': data[k].start,
+          'end': data[k].end
+        })
+      }
     }
   }
+  final.sort(function(a,b){ return a.start-b.start;});
 
   res.send(final);
 });

@@ -8,7 +8,7 @@
     <div class="col-md-8" >
       <span class="badge badge-pill flex-item text-center"
             *ngFor="let tag of tags, index as i" [ngClass]="convertBadge(i)" (click)="setFilter(tag.name)">
-        <p class="lead">{{tag?.name}}</p></span>
+        <p class="lead" *ngIf="filter.form.tags.name == tag?.name || filter.form.tags.name == '' ">{{tag?.name}}</p></span>
       <span class="badge badge-pill badge-dark flex-item text-center"  (click)="clearOrder()"> <p class="lead"> <i class="fa fa-close"></i></p></span>
     </div>
     <div class="col-md-3">
@@ -25,16 +25,16 @@
 <br>
 <div class="container">
   <div class="row"  >
-    <div class="col-md-4 " *ngFor="let post of data | orderBy: order : reverse | filterBy: filter ; index as i" >
-      <div class="card card-inverse"  routerLink= "post/{{post?._id}}">
+    <div class="col-md-4  " *ngFor="let post of data | orderBy: order : reverse | filterBy: filter ; index as i" >
+      <div class="card card-inverse border-3 "  [ngClass]="convertBorder(post?.form.tags.color)" routerLink= "post/{{post?._id}}">
         <div class="card-header" >
-          <h5 class="text-center">{{post?.form.title}} </h5>
+          <h5 class="text-center " >{{post?.form.title}} </h5>
         </div>
         <div class="card-img-top ">
           <img [src]=post?.form.img_url class="img-thumbnail " style="opacity: 0.9"  alt="preview_image">
         </div>
-
-        <div class="card-footer " [ngClass]="post?.form.tags.color">
+        <!--<div class="card-footer " [ngClass]="post?.form.tags.color">
+        {{"border-"+post?.form.tags.color}}
           <div class="row">
             <div class="col-md-6">
               <p class="lead " > {{ post?.form.tags.name }}</p>
@@ -43,9 +43,8 @@
               <p class="lead text-right" > {{ post?.time }}</p>
             </div>
           </div>
-        </div>
+        </div>-->
       </div>
-      <br>
     </div>
   </div>
 </div>

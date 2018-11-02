@@ -118,6 +118,7 @@ export class PostBlogComponent implements OnInit {
 
   public setImgClass() {
     let re = /<img /gi;
+    console.log("img class set");
     this.content = this.content.replace(re,'<img class="img-fluid" ');
   }
 

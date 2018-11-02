@@ -35,7 +35,7 @@ export class BlogComponent implements OnInit {
     }
   };
   constructor(private route: ActivatedRoute, private http: HttpClient , private router: Router, private orderPipe: OrderPipe) {
-    console.log(this.orderPipe.transform(this.data, this.order));
+    //console.log(this.orderPipe.transform(this.data, this.order));
 }
 
 
@@ -66,10 +66,13 @@ export class BlogComponent implements OnInit {
   setFilter(value: string) {
     this.filter.form.tags.name = value;
     this.filter.form.title = '';
-    console.log(value);
+    //console.log(value);
 
   }
-
+  convertBorder(value: string) {
+    value.substr(2, value.length);
+    return ('border-' +  value.substr(3, value.length));
+  }
   public getPosts() {
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
       this.data = data;

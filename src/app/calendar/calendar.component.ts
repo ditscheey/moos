@@ -51,7 +51,8 @@ export class CalendarComponent implements OnInit {
 
     body.forEach(day => {
       if (day.events.length && day.inMonth) {
-        day.cssClass = 'odd-cell';
+        day.cssClass = "odd-cell";
+        console.log(day.cssClass);
         console.log(day.events.length);
       }
     });
@@ -76,7 +77,7 @@ export class CalendarComponent implements OnInit {
   public getBookings() {
     this.http.get(this.apiUrl + 'api/fewo').subscribe(data => {
       this.bookings = data;
-      //console.log(this.bookings)
+      console.log(this.bookings);
       this.createEvents();
     });
   }
@@ -86,14 +87,13 @@ export class CalendarComponent implements OnInit {
       this.bookings.forEach(booking => {
         let ev = {
           'start': moment(booking.start).toDate(),
-          'end': moment(booking.end).subtract(2, 'd').toDate(),
+          'end': moment(booking.end).subtract(1, 'd').toDate(),
           'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
         this.events.push(ev);
       });
     }
 
   }
-
   public updateCalendar(){
     console.log("send request to putty server --> download new boookings file");
   }

@@ -6,9 +6,9 @@
 <br>
 
 <div class="container ">
-  <div class="card">
-    <div class="card-header">
-      <h3 class="display-3 mx-auto"><p class="text-center">Startseite</p></h3>
+  <div class="card border-4 border-primary">
+    <div class="card-header bg-primary">
+      <h1 class="display-2 mx-auto"><p class="text-center">Startseite </p></h1>
     </div>
     <div class="card-body">
       <div class="container ">
@@ -16,7 +16,7 @@
           <div class="col-md-6">
             <div class=" my-auto">
               <div class="container" ><br>
-                <div class="card  " >
+                <div class="card border-3 border-danger " >
                   <div class="card-header " [ngClass]="color"><h3 class="display-3 text-center" [style.color]="font" >Preise </h3></div>
                   <br>
                   <div class="card-body">
@@ -62,10 +62,33 @@
 
             </div>
             <br>
+            <div class="container">
+              <div class="card border-3 border-dark ">
+                <div class="card-header"><div class="row"><h4 class="display-5 mx-auto text-center">Informationen aktualisieren</h4>
+                  <br>
+                  <button  type="submit" class=" btn btn-block btn-dark" routerLink="/admin/editInfo"><i class="fa fa-info" aria-hidden="true"></i> Absätze formatieren</button></div> </div>
+                <br>
+                <div class="card-body">
+                  <div class="container" *ngIf="headings">
+                    <h5 class="display-5 text-center">Sektionen</h5>
+                    <ul class="list-group ">
+                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h1"></li>
+                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h2"></li>
+                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h3"></li>
+                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h4"></li>
+                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h5"></li>
+                    </ul>
+                  </div>
+                  <br>
+                  <button class="btn btn-block btn-primary"  (click)="updateHeadings()"> Sektionen speichern</button>
+                </div>
+              </div>
+            </div>
+
           </div>
           <div class="col-md-6">
-            <div class="card ">
-    <div class="container">
+            <br>
+            <div class="card border-3 border-danger">
       <div class="card-header">  <h3 class="display-3 mx-auto"><p class="text-center">aktuell: </p></h3> </div>
               <div class="card-body">
                 <div class="row" *ngIf="preise" >
@@ -82,47 +105,36 @@
                   </div>
                 </div>
               </div>
-    </div>
+
             </div> </div>
           </div>
 
         </div>
+
         <br>
+    <div class="">
+
+      <app-heading-info></app-heading-info>
+    </div>
       </div>
     </div>
   <br>
-  <div class="card container">
-    <div class="card-header"><div class="row"><h4 class="display-5 mx-auto text-center">Absätze formatieren</h4>
-      <button  type="submit" class=" btn btn-block btn-dark" routerLink="/admin/editInfo"><i class="fa fa-info" aria-hidden="true"></i> Absätze formatieren</button></div> </div>
 
-    <div class="card-body">
-      <div class="container" *ngIf="headings">
-        <h5 class="display-5 text-center">Sektionen</h5>
-        <ul class="list-group ">
-          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h1"></li>
-          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h2"></li>
-          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h3"></li>
-          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h4"></li>
-          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h5"></li>
-        </ul>
-      </div>
-      <button class="btn btn-block btn-primary"  (click)="updateHeadings()"> Sektionen speichern</button>
-    </div>
-  </div>
   </div>
   <br><br>
 
-
-    <div class="row ">
-
+  <div class="row ">
   </div>
-
-
-
-  <app-heading-info></app-heading-info>
-    <app-tags></app-tags>
-  <app-post-blog></app-post-blog>
-  <app-image-own></app-image-own>
+  <div class="container">
+    <div class="card border-4 border-warning">
+      <div class="card-header bg-warning"><h3 class="display-3 text-center">Blog</h3></div>
+      <div class="card-body">
+        <app-tags></app-tags>
+        <app-image-own></app-image-own>
+        <app-post-blog></app-post-blog>
+      </div>
+    </div>
+  </div>
   <br><br>
   <app-gallery-board></app-gallery-board>
 

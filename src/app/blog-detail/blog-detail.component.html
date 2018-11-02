@@ -1,7 +1,7 @@
 
-  <div class="  header " *ngIf="post?.form" [ngStyle]="{'background': '#fff url(' + post?.form.img_url + ')'}">
+  <div class="  header " *ngIf="post?.form" [ngStyle]="{'background-image': '#fff url(' + post?.form.img_url + ')'}">
     <br><br>
-    <div class="container card">
+    <div class="container  card">
       <div class=" card-title row"  [ngClass] = "post?.form.tags.color" [style.color]="post?.form.font">
         <div class="col-1">
           <h4 class="display-2 align-content-center"   ><i class="fa fa-arrow-left "   routerLink="/blog" aria-hidden="true"></i></h4>
@@ -12,9 +12,9 @@
       </div>
       <div class="row">
         {{post.font}}
-        <div class="col-md7 offset-md2" >
+        <div class="col-md7 offset-md2 " >
           <div class=" text-center" >
-            <div class="card-body"[innerHtml]="post?.form.content"></div>
+            <div class="card-body "[innerHtml]="post?.form.content"></div>
             <br>
             <div class="card-footer" [style.color]="post?.form.font" [ngClass] = "post?.form.tags.color">
               <div class="flex-row">

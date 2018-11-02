@@ -1,6 +1,6 @@
 <br>
 <div class="container" (onchange)="setImgClass()">
-  <div class="card">
+  <div class="card border-dark">
     <div class="card-header " [ngClass]="color_add"><h3 class="display-3 text-center" [style.color]="font">Post erstellen</h3>
       <div class="mx-auto"><button type="submit" class="btn btn-block btn-info"  (click)="isInvert()"><i class="fa fa-add" aria-hidden="true"></i>
         {{font}}</button></div></div>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-group col-md-4">
-          <label for="img_url">Header Image</label>
+          <label for="img_url">Thumbnail Image</label>
           <select class="form-control optional" id="img_url"  [(ngModel)]="img_index">
             <option *ngFor = "let img of own_imgs, index as index" [value]="index" >{{img.name}}</option>
           </select>
@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" (click)="setImgClass()">
         <div class="editor block">
           <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true"
                           [(ngModel)]='content' [imageEndPoint]="endpoint"
@@ -65,11 +65,11 @@
         {{latitude}} {{longitude}}
       </div>
       <div class="row">
-        <div class="col-md-12"><button  type="submit" class=" btn btn-block btn-primary" (click)="addPost()" >Post erstellen  </button></div>
+        <div class="col-md-12"><button *ngIf="title" type="submit" class=" btn btn-block btn-primary" (click)="addPost()" >Post erstellen  </button></div>
       </div>
       <br>
       <div *ngIf="content" class="htmlblock block">
-        <h6>HTML Output</h6>
+        <h6 class="display-3">finaler Blog Post</h6>
         <p class="lead" [innerHtml]="content"></p>
         <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="10">
           <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>

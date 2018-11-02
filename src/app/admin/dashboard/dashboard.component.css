@@ -9,4 +9,9 @@ body, html{
   background-size: cover;
 }
 
+.border-4{
+  border-width:3px !important;
+}
+
+
 
