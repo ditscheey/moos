@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef} from '@angular/core';
 
 import {
   CalendarEvent,
@@ -14,6 +14,7 @@ import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-calendar',
+ // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
@@ -25,16 +26,9 @@ export class CalendarComponent implements OnInit {
   public bookings;
   public ownDates = [];
   public ownBookings;
-
-  //public  date = moment();
-  public book;
-
-  public ownBookings_flag = true;
-  public bookings_flag = true;
+  public book;  public ownBookings_flag = true;  public bookings_flag = true;
 
   events: CalendarEvent[] = [];
-
-
   period: CalendarViewPeriod;
 
   constructor(private http: HttpClient) {
@@ -44,16 +38,19 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.getBookings();
     //this.getOwnBookings();
-
-  }
+     }
 
   beforeMonthViewRender({body}: { body: CalendarMonthViewDay[] }): void {
 
     body.forEach(day => {
+      if (day.isToday && day.inMonth) {
+          day.cssClass = 'today';
+      };
+        if (!day.events.length && day.inMonth) {
+          day.cssClass = 'free';
+        }
       if (day.events.length && day.inMonth) {
-        day.cssClass = "odd-cell";
-        console.log(day.cssClass);
-        console.log(day.events.length);
+        day.cssClass = 'reserved';
       }
     });
   }
@@ -87,15 +84,35 @@ export class CalendarComponent implements OnInit {
       this.bookings.forEach(booking => {
         let ev = {
           'start': moment(booking.start).toDate(),
-          'end': moment(booking.end).subtract(1, 'd').toDate(),
+          'end': moment(booking.end).subtract(2, 'd').toDate(),
           'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
-        this.events.push(ev);
+        //console.log(ev);
+
+        if(moment(ev.start).isAfter(moment(ev.end)))
+        {
+          let ev = {
+            'start': moment(booking.start).toDate(),
+            'end': moment(booking.end).subtract(1, 'd').toDate(),
+            'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
+          this.events.push(ev);
+        }
+        //console.log(ev);
+          this.events.push(ev);
       });
+    }
+    // deactive all days after today
+    for (let i = 1; i < 31; i++) {
+      let today = moment().subtract(i,'d');
+      let ev_t = {
+        'start': today.toDate(),
+        'end': today.toDate(),
+        'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
+      this.events.push(ev_t);
     }
 
   }
-  public updateCalendar(){
-    console.log("send request to putty server --> download new boookings file");
+  public updateCalendar() {
+    //console.log("send request to putty server --> download new boookings file");
   }
 }
 

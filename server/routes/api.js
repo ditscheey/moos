@@ -115,23 +115,26 @@ router.get('/fewo',function (req, res){
 
   let result2 = [];
 
+  //DTEnd ein Tag immer zu weit
+  // DTSTart richtig aber Zeit eventuell genau auf 0.0
   const src= "https://www.traum-ferienwohnungen.de/ical/88889a307404dc3fea1ebc83a44d0bc38214472f/95395/179210.ics?provider=1";
-  const output = 'server/routes/bookings.ics';
+  const output = './server/routes/bookings.ics';
   var download = wget.download(src,output);
   download.on('error', function(err) {
+    console.log('err  or: ');
     console.log(err);
   });
   download.on('start', function(fileSize) {
+    console.log('start');
     console.log(fileSize);
   });
   //Get Data from ICS FILE
+
   var data = ical.parseFile('server/routes/bookings.ics');
 
   for (var k in data ){
     if(data.hasOwnProperty(k)){
-      //console.log(data[k].start + " \t " + data[k].end);
-      //console.log(today);
-      if(moment(data[k].start).isAfter(today)){
+      if(moment(data[k].start).isAfter(today.subtract(10,'d'))){
         final.push({
           'start': data[k].start,
           'end': data[k].end
@@ -140,7 +143,6 @@ router.get('/fewo',function (req, res){
     }
   }
   final.sort(function(a,b){ return a.start-b.start;});
-
   res.send(final);
 });
 
