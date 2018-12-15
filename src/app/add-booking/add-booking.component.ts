@@ -19,7 +19,7 @@ export class AddBookingComponent implements OnInit {
   public ownDates = [];
   public ownBookings;
   public  date = moment();
-
+public form;
   constructor(private http: HttpClient) {
   }
 
@@ -45,9 +45,9 @@ export class AddBookingComponent implements OnInit {
 
   public deleteBooking(index){
     console.log("delete " + index);
-
     this.http.delete(this.apiUrl + 'api/bookings/' + this.ownBookings[index]._id).subscribe( data =>   {
       this.ownBookings.splice(index, 1);
+      window.location.reload();
     });
   }
 public checkDate(date) {
@@ -69,6 +69,12 @@ public checkDate(date) {
         minDate: this.date,
         alwaysShowCalendars: true,
         drops: 'down',
+      };
+    });
+  }
+
+}
+/*
         isInvalidDate: date => {
           for (var ii = 0; ii < this.ownDates.length; ii++) {
             //console.log("date " + date.format('DD.MM.YYYY'));
@@ -82,8 +88,5 @@ public checkDate(date) {
             }
           }
         }
-      };
-    });
-  }
 
-}
+*/

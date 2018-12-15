@@ -55,7 +55,11 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { GalleryBoardComponent } from './gallery-board/gallery-board.component';
 import {ImageService} from './image.service';
 
-
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { ModalComponent } from './modal/modal.component';
+registerLocaleData(localeDe);
 const appRoutes: Routes = [
   { path: '', redirectTo: 'info' , pathMatch: 'full'},
   {  path: 'info', component: InfoComponent },
@@ -104,7 +108,8 @@ const appRoutes: Routes = [
     ImageOwnComponent,
     HeadingInfoComponent,
     CalendarComponent,
-    GalleryBoardComponent
+    GalleryBoardComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -116,7 +121,6 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     FilterPipeModule,
     ClipboardModule,
-    StarRatingModule,
     MarkdownModule.forRoot(),
     ImageUploadModule.forRoot(),
     Daterangepicker,

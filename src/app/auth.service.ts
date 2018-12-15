@@ -19,7 +19,7 @@ export class AuthService {
   userProfile: any;
 
   constructor(public router: Router) {
-    console.log('http:studiomurnauermoos.de/');
+    //console.log('http:studiomurnauermoos.de/');
   }
 
   public login(): void {

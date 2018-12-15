@@ -3,6 +3,8 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 import {
   CalendarEvent,
   CalendarViewPeriod,
+  DAYS_OF_WEEK,
+  CalendarDateFormatter,
   CalendarMonthViewBeforeRenderEvent,
   CalendarWeekViewBeforeRenderEvent,
   CalendarDayViewBeforeRenderEvent,
@@ -19,22 +21,19 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CalendarComponent implements OnInit {
   viewDate: Date = new Date();
-
+  public locale = 'de';
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   view: string = 'month';
   public apiUrl = environment.apiUrl;
   public bookings;
   public ownDates = [];
   public ownBookings;
-
-  //public  date = moment();
   public book;
-
   public ownBookings_flag = true;
   public bookings_flag = true;
 
   events: CalendarEvent[] = [];
-
-
   period: CalendarViewPeriod;
 
   constructor(private http: HttpClient) {
@@ -42,61 +41,86 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getOwnBookings();
     this.getBookings();
-    //this.getOwnBookings();
-
   }
 
   beforeMonthViewRender({body}: { body: CalendarMonthViewDay[] }): void {
 
     body.forEach(day => {
+      if (day.isToday && day.inMonth) {
+        day.cssClass = 'today';
+      };
+      if (!day.events.length && day.inMonth) {
+        day.cssClass = 'free';
+      }
       if (day.events.length && day.inMonth) {
-        day.cssClass = "odd-cell";
-        console.log(day.cssClass);
-        console.log(day.events.length);
+        day.cssClass = 'reserved';
       }
     });
   }
-
   public getOwnBookings() {
     this.http.get(this.apiUrl + 'api/bookings').subscribe(data => {
       this.ownBookings = data;
-      this.ownBookings.forEach(booking => {
-        let start_date = moment(booking.form.dateFrom, 'DD.MM.YYYY');
-        //this.ownDates.push(booking.form.dateFrom);
-        for (let d = 1; d < booking.nights; d++) {
-          start_date.add(1, 'days');
-          this.ownDates.push(start_date.format('DD.MM.YYYY'));
-        }
-      });
-      //console.log(this.ownDates);
-      //this.createEvents();
+      //console.log('own');
+      //console.log(this.ownBookings);
+      this.createEventsOwn();
     });
   }
 
   public getBookings() {
     this.http.get(this.apiUrl + 'api/fewo').subscribe(data => {
       this.bookings = data;
-      console.log(this.bookings);
+      //console.log(this.bookings);
       this.createEvents();
     });
   }
 
+  public createEventsOwn() {
+    this.ownBookings.forEach(booking => {
+      let ev = {
+        'start': moment(booking.form.dateFrom, 'DD.MM.YYYY').toDate(),
+        'end': moment(booking.form.dateTo, 'DD.MM.YYYY').toDate(),
+        'title': 'deaktiviert', 'cssClass': 'odd-cell'};
+      //console.log('Events own');
+      this.events.push(ev);
+    });
+    //console.log(this.events);
+  }
   public createEvents() {
     if (this.bookings) {
       this.bookings.forEach(booking => {
         let ev = {
-          'start': moment(booking.start).toDate(),
-          'end': moment(booking.end).subtract(1, 'd').toDate(),
+          'start': moment(booking.start).add(1, 'days').toDate(),
+          'end': moment(booking.end).subtract(1, 'days').toDate(),
           'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
+        if(moment(ev.start).isAfter(moment(ev.end)))
+        {
+          //console.log('alternativ');
+          let ev = {
+            'start': moment(booking.start).toDate(),
+            'end': moment(booking.end).subtract(2, 'days').toDate(),
+            'title': 'alternativ', 'cssClass': 'odd-cell'};
+          this.events.push(ev);
+        }
         this.events.push(ev);
       });
     }
+   // deactive all days after today
+    for (let i = 1; i < 31; i++) {
+      let today = moment().subtract(i,'days');
+      let ev_t = {
+        'start': today.toDate(),
+        'end': today.toDate(),
+        'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
+      this.events.push(ev_t);
+    }
+  }
 
+  public refresh() {
+      window.location.reload();
   }
-  public updateCalendar(){
-    console.log("send request to putty server --> download new boookings file");
-  }
+
 }
 
 

@@ -41,7 +41,7 @@ export class ImageOwnComponent implements OnInit {
     //console.log($event);
     this.getTags();
     this.own_imgs = this.imgService.getImgs();
-    //location.reload();
+    window.location.reload();
   }
 
   public getTags() {

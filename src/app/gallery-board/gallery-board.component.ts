@@ -69,6 +69,7 @@ export class GalleryBoardComponent implements OnInit {
     this.http.delete(this.apiUrl + 'api/gallery/' + id).subscribe(err =>{
       if ( err) {console.log(err);}
       this.gallery.splice(index, 1);
+      window.location.reload();
     });
   }
 

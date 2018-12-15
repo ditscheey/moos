@@ -4,53 +4,19 @@
       <div class="backimg">
         <form [formGroup]="bookingForm">
           <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label for="first_name">Vorname</label>
               <input type="text" class="form-control" id="first_name" placeholder="Vorname" formControlName="first_name"
                      [ngClass] = " { 'vali' : (!bookingForm.controls.first_name?.valid && bookingForm.controls.first_name?.touched), 'good': (bookingForm.controls.first_name?.valid && bookingForm.controls.first_name?.touched)} ">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label for="last_name">Nachname</label>
               <input type="text" class="form-control" id="last_name" placeholder="Nachname" formControlName="last_name"
                      [ngClass] = " { 'vali' : (!bookingForm.controls.last_name?.valid && bookingForm.controls.last_name?.touched), 'good': (bookingForm.controls.last_name?.valid && bookingForm.controls.last_name?.touched)  } ">
             </div>
-            <div class="form-group col-md-4">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="youremail@example.com"
-                     [ngClass] = " { 'vali' : (!bookingForm.controls.email?.valid && bookingForm.controls.email?.touched), 'good': (bookingForm.controls.email?.valid && bookingForm.controls.email?.touched)  } " formControlName="email">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="people">Erwachsene</label>
-              <select class="form-control" id="people" name='people' formControlName="people"
-                      [ngClass] = " { 'vali' : (!bookingForm.controls.people?.valid && bookingForm.controls.people?.touched), 'good': (bookingForm.controls.people?.valid && bookingForm.controls.people?.touched)} " (change)="calcPrice()">
-                <option selected = "selected">1</option>
-                <option >2</option>
-                <option >3</option>
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="pets">Haustiere</label>
-              <select class="form-control optional" id="pets" name='pets' formControlName="pets"  (change)="calcPrice()">
-                <option selected="selected"  value = "5">Kein Haustier</option>
-                <option  >1</option>
-                <option  >2</option>
-              </select>
-            </div>
-
-            <div class="form-group col-md-4">
-              <label for="kids">Kinder | bis 12 Jahren</label>
-              <select class="form-control optional" name='kids' id="kids" formControlName="kids">
-                <option selected = "selected" >0</option>
-                <option >1</option>
-                <option >2</option>
-                <option >3</option>
-                <option >4</option>
-              </select>
-            </div>
 
           </div>
+
           <div class="mx-auto" style="width: 50%;"><span class="alert-danger" *ngIf="(
       (!bookingForm.controls.dateFrom?.valid && bookingForm.controls.dateFrom?.touched) || (!bookingForm.controls.dateTo?.valid && bookingForm.controls.dateTo?.touched )   )">
         falsches Format || benutzen sie den Button
@@ -91,21 +57,6 @@
   </div>
   <div class="row">
     <p><br></p>
-  </div>
-  <div class="row">
-    <div class="col-md-5 d-flex ">
-      <br>
-      <p class="lead text-justify" [innerHtml]="preisInfo"></p>
-    </div>
-    <div class="col-md-7 d-flex flex-wrap   badge-primary justify-content-center">
-      <br>
-      <span id="price" class=" badge badge-primary   justify-content-center">
-              <p class="lead p-4 align-baseline ">{{nights}} * {{price}} € <small> pro Nacht </small>  + 30 € <small> Reinigungsgebühr </small><b> =</b> </p>
-              <h4 class="display-4 d-inline-flex justify-content-center">{{complete}} € </h4>
-            </span>
-      <br>
-    </div>
-
   </div>
   <div class="row"> <p><br></p></div>
 

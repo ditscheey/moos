@@ -6,6 +6,7 @@ import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 import {GearService} from '../../gear.service';
 import {HttpClient} from '@angular/common/http';
+import { AddBookingComponent} from '../../add-booking/add-booking.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,7 @@ profile: any;
   public h1; public h2; public h3; public h4; public h5;
   public preise ; public preis_neu; public color; public update; public content;
   constructor(private auth: AuthService , private http: HttpClient, private router: Router) { }
+
 
   public checkProfile () {
     if (this.auth.userProfile) {
@@ -68,9 +70,8 @@ profile: any;
       if (err) {
         console.log(err);
       }
-      this.router.navigate(['/info']);
     });
-    //this.router.navigate(['/info']);
+
   }
 
   public getPreise() {
@@ -90,7 +91,7 @@ profile: any;
         console.log(err);
       }
       this.preise.push(preis);
-      this.router.navigate(['./admin']);
+      window.location.reload();
     });
   }
 
@@ -103,6 +104,7 @@ profile: any;
     this.http.put(this.apiUrl + 'api/preise/' + id, preis).subscribe(err => {
       if (err) {console.log(err); }
       this.preise[index] = preis;
+      window.location.reload();
     });
   }
   public setFlag (id, index) {
@@ -119,6 +121,7 @@ profile: any;
     this.http.delete(this.apiUrl + 'api/preise/' + id).subscribe(err =>{
       if ( err) {console.log(err);}
       this.preise.splice(index, 1);
+      window.location.reload();
     });
   }
 
@@ -136,8 +139,5 @@ profile: any;
       this.font = 'black';
       this.invert = true;
     }
-
   }
-
-
 }

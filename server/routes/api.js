@@ -23,9 +23,7 @@ router.get('/file',function (req, res){
     let final = [];
     let final_pret = [];
     let today = moment();
-
     let result2 = [];
-
     //Get Data from ICS FILE
     var data = ical.parseFile('server/routes/bookings.ics');
 
@@ -105,33 +103,30 @@ router.get('/file',function (req, res){
 });
 
 router.get('/fewo',function (req, res){
-  let result = [];
-  let dates = [];
-  let ints =  [];
-  let sliced = [];
-  let final = [];
-  let final_pret = [];
-  let today = moment().subtract(1,'m');
-
+  let result = [];  let dates = [];  let ints =  [];  let sliced = [];
+  let final = [];  let final_pret = [];  let today = moment();
   let result2 = [];
 
   const src= "https://www.traum-ferienwohnungen.de/ical/88889a307404dc3fea1ebc83a44d0bc38214472f/95395/179210.ics?provider=1";
   const output = 'server/routes/bookings.ics';
   var download = wget.download(src,output);
   download.on('error', function(err) {
-    console.log(err);
+    console.log("error download : " + err);
   });
   download.on('start', function(fileSize) {
-    console.log(fileSize);
+    console.log("filesize download : " + fileSize);
   });
   //Get Data from ICS FILE
   var data = ical.parseFile('server/routes/bookings.ics');
-
+  let temp = today.subtract(2,'months');
+  console.log(today);
+  console.log(temp);
   for (var k in data ){
     if(data.hasOwnProperty(k)){
       //console.log(data[k].start + " \t " + data[k].end);
       //console.log(today);
-      if(moment(data[k].start).isAfter(today)){
+      //moment(data[k].start).isAfter(today.subtract(2,'m'))
+      if(moment(data[k].start).isAfter(temp)){
         final.push({
           'start': data[k].start,
           'end': data[k].end
@@ -140,7 +135,7 @@ router.get('/fewo',function (req, res){
     }
   }
   final.sort(function(a,b){ return a.start-b.start;});
-
+  console.log(final.length);
   res.send(final);
 });
 
@@ -715,7 +710,7 @@ router.delete('/bookings/:id', function(req, res, next){
 //Save Task
 router.post('/bookings', function(req, res, next){
   var booking = req.body;
-  if(!booking.form.email){
+  if(!booking.form.first_name){
     res.status(400);
     res.json({
       "error": "Bad Data"

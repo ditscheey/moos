@@ -50,7 +50,7 @@ export class HeadingInfoComponent implements OnInit {
         console.log(err);
       }
       if (!this.gears) {
-        console.log(this.gears);
+        //console.log(this.gears);
       }
       this.gears.push(ge);
     });
@@ -65,10 +65,11 @@ export class HeadingInfoComponent implements OnInit {
 
     this.http.put(this.apiUrl + 'api/gears/' + id, gear).subscribe(err => {
       if (err) {
-        console.log(err);
+        //console.log(err);
       }
       this.gears[index] = gear;
       this.update = null;
+      window.location.reload();
     });
   }
 
@@ -124,7 +125,7 @@ export class HeadingInfoComponent implements OnInit {
       if (err) {
         console.log(err);
       }
-      this.router.navigate(['/info']);
+      window.location.reload();
     });
   }
 

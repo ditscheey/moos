@@ -105,7 +105,7 @@ export class PostBlogComponent implements OnInit {
       'font': this.font
     };
     this.setImgClass();
-    console.log(post);
+   // console.log(post);
 
     this.http.post(this.apiUrl + 'api/posts', post).subscribe(err => {
       if (err) {
