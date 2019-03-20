@@ -19,13 +19,21 @@ export class AddBookingComponent implements OnInit {
   public ownDates = [];
   public ownBookings;
   public  date = moment();
-public form;
+  public form; public searchText = '';
   constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
     this.getBookings();
     this.getOwnBookings();
+  }
+
+  public getFree(booking) {
+    if (booking.free) {
+      return "bg-success";
+    } else {
+      return "bg-warning";
+    }
   }
 
   public getOwnBookings(){

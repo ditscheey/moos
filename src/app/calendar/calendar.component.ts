@@ -13,6 +13,7 @@ import {
 import * as moment from 'moment';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-calendar',
@@ -34,6 +35,7 @@ export class CalendarComponent implements OnInit {
   public bookings_flag = true;
 
   events: CalendarEvent[] = [];
+  events_free: CalendarEvent[] = [];
   period: CalendarViewPeriod;
 
   constructor(private http: HttpClient) {
@@ -42,15 +44,15 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.getOwnBookings();
-    this.getBookings();
+    //this.getBookings();
   }
 
   beforeMonthViewRender({body}: { body: CalendarMonthViewDay[] }): void {
-
+    //let done = this.free_events();
     body.forEach(day => {
       if (day.isToday && day.inMonth) {
         day.cssClass = 'today';
-      };
+      }
       if (!day.events.length && day.inMonth) {
         day.cssClass = 'free';
       }
@@ -60,10 +62,8 @@ export class CalendarComponent implements OnInit {
     });
   }
   public getOwnBookings() {
-    this.http.get(this.apiUrl + 'api/bookings').subscribe(data => {
+    this.http.get(this.apiUrl + 'api/fewo').subscribe(data => {
       this.ownBookings = data;
-      //console.log('own');
-      //console.log(this.ownBookings);
       this.createEventsOwn();
     });
   }
@@ -77,14 +77,27 @@ export class CalendarComponent implements OnInit {
   }
 
   public createEventsOwn() {
+    //console.log("size");console.log(this.ownBookings.length)
     this.ownBookings.forEach(booking => {
+      //console.log(moment(booking));
       let ev = {
-        'start': moment(booking.form.dateFrom, 'DD.MM.YYYY').toDate(),
-        'end': moment(booking.form.dateTo, 'DD.MM.YYYY').toDate(),
-        'title': 'deaktiviert', 'cssClass': 'odd-cell'};
-      //console.log('Events own');
+        'start': moment(booking).toDate(),
+        'end': moment(booking).toDate(),
+        'title': 'belegt', 'cssClass': 'odd-cell'
+      };     //console.log('Events own');
       this.events.push(ev);
+      /*
+      for (let i = 1; i < 31; i++) {
+        let today = moment().subtract(i,'days');
+        let ev_t = {
+          'start': today.toDate(),
+          'end': today.toDate(),
+          'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
+        this.events.push(ev_t);
+      }
+      */
     });
+
     //console.log(this.events);
   }
   public createEvents() {
@@ -94,7 +107,7 @@ export class CalendarComponent implements OnInit {
           'start': moment(booking.start).add(1, 'days').toDate(),
           'end': moment(booking.end).subtract(1, 'days').toDate(),
           'title': 'belegt | reserved', 'cssClass': 'odd-cell'};
-        if(moment(ev.start).isAfter(moment(ev.end)))
+        if (moment(ev.start).isAfter(moment(ev.end)))
         {
           //console.log('alternativ');
           let ev = {

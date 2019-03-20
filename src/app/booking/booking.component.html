@@ -14,7 +14,6 @@
               <input type="text" class="form-control" id="last_name" placeholder="Nachname" formControlName="last_name"
                      [ngClass] = " { 'vali' : (!bookingForm.controls.last_name?.valid && bookingForm.controls.last_name?.touched), 'good': (bookingForm.controls.last_name?.valid && bookingForm.controls.last_name?.touched)  } ">
             </div>
-
           </div>
 
           <div class="mx-auto" style="width: 50%;"><span class="alert-danger" *ngIf="(
@@ -46,9 +45,15 @@
             <label for="comment">Details zur Buchungsanfrage  | optional</label>
             <textarea class="form-control" id="comment" rows="3" formControlName="comment"></textarea>
           </div>
-          <div class="col-md">
-            <button  [disabled]="!bookingForm.valid"   type="submit" class="  btn btn-block " [ngClass]="{'btn-primary':bookingForm.valid, 'btn-danger': bookingForm.invalid}"
-                     (click)="addBooking()">Absenden</button>
+          <div class="row">
+            <div class="col-md-6">
+              <button  [disabled]="!bookingForm.valid"   type="submit" class="  btn btn-block " [ngClass]="{'btn-primary':bookingForm.valid, 'btn-danger': bookingForm.invalid}"
+                       (click)="addBooking()"> <i class="fa fa-ban"></i> Termine blockieren!</button>
+            </div>
+            <div class="col-md-6">
+              <button  [disabled]="!bookingForm.valid"   type="submit" class="  btn btn-block " [ngClass]="{'btn-success':bookingForm.valid, 'btn-danger': bookingForm.invalid}"
+                       (click)="addFreeBooking()"><i class="fa fa-check"></i> Termine freigeben!</button>
+            </div>
           </div>
         </form>
       </div>

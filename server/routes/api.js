@@ -102,11 +102,11 @@ router.get('/file',function (req, res){
     res.send(final);
 });
 
-router.get('/fewo',function (req, res){
-  let result = [];  let dates = [];  let ints =  [];  let sliced = [];
-  let final = [];  let final_pret = [];  let today = moment();
-  let result2 = [];
-
+router.get('/fewo_alt',function (req, res){
+ /* let result = [];  let dates = [];  let ints =  [];  let sliced = [];
+    let final_pret = [];
+  let result2 = [];*/
+  var final = [];let today = moment();
   const src= "https://www.traum-ferienwohnungen.de/ical/88889a307404dc3fea1ebc83a44d0bc38214472f/95395/179210.ics?provider=1";
   const output = 'server/routes/bookings.ics';
   var download = wget.download(src,output);
@@ -119,8 +119,7 @@ router.get('/fewo',function (req, res){
   //Get Data from ICS FILE
   var data = ical.parseFile('server/routes/bookings.ics');
   let temp = today.subtract(2,'months');
-  console.log(today);
-  console.log(temp);
+  //console.log(today);  console.log(temp);
   for (var k in data ){
     if(data.hasOwnProperty(k)){
       //console.log(data[k].start + " \t " + data[k].end);
@@ -683,17 +682,119 @@ router.delete('/preise/:id', function(req, res, next){
 //Begin für Bookings api
 /////
 router.get('/bookings',function (req, res){
+  db.bookings.find(function (err, gears){
+    if(err){
+      res.send("Error found while loading the Data");
+    }
+    res.json(gears);
+  });
+});
 
+router.get('/fewo',function (req, res){
+  // get fewo bookings
+  /* let result = [];  let dates = [];  let ints =  [];  let sliced = [];
+   let final_pret = [];
+ let result2 = [];*/
+  var final = [];let today = moment();
+  var final_days = [];var booking_days= []; var free_days = [];
+  const src= "https://www.traum-ferienwohnungen.de/ical/88889a307404dc3fea1ebc83a44d0bc38214472f/95395/179210.ics?provider=1";
+  const output = 'server/routes/bookings.ics';
+ /* var download = wget.download(src,output);
+  download.on('error', function(err) {
+    console.log("error download : " + err);
+  });
+  download.on('start', function(fileSize) {
+    console.log("filesize download : " + fileSize);
+  });*/
+  //Get Data from ICS FILE
+  var data = ical.parseFile('server/routes/bookings.ics');
+  let temp = today.subtract(2,'months');
+  //console.log(today);  console.log(temp);
+  for (var k in data ){
+    if(data.hasOwnProperty(k)){
+      //console.log("data");
+     // console.log(data[k].start + " <- st | en -> " + data[k].end);
+      //console.log(today);
+      //moment(data[k].start).isAfter(today.subtract(2,'m'))
+      if(moment(data[k].start).isAfter(temp)){
+        final.push({
+          'start': moment(data[k].start).add(1, 'd'),
+          'end': moment(data[k].end).add(1, 'd')
+        });
+
+        var start = moment(data[k].start);var end = moment(data[k].end);
+        while(start <= end) {
+            final_days.push(start);
+            start = moment(start).add(1, 'days');
+         }
+      }
+    }
+  }
+  //console.log("Final \n");
+   //console.log(final_days.length);
+  final.sort(function(a,b){ return a.start-b.start;});
+  final_days.sort(function(a,b){ return a-b;});
+
+  // get bookings
   db.bookings.find(function (err, bookings){
     if(err){
       res.send("Error found while loading the Data");
     }
-    console.log("bookings");
-    console.log(bookings);
-    res.json(bookings);
-  });
+     for (var booking of bookings) {
+      //console.log(booking);
+       var start =  moment(booking.form.dateFrom, 'DD.MM.YYYY');
+       var end = moment(booking.form.dateTo, 'DD.MM.YYYY');
+      if (booking.free) {
+        //console.log(booking);
+        while(start <= end) {
+          //console.log("free");
+          free_days.push(start);
+          start = moment(start).add(1, 'days');
+        }
+      } else {
+        while(start <= end) {
+          //console.log("booking_days loop");
+          booking_days.push(start);
+          start = moment(start).add(1, 'days');
+        }
+      }
+     } //-- end for loop
+     /*
+    console.log("free days \n");
+    console.log(free_days);
+    console.log("booking days \n");
+    console.log(booking_days.length);*/
+    var merged_bookings = arrayUnique(booking_days.concat(final_days));
+    merged_bookings = arrayUnique(merged_bookings);
+    console.log('merged');console.log(merged_bookings.length);
+
+    console.log('merged - duplicate');console.log(merged_bookings.length);
+    for (var k =0;k<merged_bookings.length;k++) {
+      for (var free of free_days){
+        if (merged_bookings[k].isSame(free)) {
+          merged_bookings.splice(k,1);
+        }
+      }
+    }
+  console.log('merged _ after cleanup');console.log(merged_bookings.length);
+    res.json(merged_bookings);
+  })
+
 });
 
+function arrayUnique(array) {
+  var a = array.concat();
+  for (var i = 0; i < a.length; ++i) {
+    for (var j = i + 1; j < a.length; ++j) {
+      if (moment(a[i]).isSame(moment(a[j])) ){
+        // console.log("duplicate");
+        a.splice(j--, 1);
+      }
+
+    }
+  }
+  return a;
+}
 ///        delete Booking
 router.delete('/bookings/:id', function(req, res, next){
   var id = req.params.id;

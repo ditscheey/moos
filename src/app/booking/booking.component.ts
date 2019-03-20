@@ -112,11 +112,20 @@ public preisInfo;
       'form' : this.bookingForm.value,
     };
     //console.log(post_value);
-      this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
-        window.location.reload();
+    this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
+      window.location.reload();
     } );
   }
-
+  addFreeBooking() {
+    const post_value = {
+      'form' : this.bookingForm.value,
+      'free': true,
+    };
+    //console.log(post_value);
+    this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
+      window.location.reload();
+    } );
+  }
   public getOwnBookings(){
     this.http.get(this.apiUrl + 'api/bookings').subscribe(data => {
       this.ownBookings = data;

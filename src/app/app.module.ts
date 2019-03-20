@@ -69,9 +69,9 @@ const appRoutes: Routes = [
   {  path: 'about', component: AboutComponent },
   { path: 'impressum', component: ImpressumComponent},
   { path: 'image/:id', component: ImageComponent},
-  { path: 'admin', component: DashboardComponent , canActivate: [AdminGuardService]},
+  { path: 'admin', component: DashboardComponent },
   { path: 'admin/editInfo', component: EditInfoComponent, canActivate: [AdminGuardService]},
-  { path: 'admin/addBooking', component: AddBookingComponent, canActivate: [AdminGuardService]},
+  { path: 'admin/addBooking', component: AddBookingComponent},
   { path: 'admin/editInfo/:detail', component: EditAboutComponent, canActivate: [AdminGuardService]},
   { path: 'tags', component: TagsComponent, canActivate: [AdminGuardService]},
   { path: 'login', component: LoginComponent},
@@ -83,6 +83,7 @@ const appRoutes: Routes = [
   { path: 'calendar', component: CalendarComponent }
 
 ];
+// routes -> dashboard /addbooking -> , canActivate: [AdminGuardService]
 @NgModule({
   declarations: [
     AppComponent,

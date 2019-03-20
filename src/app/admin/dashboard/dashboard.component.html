@@ -4,123 +4,155 @@
     <div class="mx-auto my-3" style="width: 800px; opacity: 0.6 ;"> <h4 class="display-2 align-content-center " style="background-color: whitesmoke"><p style="opacity: 1;">{{profile?.given_name}}'s Dashboard</p></h4></div>
   </div>
 <br>
-
-<div class="container " id="Start">
-  <div class="card border-4 border-primary">
-    <div class="card-header bg-primary">
-      <h1 class="display-2 mx-auto"><p class="text-center">Startseite </p></h1>
+  <div class="row">
+    <div class="col-sm-4 col-md-3 sidebar">
+      <div class="mini-submenu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </div>
+      <div class="list-group">
+        <span href="#" class="list-group-item active">
+            Submenu
+            <span class="pull-right" id="slide-submenu">
+                <i class="fa fa-times"></i>
+            </span>
+        </span>
+        <a href="#" class="list-group-item">
+          <i class="fa fa-comment-o"></i> Lorem ipsum
+        </a>
+        <a href="#" class="list-group-item">
+          <i class="fa fa-search"></i> Lorem ipsum
+        </a>
+        <a href="#" class="list-group-item">
+          <i class="fa fa-user"></i> Lorem ipsum
+        </a>
+        <a href="#" class="list-group-item">
+          <i class="fa fa-folder-open-o"></i> Lorem ipsum <span class="badge">14</span>
+        </a>
+        <a href="#" class="list-group-item">
+          <i class="fa fa-bar-chart-o"></i> Lorem ipsumr <span class="badge">14</span>
+        </a>
+        <a href="#" class="list-group-item">
+          <i class="fa fa-envelope"></i> Lorem ipsum
+        </a>
+      </div>
     </div>
-    <div class="card-body">
-      <div class="container ">
-        <div class="row">
-          <div class="col-md-6">
-            <div class=" my-auto">
-              <div class="container" ><br>
-                <div class="card border-3 border-danger " >
-                  <div class="card-header " [ngClass]="color"><h3 class="display-3 text-center" [style.color]="font" >Preise </h3></div>
-                  <br>
-                  <div class="card-body">
-                    <div class="container">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="name">Beschreibung</label>
-                            <input type="text" class="form-control" id="name" [(ngModel)]="content">
+    <div class="container " id="Start">
+      <div class="card border-4 border-primary">
+        <div class="card-header bg-primary">
+          <h1 class="display-2 mx-auto"><p class="text-center">Startseite </p></h1>
+        </div>
+        <div class="card-body">
+          <div class="container ">
+            <div class="row">
+              <div class="col-md-6">
+                <div class=" my-auto">
+                  <div class="container" ><br>
+                    <div class="card border-3 border-danger " >
+                      <div class="card-header " [ngClass]="color"><h3 class="display-3 text-center" [style.color]="font" >Preise </h3></div>
+                      <br>
+                      <div class="card-body">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="name">Beschreibung</label>
+                                <input type="text" class="form-control" id="name" [(ngModel)]="content">
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="color">Farbe auswählen</label>
+                                <select class="form-control "  id="color" [(ngModel)]="color"  >
+                                  <option selected = "selected" value="bg-primary"  >primary</option>
+                                  <option  value="bg-secondary" >secondary</option>
+                                  <option  value="bg-info" >info</option>
+                                  <option  value="bg-danger" >danger</option>
+                                  <option  value="bg-warning" >warning</option>
+                                  <option  value="bg-light" >light</option>
+                                </select>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label for="color">Farbe auswählen</label>
-                            <select class="form-control "  id="color" [(ngModel)]="color"  >
-                              <option selected = "selected" value="bg-primary"  >primary</option>
-                              <option  value="bg-secondary" >secondary</option>
-                              <option  value="bg-info" >info</option>
-                              <option  value="bg-danger" >danger</option>
-                              <option  value="bg-warning" >warning</option>
-                              <option  value="bg-light" >light</option>
-                            </select>
+                          <div class="row"><div class="mx-auto">
+                          </div></div>
+                          <div class="row">
+                            <div class="col-md-5">
+                              <button type="submit" class="btn btn-block btn-info"  (click)="isInvert()"><i class="fa fa-add" aria-hidden="true"></i>
+                                {{font}} </button>
+                            </div>
+                            <div class="col-md-7">
+                              <button  id="bt" *ngIf="!update?.id" type="submit" class=" btn btn-block btn-primary"  (click)="addPreis()"><i class="fa fa-add" aria-hidden="true"></i> hinzufügen</button>
+                              <button  *ngIf="update?.id" id="bt2" type="submit" class=" btn btn-block btn-info"  (click)="updatePreis(update?.id,update?.index)"><i class="fa fa-add" aria-hidden="true"></i> ändern</button>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div class="row"><div class="mx-auto">
-                        </div></div>
-                      <div class="row">
-                        <div class="col-md-5">
-                          <button type="submit" class="btn btn-block btn-info"  (click)="isInvert()"><i class="fa fa-add" aria-hidden="true"></i>
-                            {{font}} </button>
-                        </div>
-                        <div class="col-md-7">
-                          <button  id="bt" *ngIf="!update?.id" type="submit" class=" btn btn-block btn-primary"  (click)="addPreis()"><i class="fa fa-add" aria-hidden="true"></i> hinzufügen</button>
-                          <button  *ngIf="update?.id" id="bt2" type="submit" class=" btn btn-block btn-info"  (click)="updatePreis(update?.id,update?.index)"><i class="fa fa-add" aria-hidden="true"></i> ändern</button>
-                        </div>
-                      </div>
 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <br>
+                <div class="container">
+                  <div class="card border-3 border-dark ">
+                    <div class="card-header"><div class="row"><h4 class="display-5 mx-auto text-center">Informationen aktualisieren</h4>
+                      <br>
+                      <button  type="submit" class=" btn btn-block btn-dark" routerLink="/admin/editInfo"><i class="fa fa-info" aria-hidden="true"></i> Absätze formatieren</button></div> </div>
+                    <br>
+                    <div class="card-body">
+                      <div class="container" *ngIf="headings">
+                        <h5 class="display-5 text-center">Sektionen</h5>
+                        <ul class="list-group ">
+                          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h1"></li>
+                          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h2"></li>
+                          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h3"></li>
+                          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h4"></li>
+                          <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h5"></li>
+                        </ul>
+                      </div>
+                      <br>
+                      <button class="btn btn-block btn-primary"  (click)="updateHeadings()"> Sektionen speichern</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-6">
+                <br>
+                <div class="card border-3 border-danger">
+                  <div class="card-header">  <h3 class="display-3 mx-auto"><p class="text-center">aktuell: </p></h3> </div>
+                  <div class="card-body">
+                    <div class="row" *ngIf="preise" >
+                      <div class="col-md-12">
+                        <ul class="list-group">
+                          <li class="list-group-item" [ngClass]="preis.color" [style.color]="preis.font"  *ngFor="let preis of preise, index as index" >
+                            <div class="row">
+                              <div class="col-md-6 my-auto text-center"><h5 class="display-5" [ngClass]="showUsed(preis.color)">{{preis.content}}</h5>         </div>
+                              <div class="col-md-3"><button class="btn btn-outline-primary btn-block" (click)="setFlag(preis?._id, index)"> &nbsp;<i class="mx-auto fa fa-circle-o-notch"  aria-hidden="true"></i></button></div>
+                              <div class="col-md-3"><button class="btn btn-outline-danger btn-block" (click)="deleteTag(preis?._id, index)"> &nbsp;<i class="fa fa-close"  aria-hidden="true"></i></button></div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
-            <br>
-            <div class="container">
-              <div class="card border-3 border-dark ">
-                <div class="card-header"><div class="row"><h4 class="display-5 mx-auto text-center">Informationen aktualisieren</h4>
-                  <br>
-                  <button  type="submit" class=" btn btn-block btn-dark" routerLink="/admin/editInfo"><i class="fa fa-info" aria-hidden="true"></i> Absätze formatieren</button></div> </div>
-                <br>
-                <div class="card-body">
-                  <div class="container" *ngIf="headings">
-                    <h5 class="display-5 text-center">Sektionen</h5>
-                    <ul class="list-group ">
-                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h1"></li>
-                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h2"></li>
-                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h3"></li>
-                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h4"></li>
-                      <li class="list-group-item"><input type="text" class="form-control" [(ngModel)]="h5"></li>
-                    </ul>
-                  </div>
-                  <br>
-                  <button class="btn btn-block btn-primary"  (click)="updateHeadings()"> Sektionen speichern</button>
-                </div>
-              </div>
-            </div>
-
           </div>
-          <div class="col-md-6">
-            <br>
-            <div class="card border-3 border-danger">
-      <div class="card-header">  <h3 class="display-3 mx-auto"><p class="text-center">aktuell: </p></h3> </div>
-              <div class="card-body">
-                <div class="row" *ngIf="preise" >
-                  <div class="col-md-12">
-                    <ul class="list-group">
-                      <li class="list-group-item" [ngClass]="preis.color" [style.color]="preis.font"  *ngFor="let preis of preise, index as index" >
-                        <div class="row">
-                          <div class="col-md-6 my-auto text-center"><h5 class="display-5" [ngClass]="showUsed(preis.color)">{{preis.content}}</h5>         </div>
-                          <div class="col-md-3"><button class="btn btn-outline-primary btn-block" (click)="setFlag(preis?._id, index)"> &nbsp;<i class="mx-auto fa fa-circle-o-notch"  aria-hidden="true"></i></button></div>
-                          <div class="col-md-3"><button class="btn btn-outline-danger btn-block" (click)="deleteTag(preis?._id, index)"> &nbsp;<i class="fa fa-close"  aria-hidden="true"></i></button></div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-            </div> </div>
+          <br>
+          <div class="">
+            <app-heading-info></app-heading-info>
           </div>
-
         </div>
-
-        <br>
-    <div class="">
-
-      <app-heading-info></app-heading-info>
-    </div>
       </div>
-    </div>
-  <br>
+      <br>
 
+    </div>
   </div>
+
   <br><br>
 
   <div class="row ">

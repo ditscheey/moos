@@ -1,9 +1,20 @@
-<div class="container-fluid" *ngIf="ownBookings">
-  <div class="d-flex flex-row flex-wrap ">
-    <div class="p-2 col-md-pull-3 col-sm-4" *ngFor="let booking of ownBookings; let i = index" >
-      <div class="card  flex-wrap" >
+<div class="row"><div class="input-group " >
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1" >Suchen: </span>
+  </div>
+  <input type="text" class="form-control" [(ngModel)]="searchText" >
+  <hr>
+  <br>
+</div>
+  <br></div>
+<div class="row">
+  <hr></div>
+<div class="container-fluid" *ngIf="ownBookings" >
+  <div class="d-flex flex-row flex-wrap " >
+    <div class="p-2 col-md-pull-3 col-sm-4" *ngFor="let booking of ownBookings | filterBy:searchText ; let i = index" >
+      <div class="card  flex-wrap" [ngClass]="getFree(booking)" >
         <div class="col-md-12 " >
-          <div class="card-header">
+          <div class="card-header" [ngClass]="getFree(booking)">
             <h3 class="card-title">{{booking.form.first_name }} {{booking.form.last_name}} <div class="pull-right" > </div>  </h3>
           </div>
           <div class="card card-inverse">
