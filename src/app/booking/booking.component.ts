@@ -110,6 +110,7 @@ public preisInfo;
   addBooking() {
     const post_value = {
       'form' : this.bookingForm.value,
+      'free': false
     };
     //console.log(post_value);
     this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
@@ -142,11 +143,15 @@ public preisInfo;
     });
   }
 
+  public getblockedDates(){
+
+  }
+
   public getBookings() {
-    this.http.get(this.apiUrl + 'api/file').subscribe(data => {
+    this.http.get(this.apiUrl + 'api/fewo').subscribe(data => {
       this.bookings = data;
-      if (!this.ownBookings) { this.getOwnBookings(); }
-   //   console.log(this.bookings);
+      //console.log(this.bookings);  "2018-12-20T23:00:00.000Z"
+
       this.pickerOptions = {
         showDropdowns: true,
         showWeekNumbers: true,
@@ -156,14 +161,8 @@ public preisInfo;
         alwaysShowCalendars: true,
         drops: 'down',
         isInvalidDate: date => {
-          for (var ii = 0; ii < this.ownDates.length; ii++) {
-            //console.log("date " + date.format('DD.MM.YYYY'));
-            if (date.format('DD.MM.YYYY') === this.ownDates[ii]) {
-              return true;
-            }
-          }
           for (var jj = 0; jj < this.bookings.length; jj++) {
-            if (date.format('DD.MM.YYYY') === this.bookings[jj]) {
+            if (date.isSame(moment(this.bookings[jj]))) {
               return true;
             }
           }

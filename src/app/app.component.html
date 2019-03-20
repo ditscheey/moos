@@ -33,7 +33,7 @@
           <li routerLinkActive="active" class="nav-item-" *ngIf="(router.url === '/admin')">
             <a class="nav-link" (click)="scroll('Start')">| Start</a>
           </li>
-          <li routerLinkActive="active" class="nav-item" *ngIf="(router.url === '/admin')">
+          <li routerLinkActive="active" class="nav-item" [ngClass]="" *ngIf="(router.url === '/admin')">
             <a class="nav-link" (click)="scroll('Gallerie')"> Gallerie</a>
           </li>
           <li routerLinkActive="active" class="nav-item" *ngIf="(router.url === '/admin')">

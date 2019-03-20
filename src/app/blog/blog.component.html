@@ -6,9 +6,9 @@
       <span class="badge badge-pill badge-dark flex-item text-center" (click)="setOrder('time')"> <p class="lead"> Aktuell</p></span>
     </div>
     <div class="col-md-8" >
-      <span class="badge badge-pill flex-item text-center"
+      <span class="badge badge-pill flex-item align-middle"
             *ngFor="let tag of tags, index as i" [ngClass]="convertBadge(i)" (click)="setFilter(tag.name)">
-        <p class="lead" *ngIf="filter.form.tags.name == tag?.name || filter.form.tags.name == '' ">{{tag?.name}}</p></span>
+        <p class="lead align-middle" *ngIf="filter.form.tags.name == tag?.name || filter.form.tags.name == '' ">{{tag?.name}}</p></span>
       <span class="badge badge-pill badge-dark flex-item text-center"  (click)="clearOrder()"> <p class="lead"> <i class="fa fa-close"></i></p></span>
     </div>
     <div class="col-md-3">

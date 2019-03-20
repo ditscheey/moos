@@ -20,6 +20,7 @@ export class AppComponent {
     //console.log(id);
     let el = document.getElementById(id);
     el.scrollIntoView();
+    //return 'active';
   }
 
 

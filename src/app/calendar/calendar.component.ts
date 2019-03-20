@@ -47,6 +47,15 @@ export class CalendarComponent implements OnInit {
     //this.getBookings();
   }
 
+  public limitMonthsback(){
+    var viewD = moment(this.viewDate);
+    //console.log("viewD" + viewD.month());
+    var today = moment().subtract(1, 'months');
+    //console.log(today.month());
+    if (viewD.month() === today.month()) {
+      return false;
+    } else { return true;}
+  }
   beforeMonthViewRender({body}: { body: CalendarMonthViewDay[] }): void {
     //let done = this.free_events();
     body.forEach(day => {

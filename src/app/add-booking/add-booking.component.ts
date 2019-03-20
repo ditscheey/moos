@@ -17,9 +17,15 @@ export class AddBookingComponent implements OnInit {
   public pickerOptions: any;
   public bookings;
   public ownDates = [];
-  public ownBookings;
+  public ownBookings; public ownBookings_clean = [];
   public  date = moment();
   public form; public searchText = '';
+  public filter= {form : {
+      first_name : this.searchText,
+  last_name : this.searchText,
+  dateFrom: this.searchText , dateTo: this.searchText, comment: this.searchText
+}};
+
   constructor(private http: HttpClient) {
   }
 
@@ -40,19 +46,34 @@ export class AddBookingComponent implements OnInit {
     this.http.get(this.apiUrl + 'api/bookings').subscribe(data => {
       this.ownBookings = data;
       this.ownBookings.forEach(booking => {
+        var free;
+        if(!booking.free){
+          free = false;
+        }else {free = true;}
+        var b = {first_name: booking.form.first_name,
+                  last_name: booking.form.last_name,
+                  dateFrom: booking.form.dateFrom,
+                  dateTo: booking.form.dateTo,
+                  comment: booking.form.comment,
+                  free : free
+        };
+        this.ownBookings_clean.push(b);
+      });
+      console.log(this.ownBookings_clean);
+    /*  this.ownBookings.forEach(booking => {
         let start_date = moment(booking.form.dateFrom, 'DD.MM.YYYY');
         this.ownDates.push(booking.form.dateFrom);
         for (let d = 0; d < booking.nights; d ++) {
           start_date.add(1, 'days');
           this.ownDates.push(start_date.format('DD.MM.YYYY'));
           }
-      });
+      });*/
       //console.log(this.ownDates);
     });
   }
 
   public deleteBooking(index){
-    console.log("delete " + index);
+    //console.log("delete " + index);
     this.http.delete(this.apiUrl + 'api/bookings/' + this.ownBookings[index]._id).subscribe( data =>   {
       this.ownBookings.splice(index, 1);
       window.location.reload();
@@ -65,8 +86,8 @@ public checkDate(date) {
 }
   public getBookings() {
     this.http.get(this.apiUrl + 'api/file').subscribe(data => {
-      console.log(data);
-      if (!this.ownBookings) { this.getOwnBookings(); }
+     // console.log(data);
+     // if (!this.ownBookings) { this.getOwnBookings(); }
       this.bookings = data;
       //   console.log(this.bookings);
       this.pickerOptions = {

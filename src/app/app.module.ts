@@ -54,11 +54,12 @@ import {CalendarModule} from 'angular-calendar';
 import { CalendarComponent } from './calendar/calendar.component';
 import { GalleryBoardComponent } from './gallery-board/gallery-board.component';
 import {ImageService} from './image.service';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import { NgxSmartModalModule } from 'ngx-smart-modal';
+
 import { ModalComponent } from './modal/modal.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 registerLocaleData(localeDe);
 const appRoutes: Routes = [
   { path: '', redirectTo: 'info' , pathMatch: 'full'},
@@ -121,6 +122,8 @@ const appRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FilterPipeModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule,
     ClipboardModule,
     MarkdownModule.forRoot(),
     ImageUploadModule.forRoot(),

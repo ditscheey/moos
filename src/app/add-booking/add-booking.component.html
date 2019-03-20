@@ -2,7 +2,7 @@
   <div class="input-group-prepend">
     <span class="input-group-text" id="basic-addon1" >Suchen: </span>
   </div>
-  <input type="text" class="form-control" [(ngModel)]="searchText" >
+  <input type="text" class="form-control" [(ngModel)]="searchText" placeholder="Suchparameter eingeben z.B 12 -> nur Dezember oder 'true'-> nur Freigaben ">
   <hr>
   <br>
 </div>
@@ -11,19 +11,19 @@
   <hr></div>
 <div class="container-fluid" *ngIf="ownBookings" >
   <div class="d-flex flex-row flex-wrap " >
-    <div class="p-2 col-md-pull-3 col-sm-4" *ngFor="let booking of ownBookings | filterBy:searchText ; let i = index" >
+    <div class="p-2 col-md-pull-3 col-sm-4" *ngFor="let booking of ownBookings_clean | paginate: { itemsPerPage: 9, currentPage: p } | filter:searchText ; let i = index " >
       <div class="card  flex-wrap" [ngClass]="getFree(booking)" >
         <div class="col-md-12 " >
           <div class="card-header" [ngClass]="getFree(booking)">
-            <h3 class="card-title">{{booking.form.first_name }} {{booking.form.last_name}} <div class="pull-right" > </div>  </h3>
+            <h3 class="card-title">{{booking.first_name }} {{booking.last_name}} <div class="pull-right" > </div>  </h3>
           </div>
           <div class="card card-inverse">
             <div class="card-block">
               <div class="card-text">
                 <ul class="list-group">
-                  <li class="list-group-item">Check-in: {{booking.form.dateFrom}}</li>
-                  <li class="list-group-item">Check-out: {{booking.form.dateTo}}</li>
-                  <li class="list-group-item">Kommentar: {{booking.form.comment}} </li>
+                  <li class="list-group-item">Check-in: {{booking.dateFrom}}</li>
+                  <li class="list-group-item">Check-out: {{booking.dateTo}}</li>
+                  <li class="list-group-item">Kommentar: {{booking.comment}} </li>
                 </ul>
               </div>
             </div>
@@ -37,7 +37,9 @@
       </div>
     </div>
   </div>
+</div>
 
-
+<div class="container text-center"><br>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
 </div>
