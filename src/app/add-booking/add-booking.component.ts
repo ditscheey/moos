@@ -14,6 +14,7 @@ import {AuthService} from '../auth.service';
 export class AddBookingComponent implements OnInit {
   public apiUrl = environment.apiUrl;
   public data;
+  public p;
   public pickerOptions: any;
   public bookings;
   public ownDates = [];

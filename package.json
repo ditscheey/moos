@@ -66,7 +66,6 @@
     "path": "^0.12.7",
     "popper.js": "^1.12.9",
     "rxjs": "^5.5.2",
-    "sharp": "^0.20.3",
     "string": "^3.3.3",
     "uuid": "^3.2.1",
     "web-animations-js": "^2.3.1",
