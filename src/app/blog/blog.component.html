@@ -1,9 +1,15 @@
 <br><br>
 <!-- using pill badges to navigate -->
 <div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
+  </div>
   <div class="row ">
     <div class="col-md-1 ">
-      <span class="badge badge-pill badge-dark flex-item text-center" (click)="setOrder('time')"> <p class="lead"> Aktuell</p></span>
+      <span class="badge badge-pill badge-dark flex-item text-center" (click)="setOrder('time')"> <p class="lead"> Aktuell</p><i ngif*="reverse" class="fa fa-arrowup"></i><i ngif*="!reverse" class="fa fa-arrowdw"></i></span>
     </div>
     <div class="col-md-8" >
       <span class="badge badge-pill flex-item align-middle"
