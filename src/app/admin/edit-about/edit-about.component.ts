@@ -60,8 +60,15 @@ export class EditAboutComponent implements OnInit {
 
   public getCms() {
     this.http.get(this.apiUrl + 'api/info').subscribe(data => {
-      this.data = data;
-      this.content = data[this.routeInfo];
+      if ( data[0].info1 ) {
+        this.data = data[0];
+
+      } else {
+        this.data = data[1];
+
+      }
+      console.log(this.routeInfo);
+      this.content = this.data[this.routeInfo];
     });
   }
 

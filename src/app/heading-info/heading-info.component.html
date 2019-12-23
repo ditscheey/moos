@@ -1,0 +1,47 @@
+<br>
+<div class="container">
+  <div class="card border-info border-3">
+    <div class="card-header">
+      <h5 class="display-3 "><p class="text-center">Details auf der Startseite </p></h5>
+    </div>
+    <div class="card-body">
+      <ul class="list-group" >
+        <li class="list-group-item bg-primary">
+          <div class="row">
+            <div class="col-md-2">
+              <label for="ic"></label>
+              <span class="input-group-text" id="ic"><i [ngClass]="newIcon"></i> </span>
+            </div>
+            <div class="col-md-10">
+              <div class="input-group">
+                <input type="text" id="gear" class="form-control" placeholder="z.B 'Kabelfernsehen' -> icon nächstes Feld" [(ngModel)]="gear">
+                <div >
+
+                  <button *ngIf="!update?.id" class="btn btn-info" type="button" (click)="addGear()">hinzufügen</button>
+                  <button *ngIf="update?.id" class="btn btn-success" type="button" (click)="updateGear(update?.id, update?.index)">ändern</button>
+                </div>
+              </div>
+              <input [iconPicker]="newIcon" id=picker size="10"  class="form-control"   [ipPosition]="'bottom'"  [ipPlaceHolder]="newIcon"
+                     [ipFallbackIcon]="fallbackIcon" (iconPickerSelect)="onIconPickerSelect($event)"/>
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item"  *ngFor="let gear of gears, index as index" >
+          <div class="row">
+            <div class="col-md-1">
+              <span class="input-group-text"><i [ngClass]="gear.icon"> </i>&nbsp;</span>
+            </div>
+            <div class="col-md-6 my-auto text-center"><p class="lead" >{{gear.name}}</p></div>
+            <div class="col-md-2"><button class="btn btn-outline-primary btn-block" (click)="setFlag(gear?._id, index)">ändern&nbsp;<i class="fa fa-circle-o-notch"  aria-hidden="true"></i></button></div>
+            <div class="col-md-3"><button class="btn btn-outline-danger btn-block" (click)="deleteGear(gear?._id, index)">löschen&nbsp;<i class="fa fa-close"  aria-hidden="true"></i></button></div>
+          </div>
+        </li>
+
+
+      </ul>
+    </div>
+  </div>
+    </div>
+<br>
+

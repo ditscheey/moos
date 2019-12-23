@@ -35,27 +35,56 @@ import {AdminGuardService} from './admin-guard.service';
 import { BlogComponent } from './blog/blog.component';
 import { PostBlogComponent } from './post-blog/post-blog.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
+import { ImagesBlogComponent } from './images-blog/images-blog.component';
+import { AddBookingComponent } from './add-booking/add-booking.component';
 
+import {ImageUploadModule} from 'angular2-image-upload';
+import { EditBlogPostComponent } from './edit-blog-post/edit-blog-post.component';
+import { ImpressumComponent } from './impressum/impressum.component';
+import { OrderModule } from 'ngx-order-pipe';
+import { TagsComponent } from './tags/tags.component';
+import { ImageOwnComponent } from './image-own/image-own.component';
+import {FilterPipeModule} from 'ngx-filter-pipe';
+import {ClipboardModule} from 'ngx-clipboard';
+import { HeadingInfoComponent } from './heading-info/heading-info.component';
+import {IconPickerModule} from 'ngx-icon-picker';
+import {DisqusModule} from 'ngx-disqus';
+import {GearService} from './gear.service';
+import {CalendarModule} from 'angular-calendar';
+import { CalendarComponent } from './calendar/calendar.component';
+import { GalleryBoardComponent } from './gallery-board/gallery-board.component';
+import {ImageService} from './image.service';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 
-
+import { ModalComponent } from './modal/modal.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+registerLocaleData(localeDe);
 const appRoutes: Routes = [
   { path: '', redirectTo: 'info' , pathMatch: 'full'},
   {  path: 'info', component: InfoComponent },
   {  path: 'home', redirectTo: 'admin', pathMatch: 'full' },
   {  path: 'gallery', component: GalleryComponent },
-  {  path: 'booking', component: BookingComponent },
+  {  path: 'booking', component: BookingComponent , canActivate: [AdminGuardService]},
   {  path: 'about', component: AboutComponent },
+  { path: 'impressum', component: ImpressumComponent},
   { path: 'image/:id', component: ImageComponent},
-  { path: 'admin', component: DashboardComponent , canActivate: [AdminGuardService]},
+  { path: 'admin', component: DashboardComponent },
   { path: 'admin/editInfo', component: EditInfoComponent, canActivate: [AdminGuardService]},
+  { path: 'admin/addBooking', component: AddBookingComponent},
   { path: 'admin/editInfo/:detail', component: EditAboutComponent, canActivate: [AdminGuardService]},
+  { path: 'tags', component: TagsComponent, canActivate: [AdminGuardService]},
   { path: 'login', component: LoginComponent},
   { path: 'blog', component: BlogComponent},
   { path: 'blog/post/:id', component: BlogDetailComponent},
+  { path: 'blog/post/edit/:id', component: EditBlogPostComponent},
   { path: 'blog/post', component: PostBlogComponent},
-  { path: 'callback', component: CallbackComponent }
+  { path: 'callback', component: CallbackComponent },
+  { path: 'calendar', component: CalendarComponent }
 
 ];
+// routes -> dashboard /addbooking -> , canActivate: [AdminGuardService]
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +101,17 @@ const appRoutes: Routes = [
     CallbackComponent,
     BlogComponent,
     PostBlogComponent,
-    BlogDetailComponent
+    BlogDetailComponent,
+    ImagesBlogComponent,
+    AddBookingComponent,
+    EditBlogPostComponent,
+    ImpressumComponent,
+    TagsComponent,
+    ImageOwnComponent,
+    HeadingInfoComponent,
+    CalendarComponent,
+    GalleryBoardComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -82,19 +121,29 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StarRatingModule,
+    FilterPipeModule,
+    Ng2SearchPipeModule,
+    NgxPaginationModule,
+    ClipboardModule,
     MarkdownModule.forRoot(),
+    ImageUploadModule.forRoot(),
     Daterangepicker,
+    IconPickerModule,
     NgbModule.forRoot(),
+    CalendarModule.forRoot(),
+    OrderModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDsNMb4RG2O66JAEHYPLcw_RwAG6yzcuJQ'
     }),
+    DisqusModule.forRoot( 'studiomurnauermoos'),
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  providers: [AuthGuardService, AdminGuardService, AuthService],
+  providers: [AuthGuardService, AdminGuardService, AuthService, GearService, ImageService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  private static CalendarModule: any;
+}

@@ -2,21 +2,25 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import * as auth0 from 'auth0-js';
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class AuthService {
+  public apiUrl = environment.apiUrl;
   public  requestedScopes  = 'openid profile read:messages write:messages';
   auth0 = new auth0.WebAuth({
     clientID: 'ltxYz9HvdgDbgc6CGTqVSVo7IJYaVh6D',
     domain: 'studiomoos.eu.auth0.com',
     responseType: 'token id_token',
     audience: 'https://studiomoos.eu.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: 'http://studiomurnauermoos.de',
     scope: this.requestedScopes
   });
   userProfile: any;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+    //console.log('http:studiomurnauermoos.de/');
+  }
 
   public login(): void {
     this.auth0.authorize();
@@ -27,10 +31,10 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
-        console.log('we got into the session yeah |autheservice')
+       // console.log('we got into the session yeah |autheservice')
         this.router.navigate(['/info']);
       } else if (err) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/']);
       }
     });
   }
@@ -70,7 +74,7 @@ export class AuthService {
       if (profile) {
         this.userProfile = profile;
       }
-      console.log('sorry');
+      //console.log('sorry');
       cb(err, profile);
     });
     }

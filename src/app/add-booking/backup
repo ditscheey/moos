@@ -1,0 +1,15 @@
+for (var ij = 0; ij < this.ownDates.length / 2; ij ++) {
+            const temp_From = this.ownDates[ij];
+            const temp_To = moment(this.ownDates[ij + 1]);
+            console.log(temp_From + "  ");
+            console.log(temp_To);
+            console.log("date "+ date);
+            if (date.format('DD.MM.YYYY') === this.ownDates[ij] ) {
+                console.log(this.ownBookings.[1].nights);
+                for (var d = 0; d < days - 1; d++){
+                  const temp_mo = temp_To.add(1, 'days');
+                  if (date.format('DD.MM.YYYY') === temp_mo.format('DD.MM.YYYY') ){
+                      return true;
+                  }
+                }
+            }

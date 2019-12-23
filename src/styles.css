@@ -7,3 +7,32 @@
   background-image : url("./assets/lightpaperfibers.png");
   opacity: 0.2;
 }
+
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+.own_box {
+  background-color: black;
+  opacity: 0.5;
+  color: white;
+}
+
+.free   {
+  background-color: #E8FDE7 !important;
+  opacity: 0.9;
+  -moz-box-shadow:    2px 2px 3px 3px #ccc;
+  -webkit-box-shadow: 2px 2px 3px 3px #ccc;
+  box-shadow:         2px 2px 3px 3px #ccc;
+}
+.reserved  {
+  background-color: #EDD5D5 !important;
+  opacity: 0.9;
+  -moz-box-shadow:    2px 2px 3px 3px #ccc;
+  -webkit-box-shadow: 2px 2px 3px 3px #ccc;
+  box-shadow:         2px 2px 3px 3px #ccc;
+
+}
+
+.today {
+  background-color: #349AFE !important;
+}
+

@@ -1,29 +1,32 @@
-<form [formGroup]="bookingForm">
-<div class="row">
-  <div class="col-2"></div>
-  <div class="col-8">
-    <h4 class="display-4"><p class="text-center">{{title}}</p></h4>
-  </div>
-  <div class="col-2"></div>
-</div>
-<br>
-<div class="row">
-  <span class="alert-danger" *ngIf="(this.routeInfo == 'email')"> alle Ausdrücke mit "form" nicht verändern. umschreiben des Textes jedoch möglich</span>
-  <div class="editor block">
-    <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='content'
-                    [ngModelOptions]="{standalone: true}"></app-ngx-editor>
-  </div>
-</div>
-<div class="row"><br><br></div>
-<div class="row">
-  <br><br>
-  <div class="col-3"><button  type="submit" class=" btn btn-block btn-danger" routerLink="/admin/editInfo">back </button></div>
-  <div class="col-9"><button  type="submit" class=" btn btn-block btn-success" (click)="updateCms()">update  </button></div>
+<div class="container" *ngIf="this.data">
+  <form ><br>
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <h4 class="display-4"><p class="text-center">{{title}}</p></h4>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <br>
+    <div class="row">
+      <span class="alert-danger" *ngIf="(this.routeInfo == 'email')"> alle Ausdrücke mit "form" nicht verändern. umschreiben des Textes jedoch möglich</span>
+      <div class="editor block">
+        <app-ngx-editor [config]="editorConfig" [placeholder]="placeholder" [spellcheck]="true" [(ngModel)]='content'
+                        [ngModelOptions]="{standalone: true}"></app-ngx-editor>
+      </div>
+    </div>
+    <div class="row"><br><br></div>
+    <div class="row">
+      <br><br>
+      <div class="col-3"><button  type="submit" class=" btn btn-block btn-danger" routerLink="/admin/editInfo">back </button></div>
+      <div class="col-9"><button  type="submit" class=" btn btn-block btn-success" (click)="updateCms()">update  </button></div>
 
+    </div>
+    <br>
+    <div *ngIf="content"  class="htmlblock block">
+      <h6>HTML Output</h6>
+      <p class="lead" [innerHtml]="content"></p>
+    </div>
+  </form>
 </div>
-<br>
-<div *ngIf="content" class="htmlblock block">
-  <h6>HTML Output</h6>
-  <p class="lead" [innerHtml]="content"></p>
-</div>
-</form>
+

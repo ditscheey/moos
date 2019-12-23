@@ -1,0 +1,22 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-modal',
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css']
+})
+export class ModalComponent implements OnInit {
+  public seen = false;
+  constructor() { }
+
+  ngOnInit() {
+  }
+  public toggle_seen() {
+    if (this.seen) {
+      this.seen = false;
+    } else {
+      this.seen = true;
+    }
+  }
+
+}

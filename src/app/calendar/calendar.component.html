@@ -1,0 +1,72 @@
+<ng-template #loading><br><br>
+  <div class="text-center">
+    <i class="fa fa-spin fa-spinner fa-5x"></i>
+    <br>
+    Loading events...
+  </div>
+</ng-template>
+<br><br>
+<div class="container" *ngIf="ownBookings"><br>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary" *ngIf="limitMonthsback()"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
+          Letzter
+        </div>
+        <div
+          class="btn btn-outline-secondary"
+          mwlCalendarToday
+          [(viewDate)]="viewDate">
+          Dieser
+        </div>
+        <div
+          class="btn btn-primary"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
+          Nächster
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'de' }}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          (click)="view = 'month'"
+          [class.active]="view === 'month'">
+          Monat
+        </div>
+        <div
+          class="btn btn-info"
+          (click)="refresh()">
+          <i class="fa fa-refresh" aria-hidden="true"></i> aktualisieren
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [locale]="locale"
+      [weekStartsOn]="weekStartsOn"
+      [weekendDays]="weekendDays"
+      (beforeViewRender)="beforeMonthViewRender($event)">
+    </mwl-calendar-month-view>
+  </div>
+</div>
+<br><br>
+
+<br>
+

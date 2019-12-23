@@ -23,7 +23,10 @@ export class BookingComponent implements OnInit {
   public flag = true;
   public flag2 = true;
   public priceNight;
-public apiUrl = environment.apiUrl;
+  public apiUrl = environment.apiUrl;
+  public ownDates = [];
+  public ownBookings;
+
 
 public preisInfo;
 
@@ -105,22 +108,50 @@ public preisInfo;
   }
 
   addBooking() {
-    let post_value = {
+    const post_value = {
       'form' : this.bookingForm.value,
-      'nights' : this.nights,
-      'priceNight': this.priceNight,
-      'price': this.complete,
+      'free': false
     };
-    console.log(post_value);
-    /*  this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
-      this.router.navigate(['./info']);
-    } ); */
+    //console.log(post_value);
+    this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
+      window.location.reload();
+    } );
+  }
+  addFreeBooking() {
+    const post_value = {
+      'form' : this.bookingForm.value,
+      'free': true,
+    };
+    //console.log(post_value);
+    this.http.post(this.apiUrl + 'api/bookings', post_value).subscribe(data =>{
+      window.location.reload();
+    } );
+  }
+  public getOwnBookings(){
+    this.http.get(this.apiUrl + 'api/bookings').subscribe(data => {
+      this.ownBookings = data;
+      this.ownBookings.forEach(booking => {
+        let start_date = moment(booking.form.dateFrom, 'DD.MM.YYYY');
+        this.ownDates.push(booking.form.dateFrom);
+        for (let d = 0; d < booking.nights; d ++) {
+          start_date.add(1, 'days');
+          this.ownDates.push(start_date.format('DD.MM.YYYY'));
+        }
+      });
+    //  console.log('own');
+    //  console.log(this.ownBookings);
+    });
+  }
+
+  public getblockedDates(){
+
   }
 
   public getBookings() {
-    this.http.get(this.apiUrl + 'api/file').subscribe(data => {
+    this.http.get(this.apiUrl + 'api/fewo').subscribe(data => {
       this.bookings = data;
-   //   console.log(this.bookings);
+      //console.log(this.bookings);  "2018-12-20T23:00:00.000Z"
+
       this.pickerOptions = {
         showDropdowns: true,
         showWeekNumbers: true,
@@ -130,8 +161,8 @@ public preisInfo;
         alwaysShowCalendars: true,
         drops: 'down',
         isInvalidDate: date => {
-          for (var ii = 0; ii < this.bookings.length; ii++) {
-            if (date.format('DD.MM.YYYY') === this.bookings[ii]) {
+          for (var jj = 0; jj < this.bookings.length; jj++) {
+            if (date.isSame(moment(this.bookings[jj]))) {
               return true;
             }
           }
@@ -143,17 +174,13 @@ public preisInfo;
 
   ngOnInit() {
     this.bookings = this.getBookings();
-    this.getPreisInfo();
+    //this.getPreisInfo();
     // Create Form set Validation
     this.bookingForm = this.fb.group({
       first_name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*'), Validators.minLength(3)]],
       last_name: ['', [Validators.required,  Validators.pattern('^[a-zA-Z ]*') , Validators.minLength(3)]],
-      email: ['',  [Validators.required, Validators.minLength(5), Validators.email]] ,
       dateFrom: [, [Validators.required, Validators.pattern('^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$')]],
       dateTo: [,[Validators.required, Validators.pattern('^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$')]],
-      people: [, Validators.required],
-      pets:'',
-      kids:'',
       comment: ''
     });
   }

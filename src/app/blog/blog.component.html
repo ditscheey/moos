@@ -1,18 +1,59 @@
-<div class="well" *ngFor="let post of data; let i = index">
-  <div class="col-md-7 offset-md-3">
-    <div class="card-header">
-      <h3 class="card-title">{{post.title}}<div class="pull-left" >    {{ post.tags }}</div>  </h3>
+<br><br>
+<!-- using pill badges to navigate -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row ">
+    <div class="col-md-1 ">
+      <span class="badge badge-pill badge-dark flex-item text-center" (click)="setOrder('time')"> <p class="lead"> Aktuell</p><i ngif*="reverse" class="fa fa-arrowup"></i><i ngif*="!reverse" class="fa fa-arrowdw"></i></span>
+    </div>
+    <div class="col-md-8" >
+      <span class="badge badge-pill flex-item align-middle"
+            *ngFor="let tag of tags, index as i" [ngClass]="convertBadge(i)" (click)="setFilter(tag.name)">
+        <p class="lead align-middle" *ngIf="filter.form.tags.name == tag?.name || filter.form.tags.name == '' ">{{tag?.name}}</p></span>
+      <span class="badge badge-pill badge-dark flex-item text-center"  (click)="clearOrder()"> <p class="lead"> <i class="fa fa-close"></i></p></span>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Filtern: </span>
+        </div>
+        <input type="text" class="form-control" [(ngModel)]="filter.form.title">
+      </div>
 
     </div>
-    <div class="card card-inverse">
-      <div class="card-block">
-        <p class="card-text"[innerHtml]="post.content"></p>
-
-        <a class="btn btn-outline-info pull-right " routerLink="post/{{i}}">READ MORE</a>
+  </div>
+</div>
+<br>
+<div class="container">
+  <div class="row"  >
+    <div class="col-md-4  " *ngFor="let post of data | orderBy: order : reverse | filterBy: filter ; index as i" >
+      <div class="card card-inverse border-3 "  [ngClass]="convertBorder(post?.form.tags.color)" routerLink= "post/{{post?._id}}">
+        <div class="card-header" >
+          <h5 class="text-center " >{{post?.form.title}} </h5>
+        </div>
+        <div class="card-img-top ">
+          <img [src]=post?.form.img_url class="img-thumbnail " style="opacity: 0.9"  alt="preview_image">
+        </div>
+        <!--<div class="card-footer " [ngClass]="post?.form.tags.color">
+        {{"border-"+post?.form.tags.color}}
+          <div class="row">
+            <div class="col-md-6">
+              <p class="lead " > {{ post?.form.tags.name }}</p>
+            </div>
+            <div class="col-md-6">
+              <p class="lead text-right" > {{ post?.time }}</p>
+            </div>
+          </div>
+        </div>-->
       </div>
     </div>
   </div>
-  <div class="col-md-3"></div>
-  <div class="row"><br><br></div>
 </div>
+<div class="row"><br><br></div>
+
 

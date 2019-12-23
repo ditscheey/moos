@@ -1,0 +1,14 @@
+<div #modal class="card" *ngIf="!seen">
+  <div class="card-body container">
+    <br><br><br>
+    <h4 class="display-5 text-center">Datenschutz</h4>
+    <p class="lead text-center">
+      Bitte informieren Sie sich über die benutzten externen Erweiterungen. Alle notwendigen Details finden Sie unter dem Abschnitt Impressum.
+      Falls dies nicht ihr erster Besuch ist, können sie diese Nachricht ignorieren.</p>
+    <div class="row">
+      <div class="col-md-6"><button class="btn-block btn-danger" (click)="toggle_seen()">schließen</button></div>
+      <div class="col-md-6"><button class="btn-block btn-primary" routerLink="impressum">Details</button></div>
+    </div>
+
+  </div>
+</div>

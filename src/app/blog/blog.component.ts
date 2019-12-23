@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import { environment} from '../..//environments/environment';
+import * as moment from 'moment';
+import { OrderPipe } from 'ngx-order-pipe';
+import index from '@angular/cli/lib/cli';
 
 @Component({
   selector: 'app-blog',
@@ -16,17 +19,77 @@ export class BlogComponent implements OnInit {
   public tags;
   public apiUrl = environment.apiUrl;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient , private router: Router) { }
+  public order = 'time';
+  public reverse = true;
+  public filter_input = null;
+  public filter = {'form' : {
+      'title' : '',
+      'tags' : {
+        'name': ''
+      }
+    }};
+
+  public orde = {
+    'tags': {
+      'name' : ''
+    }
+  };
+  constructor(private route: ActivatedRoute, private http: HttpClient , private router: Router, private orderPipe: OrderPipe) {
+    //console.log(this.orderPipe.transform(this.data, this.order));
+}
 
 
   ngOnInit() {
     this.getPosts();
+    //console.log(this.orderPipe.transform(this.data, this.order));
+  }
+
+  public clearOrder() {
+    this.filter.form.tags.name = '';
+  }
+  public convertBadge(index) {
+    let temp_tag = this.tags[index];
+   // console.log(temp_tag.color.split('-')[1]);
+    let style = 'badge-' + temp_tag.color.split('-')[1];
+    //console.log(style);
+    return style;
+  }
+
+
+  setOrder(value: string) {
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    }
+    this.order = value;
+  }
+
+  setFilter(value: string) {
+    this.filter.form.tags.name = value;
+    this.filter.form.title = '';
+    //console.log(value);
 
   }
-  public getPosts(){
+  convertBorder(value: string) {
+    value.substr(2, value.length);
+    return ('border-' +  value.substr(3, value.length));
+  }
+  public getPosts() {
     this.http.get(this.apiUrl + 'api/posts').subscribe(data => {
       this.data = data;
-      //this.content = data[this.routeInfo];
+        this.data.forEach((post, i) => {
+           /*console.log(post);
+          console.log(index); */
+           let temp = post.time;
+           let days = moment().diff(temp, 'days');
+           let hours= moment().diff(temp, 'hours');
+           let mins = moment().diff(temp, 'minutes');
+
+        //  console.log(days);
+        });
     });
+    this.http.get(this.apiUrl + 'api/tags').subscribe(data => {
+        this.tags = data;
+      });
+    }
   }
-  }
+

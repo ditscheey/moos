@@ -1,20 +1,19 @@
-<div class="well">
+<br><div class="container" *ngIf="img">
   <div class="row">
-    <img src="{{image_path}}" alt="" class="img rounded" style="width: 100%; height: 100%; padding: 5px">
-  </div>
-  <div class="row">
-    <div class="col-md-2">
-      <button  type="submit" class="btn btn-block btn-outline-danger" (click)="prevImg()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-      <br>
+    <div class="col-md-2"><br>
+      <button  type="submit" class=" align-top btn btn-block btn-outline-danger" (click)="prevImg()"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+
     </div>
     <div class="col-md-8">
-      <h4 class="text-center align-middle" style="color: #007BFF">{{this.image_desc}}</h4>
-      <br>
+      <h4 class="display-4 text-center align-top " style="color: #007BFF">{{img?.title}}</h4>
     </div>
-    <div class="col-md-2">
-      <button  type="submit" class="btn btn-block btn-outline-success" (click)="nextImg()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-      <br>
+    <div class="col-md-2"><br>
+      <button  type="submit" class=" align-top btn btn-block btn-outline-success" (click)="nextImg()"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
     </div>
   </div>
+    <div class="row">
+    <img src="{{img?.img_path}}" alt="" class="img-fluid" (click)="nextImg()" style="width: 100%; height: 100%; padding: 5px">
+  </div>
+
 </div>
 

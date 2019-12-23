@@ -12,7 +12,8 @@ const cors = require('cors');
 const api = require('./server/routes/api');
 
 const app = express();
-
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
 app.use(cors());
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -44,4 +45,4 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port, function (){console.log("API running on port:"+port)});
+server.listen(port, function (){console.log("API running on port: "+port + " \n if in prod change to port:80 and update ngAuth0")});
